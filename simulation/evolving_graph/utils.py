@@ -7,6 +7,12 @@ import numpy as np
 from evolving_graph.environment import EnvironmentGraph, Property, Room
 from evolving_graph.execution import SitExecutor, LieExecutor
 
+import sys
+sys.path.append('../../rsr-engine')
+from rsr_tasks.utils import *
+
+import pdb
+
 
 random.seed(123)
 
@@ -47,6 +53,67 @@ def load_properties_data(file_name='../../resources/properties_data.json'):
     with open(file_name_all, 'r') as f:
         pd_dict = json.load(f)
         return {key: [Property[p] for p in props] for (key, props) in pd_dict.items()}
+
+
+def fill_graph_missing_properties(graph):
+    logout("Patching node properties missing in the graph","i")
+    properties_data = load_properties_data()
+    script_object2unity_object = load_name_equivalence()
+    unity_object2script_object = build_unity2object_script(script_object2unity_object)
+
+    static_objects = ['bathroom', 'floor', 'wall', 'ceiling', 'rug', 'curtains', 'ceiling_lamp', 'wall_lamp',
+                      'bathroom_counter', 'bathtub', 'towel_rack', 'wall_shelf', 'stall', 'bathroom_cabinet',
+                      'toilet', 'shelf', 'door', 'doorjamb', 'window', 'lightswitch', 'bedroom', 'table_lamp',
+                      'chair', 'bookshelf', 'nightstand', 'bed', 'closet', 'coatrack', 'coffee_table',
+                      'pillow', 'hanger', 'character', 'kitchen', 'maindoor', 'tv_stand', 'kitchen_table',
+                      'bench', 'kitchen_counter', 'sink', 'power_socket', 'tv', 'clock', 'wall_phone',
+                      'cutting_board', 'stove', 'papertray', 'toaster', 'fridge', 'coffeemaker', 'microwave',
+                      'livingroom', 'sofa', 'coffee_table', 'desk', 'cabinet', 'standing_mirror', 'globe',
+                      'mouse', 'mousemat', 'cpu_screen', 'computer', 'cpu_case', 'keyboard', 'ceilingfan',
+                      'kitchen_cabinets', 'dishwasher', 'cookingpot', 'wallpictureframe', 'vase', 'knifeblock',
+                      'stovefan', 'orchid', 'long_board', 'garbage_can', 'photoframe', 'balance_ball', 'closet_drawer',
+                      'faucet', 'dining_room', 'home_office', 'amplifier', 'speaker']
+    static_objects = static_objects + [x.replace('_', '') for x in static_objects]
+
+    logged_class_names = []
+    for node in graph.get_nodes():
+        # gets the equivalent name
+        temp = unity_object2script_object[node.class_name].lower().replace(' ', '_') if \
+            node.class_name in unity_object2script_object else \
+            node.class_name.lower().replace(' ', '_')
+        if node.properties == set():
+            if temp in properties_data:  # equivalent class with properties found
+                if node.class_name not in logged_class_names:
+                    logout("Giving " + str(node.class_name) + " properties of " + str(temp) +
+                           " which are \n " + str(properties_data[temp]))
+                    logged_class_names.append(node.class_name)
+                node.properties = properties_data[temp]
+            elif temp in static_objects:
+                continue  # just an object like wall, ceiling, etc. with no properties
+            else:
+                logout("Found a rogue object with class "+str(node.class_name),"w")
+        else:
+            if node.class_name in properties_data:
+                node.properties = node.properties.union(properties_data[node.class_name])
+            elif temp in properties_data:
+                node.properties = node.properties.union(properties_data[temp])
+    return graph
+
+
+def get_equivalent_class_names(class_names):
+    script_object2unity_object = load_name_equivalence()
+    unity_object2script_object = build_unity2object_script(script_object2unity_object)
+    if type(class_names) is str:
+        return unity_object2script_object[class_names].lower().replace(' ','_') if \
+            class_names in unity_object2script_object else \
+            class_names.lower().replace(' ', '_')
+    else:
+        new_class_names = []
+        for class_name in class_names:
+            new_class_names.append(unity_object2script_object[class_name].lower().replace(' ','_') if
+                                  class_name in unity_object2script_object else
+                                  class_name.lower().replace(' ', '_'))
+        return new_class_names
 
 
 def build_unity2object_script(script_object2unity_object):

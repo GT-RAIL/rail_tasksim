@@ -627,6 +627,12 @@
         "CUTTABLE",
         "MOVABLE"
     ],
+    "food_peach": [
+        "GRABBABLE",
+        "EATABLE",
+        "CUTTABLE",
+        "MOVABLE"
+    ],
     "food_bacon": [
         "GRABBABLE",
         "EATABLE",
@@ -1379,6 +1385,17 @@
         "CAN_OPEN",
         "MOVABLE"
     ],
+    "perfume": [
+        "GRABBABLE",
+        "POURABLE",
+        "CAN_OPEN",
+        "MOVABLE"
+    ],
+    "deodorant": [
+        "GRABBABLE",
+        "CAN_OPEN",
+        "MOVABLE"
+    ],
     "shaving_cream": [
         "GRABBABLE",
         "POURABLE",
@@ -1540,6 +1557,12 @@
         "MOVABLE",
         "CREAM"
     ],
+    "painkillers": [
+        "GRABBABLE",
+        "POURABLE",
+        "CAN_OPEN",
+        "MOVABLE"
+    ],
     "toothbrush": [
         "GRABBABLE",
         "RECIPIENT",
@@ -1551,6 +1574,11 @@
         "MOVABLE"
     ],
     "towel": [
+        "GRABBABLE",
+        "COVER_OBJECT",
+        "MOVABLE"
+    ],
+    "towelrolled": [
         "GRABBABLE",
         "COVER_OBJECT",
         "MOVABLE"

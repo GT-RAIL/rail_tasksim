@@ -5,6 +5,7 @@ import evolving_graph.common as common
 from evolving_graph.environment import *
 from evolving_graph.scripts import Action, ScriptLine, Script
 
+import pdb
 
 # ExecutionInfo
 ###############################################################################
@@ -1291,7 +1292,6 @@ class ScriptExecutor(object):
                     break
 
     def execute(self, script: Script, init_changers: List[StateChanger]=None, w_graph_list: bool=True):
-
         info = self.info
         state = EnvironmentState(self.graph, self.name_equivalence, instance_selection=True)
         _apply_initial_changers(state, script, init_changers)
@@ -1306,6 +1306,24 @@ class ScriptExecutor(object):
             if state is None:
                 return False, prev_state, graph_state_list
                 
+        if w_graph_list:
+            graph_state_list.append(state.to_dict())
+
+        return True, state, graph_state_list
+
+    def execute_from_current(self, script: Script, state: EnvironmentState, w_graph_list: bool = True):
+        info = self.info
+        graph_state_list = []
+        for i in range(len(script)):
+            prev_state = state
+            if w_graph_list:
+                graph_state_list.append(state.to_dict())
+
+            future_script = script.from_index(i)
+            state = next(self.call_action_method(future_script, state, info), None)
+            if state is None:
+                return False, prev_state, graph_state_list
+
         if w_graph_list:
             graph_state_list.append(state.to_dict())
 

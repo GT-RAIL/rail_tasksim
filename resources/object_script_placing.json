@@ -2186,7 +2186,54 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
+    ],
+    "towelrolled": [
+        {
+            "destination": "kitchen_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "basket_for_clothes",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "dresser",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "washing_machine",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "shoe_rack",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "towel_rack",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
     "printing_paper": [
         {
             "destination": "bookshelf", 
@@ -6987,7 +7034,71 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
+    ],
+    "perfume": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "table",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bag",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
+    "deodorant": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "table",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bag",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
     "cat": [
         {
             "destination": "floor", 
@@ -8122,7 +8233,64 @@
             "relation": "ON", 
             "room": "null"
         }
-    ], 
+    ],
+    "food_peach": [
+        {
+            "destination": "table_cloth",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "kitchen_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "garbage_can",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "plate",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "fridge",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "mini-fridge",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "trashcan",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cutting_board",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "freezer",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "table",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "pantry",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
     "cd_player": [
         {
             "destination": "closet", 
@@ -8932,7 +9100,34 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
+    ],
+    "painkillers": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_counter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bag",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroom_cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
     "keys": [
         {
             "destination": "couch", 
