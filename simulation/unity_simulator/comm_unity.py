@@ -125,10 +125,9 @@ class UnityCommunication(object):
         :param save_pose_data: save pose data
         :param save_scene_states: save scene states
         :param character_resource: path to character resource to be used
-        :param camera_mode: automatic (AUTO), first person (FIRST_PERSON), top (PERSON_TOP),
+        :param camera_mode: automatic (AUTO), first person (FIRST_PERSON), top (PERSON_TOP), front person view (PERSON_FRONT)
         :param image_width: image_height
         :param image_height: image_width
-            front person view (PERSON_FRONT)
         :return: pair success (bool), message: (str)
         """
         params = {'randomize_execution': randomize_execution, 'random_seed': random_seed,

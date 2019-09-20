@@ -7,12 +7,9 @@ import numpy as np
 from evolving_graph.environment import EnvironmentGraph, Property, Room
 from evolving_graph.execution import SitExecutor, LieExecutor
 
-import sys
-sys.path.append('../../rsr-engine')
-from rsr_tasks.utils import *
+from rail_tasksim_tasks.utils import *
 
 import pdb
-
 
 random.seed(123)
 
