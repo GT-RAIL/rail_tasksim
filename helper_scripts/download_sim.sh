@@ -11,7 +11,7 @@ fi
 base_url="http://virtual-home.org/release/simulator/"
 url=$base_url$name_script".zip"
 echo "Downloading"
-#wget $url
+wget $url
 mv $name_script.zip ./rail_tasksim/simulation/
 cd ./rail_tasksim/simulation/
 unzip $name_script.zip
