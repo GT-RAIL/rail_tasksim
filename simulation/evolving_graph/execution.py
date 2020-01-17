@@ -179,20 +179,24 @@ class FindExecutor(ActionExecutor):
         current_line = script[0]
         info.set_current_line(current_line)
         current_obj = current_line.object()
-        for node in state.select_nodes(current_obj):
-            char_node = _get_character_node(state)
+        target_node = state.select_nodes(current_obj)
+        if target_node[0] is None:
+            info.error('Could not find object {}'.format(current_obj.name))
+            return iter([])
+        else:
+            for node in target_node:
+                char_node = _get_character_node(state)
+                if state.evaluate(ExistsRelation(NodeInstance(node), Relation.ON, NodeInstanceFilter(char_node))):
+                    return _only_find_executor.execute(script, state, info)
+                elif Property.BODY_PART in node.properties:
+                    return _only_find_executor.execute(script, state, info)
+                elif _is_character_close_to(state, node):
+                    return _only_find_executor.execute(script, state, info)
+                elif State.SITTING in char_node.states or State.LYING in char_node.states:
+                    return _only_find_executor.execute(script, state, info)
+                else:
+                    return _walk_find_executor.execute(script, state, info)
 
-            if state.evaluate(ExistsRelation(NodeInstance(node), Relation.ON, NodeInstanceFilter(char_node))):
-                return _only_find_executor.execute(script, state, info)
-            elif Property.BODY_PART in node.properties:
-                return _only_find_executor.execute(script, state, info)
-            elif _is_character_close_to(state, node):
-                return _only_find_executor.execute(script, state, info)
-            elif State.SITTING in char_node.states or State.LYING in char_node.states:
-                return _only_find_executor.execute(script, state, info)
-            else:
-                return _walk_find_executor.execute(script, state, info)
-        info.error('Could not find object {}'.format(current_obj.name))
 
 
 class GreetExecutor(ActionExecutor):
@@ -1320,7 +1324,8 @@ class ScriptExecutor(object):
                 graph_state_list.append(state.to_dict())
 
             future_script = script.from_index(i)
-            state = next(self.call_action_method(future_script, state, info), None)
+            temp = self.call_action_method(future_script, state, info)
+            state = next(temp, None)
             if state is None:
                 return False, prev_state, graph_state_list
 
