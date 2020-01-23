@@ -6,7 +6,7 @@ import os
 from evolving_graph.common import TimeMeasurement
 from evolving_graph.scripts import ScriptObject
 
-from rail_tasksim_tasks.utils import *
+from rail_tasksim_tasks.logging_utils import logout
 
 # {'bounding_box': {'center': [-3.629491, 0.9062717, -9.543596],
 #  'size': [0.220000267, 0.00999999, 0.149999619]},

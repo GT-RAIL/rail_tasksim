@@ -289,7 +289,7 @@ class GrabExecutor(ActionExecutor):
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
         info.set_current_line(current_line)
-        node = state.get_state_node(current_line.object())
+        node = state.select_nodes(current_line.object())[0]
         if node is None:
             info.object_found_error()
         else:
@@ -1228,6 +1228,7 @@ class ScriptExecutor(object):
     _action_executors = {
         Action.WALK: WalkExecutor(),
         Action.FIND: FindExecutor(),
+        Action._FIND: _FindExecutor(),
         Action.SIT: SitExecutor(),
         Action.STANDUP: StandUpExecutor(),
         Action.GRAB: GrabExecutor(),
