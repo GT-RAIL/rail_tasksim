@@ -7,7 +7,7 @@ import numpy as np
 from evolving_graph.environment import EnvironmentGraph, Property, Room
 from evolving_graph.execution import SitExecutor, LieExecutor
 
-from rail_tasksim_tasks.utils import *
+from rail_tasksim_tasks.op_script_utils import *
 
 import pdb
 

@@ -6,8 +6,10 @@ import os
 from evolving_graph.common import TimeMeasurement
 from evolving_graph.scripts import ScriptObject
 
+from rail_tasksim_tasks.logging_utils import logout
+
 # {'bounding_box': {'center': [-3.629491, 0.9062717, -9.543596],
-#   'size': [0.220000267, 0.00999999, 0.149999619]},
+#  'size': [0.220000267, 0.00999999, 0.149999619]},
 #  'category': 'Props',
 #  'class_name': 'notes',
 #  'id': 334,
@@ -243,6 +245,33 @@ class EnvironmentGraph(object):
     def has_edge(self, from_node: Node, relation: Relation, to_node: Node):
         return to_node.id in self._get_node_maps_from(from_node.id, relation)
 
+    def get_edge_heads(self, relation: Relation, to_node: Node):
+        from_nodes = []
+        for node in self.get_nodes():
+            if to_node.id in self._get_node_maps_from(node.id, relation):
+                from_nodes.append(node)
+        return from_nodes
+
+    def get_edges(self, from_node: Node):
+        """ get all edges for node """
+        edges = {}
+        for relation in Relation:
+            ids = self._get_node_maps_from(from_node.id, relation)
+            if ids != {}:
+                edges[relation] = ids
+        return edges
+
+    def print_edges(self, from_node: Node):
+        """ list all edges for node """
+        for relation in Relation:
+            nodes = self._get_node_maps_from(from_node.id, relation)
+            if nodes != {}:
+                for id, node in nodes.items():
+                    logout(from_node.class_name + "<" + str(from_node.id) + ">" + ", "
+                           + str(relation) + ", "
+                           + node.class_name + "<" + str(id) + ">")
+
+
     def add_node(self, node: GraphNode):
         assert node.id not in self._node_map
         self._node_map[node.id] = node
@@ -254,6 +283,14 @@ class EnvironmentGraph(object):
         assert from_node.id in self._node_map and to_node.id in self._node_map
         es = self._edge_map.setdefault((from_node.id, r), {})
         es[to_node.id] = to_node
+
+    def to_dict(self):
+        edges = []
+        from_pairs = self.get_from_pairs()
+        for from_n, r in from_pairs:
+            for to_n in self.get_node_ids_from(from_n, r):
+                edges.append({'from_id': from_n, 'relation_type': r.name, 'to_id': to_n})
+        return {'nodes': [n.to_dict() for n in self.get_nodes()], 'edges': edges}
 
 
 # EnvironmentState

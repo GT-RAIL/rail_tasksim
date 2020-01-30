@@ -13,6 +13,7 @@ class Action(Enum):
     CLOSE = ("Close", 1)
     DRINK = ("Drink", 1)
     FIND = ("Find", 1)
+    _FIND = ("_Find", 1)
     WALK = ("Walk", 1)
     GRAB = ("Grab", 1)
     LOOKAT = ("Look at", 1)
