@@ -551,30 +551,68 @@ class WipeExecutor(ActionExecutor):
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
         info.set_current_line(current_line)
-        node = state.get_state_node(current_line.object())
-        if node is None:
-            info.object_found_error()
-        elif self.check_wipe(state, node, info):
-            new_node = node.copy()
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_wipe(state, target_node, tool_node, info):
+            new_node = target_node.copy()
             new_node.states.discard(State.DIRTY)
             new_node.states.add(State.CLEAN)
             yield state.change_state([ChangeNode(new_node)])
 
-    def check_wipe(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
+    def check_wipe(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
         char_node = _get_character_node(state)
 
-        if not _is_character_close_to(state, node):
-            info.error('{} is not close to {}', char_node, node)
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
             return False
 
         #if Property.SURFACES not in node.properties:
         #    info.error('{} is not a surface', node)
         #    return False
 
-        nodes_in_hands = _find_nodes_from(state, char_node, [Relation.HOLDS_RH, Relation.HOLDS_LH])
-        if len(nodes_in_hands) == 0:
-            info.error('{} does not hold anything in hands', char_node)
-            return 
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+class ScrubExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_scrub(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_scrub(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
 
         return True
 
@@ -1241,7 +1279,8 @@ class ScriptExecutor(object):
         Action.DRINK: DrinkExecutor(), 
         Action.LOOKAT: LookAtExecutor(), 
         Action.TURNTO: TurnToExecutor(), 
-        Action.WIPE: WipeExecutor(), 
+        Action.WIPE: WipeExecutor(),
+        Action.SCRUB: ScrubExecutor(),
         Action.RUN: WalkExecutor(),
         Action.PUTON: PutOnExecutor(), 
         Action.PUTOFF: PutOffExecutor(), 
@@ -1255,12 +1294,11 @@ class ScriptExecutor(object):
         Action.POUR: PourExecutor(), 
         Action.TYPE: TypeExecutor(), 
         Action.WATCH: WatchExecutor(), 
-        Action.PUSH: MoveExecutor(), 
-        Action.PULL: MoveExecutor(), 
-        Action.MOVE: MoveExecutor(), 
+        Action.PUSH: MoveExecutor(),
+        Action.PULL: MoveExecutor(),
+        Action.MOVE: MoveExecutor(),
         Action.RINSE: WashExecutor(),
-        Action.WASH: WashExecutor(), 
-        Action.SCRUB: WashExecutor(), 
+        Action.WASH: WashExecutor(),
         Action.SQUEEZE: SqueezeExecutor(), 
         Action.PLUGIN: PlugExecutor(True), 
         Action.PLUGOUT: PlugExecutor(False), 
