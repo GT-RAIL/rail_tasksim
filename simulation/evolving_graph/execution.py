@@ -149,19 +149,23 @@ class _FindExecutor(ActionExecutor):
         current_line = script[0]
         info.set_current_line(current_line)
         current_obj = current_line.object()
-
-        # select objects based on current_obj
-        for node in state.select_nodes(current_obj):
-            if self.check_find(state, node, info):
-                yield state.change_state(
-                    [DeleteEdges(CharacterNode(), [Relation.FACING], AnyNode()), 
-                     AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(node), add_reverse=True)],
-                    node,
-                    current_obj
-                )
+        target_node = state.select_nodes(current_obj)
+        if target_node[0] is None or target_node[0].class_name != current_obj.name:
+            info.error('Could not find object {}'.format(current_obj.name))
+            return iter([])
+        else:
+            # select objects based on current_obj
+            for node in target_node:
+                if self.check_find(state, node, info):
+                    yield state.change_state(
+                        [DeleteEdges(CharacterNode(), [Relation.FACING], AnyNode()),
+                         AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(node), add_reverse=True)],
+                        node,
+                        current_obj
+                    )
 
     def check_find(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
-        if not _is_character_close_to(state, node):
+        if not _is_character_close_to_graphnode(state, node):
             char_node = _get_character_node(state)
             info.error('{} is not close to {}', char_node, node)
             return False
@@ -581,6 +585,7 @@ class WipeExecutor(ActionExecutor):
 
         return True
 
+
 class ScrubExecutor(ActionExecutor):
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
@@ -598,6 +603,294 @@ class ScrubExecutor(ActionExecutor):
             yield state.change_state([ChangeNode(new_node)])
 
     def check_scrub(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class WashExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_washable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_washable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class RinseExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_rinseable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_rinseable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class SweepExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_sweepable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_sweepable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class VacuumExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_vacuumable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_vacuumable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class DustExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_dustable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_dustable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class MopExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_moppable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_moppable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class SpongeExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_spongeable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_spongeable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+
+        if not _is_character_close_to(state, target_node):
+            info.error('{} is not close to {}', char_node, target_node)
+            return False
+
+        #if Property.SURFACES not in node.properties:
+        #    info.error('{} is not a surface', node)
+        #    return False
+
+        hand_rel = _find_holding_hand(state, tool_node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, tool_node)
+            return False
+
+        return True
+
+
+class DisinfectExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        target_node = state.get_state_node(current_line.object())
+        tool_node = state.get_state_node(current_line.subject())
+
+        if target_node is None or tool_node is None:
+            info.script_object_found_error(current_line.object() if target_node is None else current_line.subject())
+        elif self.check_disinfectable(state, target_node, tool_node, info):
+            new_node = target_node.copy()
+            new_node.states.discard(State.DIRTY)
+            new_node.states.add(State.CLEAN)
+            yield state.change_state([ChangeNode(new_node)])
+
+    def check_disinfectable(self, state: EnvironmentState, target_node: GraphNode, tool_node: GraphNode, info: ExecutionInfo):
         char_node = _get_character_node(state)
 
         if not _is_character_close_to(state, target_node):
@@ -919,29 +1212,6 @@ class MoveExecutor(ActionExecutor):
         return new_relation
 
 
-class WashExecutor(ActionExecutor):
-
-    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
-        current_line = script[0]
-        info.set_current_line(current_line)
-        node = state.get_state_node(current_line.object())
-        if node is None:
-            info.object_found_error()
-        elif self.check_washable(state, node, info):
-            new_node = node.copy()
-            new_node.states.discard(State.DIRTY)
-            new_node.states.add(State.CLEAN)
-            yield state.change_state([ChangeNode(new_node)])
-
-    def check_washable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
-        
-        if not _is_character_close_to(state, node):
-            info.error('{} is not close to {}', _get_character_node(state), node)
-            return False
-
-        return True
-
-
 class SqueezeExecutor(ActionExecutor):
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
@@ -1120,6 +1390,18 @@ def _is_character_close_to(state: EnvironmentState, node: Node):
     return False
 
 
+def _is_character_close_to_graphnode(state: EnvironmentState, node: Node):
+    if state.evaluate(ExistsRelation(CharacterNode(), Relation.CLOSE, GraphNodeInstanceFilter(node))):
+        return True
+    # loose rule
+    for close_node in state.get_nodes_from(_get_character_node(state), Relation.CLOSE):
+        if state.evaluate(ExistsRelation(NodeInstance(close_node), Relation.CLOSE, GraphNodeInstanceFilter(node))):
+            return True
+        if state.evaluate(ExistsRelation(NodeInstance(node), Relation.ON, GraphNodeInstanceFilter(close_node))):
+            return True
+    return False
+
+
 def _is_character_face_to(state: EnvironmentState, node: Node):
     if state.evaluate(ExistsRelation(CharacterNode(), Relation.FACING, NodeInstanceFilter(node))):
         return True
@@ -1278,9 +1560,19 @@ class ScriptExecutor(object):
         Action.SWITCHOFF: SwitchExecutor(False),
         Action.DRINK: DrinkExecutor(), 
         Action.LOOKAT: LookAtExecutor(), 
-        Action.TURNTO: TurnToExecutor(), 
+        Action.TURNTO: TurnToExecutor(),
+        # CLEAN EXECUTORS
         Action.WIPE: WipeExecutor(),
         Action.SCRUB: ScrubExecutor(),
+        Action.WASH: WashExecutor(),
+        Action.RINSE: RinseExecutor(),
+        Action.SWEEP: SweepExecutor(),
+        Action.VACUUM: VacuumExecutor(),
+        Action.DUST: DustExecutor(),
+        Action.MOP: MopExecutor(),
+        Action.SPONGE: SpongeExecutor(),
+        Action.DISINFECT: DisinfectExecutor(),
+        # CLEAN EXECUTORS
         Action.RUN: WalkExecutor(),
         Action.PUTON: PutOnExecutor(), 
         Action.PUTOFF: PutOffExecutor(), 
@@ -1297,8 +1589,6 @@ class ScriptExecutor(object):
         Action.PUSH: MoveExecutor(),
         Action.PULL: MoveExecutor(),
         Action.MOVE: MoveExecutor(),
-        Action.RINSE: WashExecutor(),
-        Action.WASH: WashExecutor(),
         Action.SQUEEZE: SqueezeExecutor(), 
         Action.PLUGIN: PlugExecutor(True), 
         Action.PLUGOUT: PlugExecutor(False), 
