@@ -1666,5 +1666,125 @@
     "wooden_spoon": [
         "GRABBABLE",
         "MOVABLE"
+    ],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "cloth": [
+        "GRABBABLE",
+        "COVER_OBJECT",
+        "MOVABLE"
+    ],
+    "vacuum": [
+        "GRABBABLE",
+        "HAS_SWITCH",
+        "HAS_PLUG",
+        "MOVABLE"
+    ],
+    "steammop": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "scrubber": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "squeegee": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "featherduster": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "recyclebin": [
+        "CAN_OPEN",
+        "CONTAINERS",
+        "MOVABLE"
+    ],
+    "kitchentowel": [
+        "GRABBABLE",
+        "COVER_OBJECT",
+        "MOVABLE"
+    ],
+    "scouringpad": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "dishtowel": [
+        "GRABBABLE",
+        "COVER_OBJECT",
+        "MOVABLE"
+    ],
+    "laundrybasket": [
+        "CAN_OPEN",
+        "CONTAINERS",
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "bleach": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "whiskbroom": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "trashbag": [
+        "GRABBABLE",
+        "MOVABLE",
+        "CONTAINERS"
+    ],
+    "rubbishbin": [
+        "CAN_OPEN",
+        "CONTAINERS",
+        "MOVABLE"
+    ],
+    "disinfectant_wipes": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "magiceraser": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "washcloth": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "dustbrush": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "bottlebrush": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "steelwool": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "papertowel": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "scraper": [
+        "GRABBABLE",
+        "MOVABLE"
+    ],
+    "multicleaner": [
+        "GRABBABLE",
+        "MOVABLE"
     ]
 }

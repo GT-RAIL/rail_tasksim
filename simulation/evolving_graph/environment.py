@@ -570,6 +570,15 @@ class NodeInstanceFilter(NodeFilter):
         return node.id == self.node.id
 
 
+class GraphNodeInstanceFilter(NodeFilter):
+
+    def __init__(self, node: GraphNode):
+        self.node = node
+
+    def filter(self, node: GraphNode):
+        return node.id == self.node.id and node.class_name == self.node.class_name
+
+
 class NodeConditionFilter(NodeFilter):
 
     def __init__(self, value: 'LogicalValue'):
