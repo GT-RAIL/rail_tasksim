@@ -240,74 +240,7 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
-    "paper": [
-        {
-            "destination": "couch", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bookshelf", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "music_stand", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "folder", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "dresser", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "shoe_rack", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "trashcan", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "desk", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "love_seat", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "table", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bag", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "filing_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }
-    ], 
+    ],
     "crayon": [
         {
             "destination": "cabinet", 
@@ -2115,100 +2048,6 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
-    "towel": [
-        {
-            "destination": "kitchen_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "basket_for_clothes", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "dresser", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "washing_machine", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "shoe_rack", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "towel_rack", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }
-    ],
-    "towelrolled": [
-        {
-            "destination": "kitchen_counter",
-            "relation": "ON",
-            "room": "null"
-        },
-        {
-            "destination": "basket_for_clothes",
-            "relation": "IN",
-            "room": "null"
-        },
-        {
-            "destination": "dresser",
-            "relation": "IN",
-            "room": "null"
-        },
-        {
-            "destination": "washing_machine",
-            "relation": "IN",
-            "room": "null"
-        },
-        {
-            "destination": "shoe_rack",
-            "relation": "ON",
-            "room": "null"
-        },
-        {
-            "destination": "cabinet",
-            "relation": "IN",
-            "room": "null"
-        },
-        {
-            "destination": "bathroom_counter",
-            "relation": "ON",
-            "room": "null"
-        },
-        {
-            "destination": "towel_rack",
-            "relation": "ON",
-            "room": "null"
-        },
-        {
-            "destination": "bathroom_cabinet",
-            "relation": "IN",
-            "room": "null"
-        }
     ],
     "printing_paper": [
         {
@@ -3439,44 +3278,7 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
-    "alcohol": [
-        {
-            "destination": "kitchen_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "kitchen_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "sink", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "freezer", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "table", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "pantry", 
-            "relation": "ON", 
-            "room": "null"
-        }
-    ], 
+    ],
     "food_dessert": [
         {
             "destination": "table_cloth", 
@@ -4381,39 +4183,7 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
-    "toilet_paper": [
-        {
-            "destination": "shoe_rack", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "trashcan", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bag", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "toilet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }
-    ], 
+    ],
     "food_cheese": [
         {
             "destination": "table_cloth", 
@@ -4532,44 +4302,7 @@
             "relation": "IN", 
             "room": "null"
         }
-    ], 
-    "toothbrush": [
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "sink", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "trashcan", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "toothbrush_holder", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bag", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }
-    ], 
+    ],
     "coffee_pot": [
         {
             "destination": "kitchen_counter", 
@@ -5146,44 +4879,7 @@
             "relation": "ON", 
             "room": "null"
         }
-    ], 
-    "paper_towel": [
-        {
-            "destination": "kitchen_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "kitchen_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "trashcan", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "table", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bag", 
-            "relation": "IN", 
-            "room": "null"
-        }
-    ], 
+    ],
     "remote_control": [
         {
             "destination": "dresser", 
@@ -8970,33 +8666,6 @@
             "relation": "ON", 
             "room": "null"
         }
-    ], 
-    "tooth_paste": [
-        {
-            "destination": "cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "sink", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_counter", 
-            "relation": "ON", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bag", 
-            "relation": "IN", 
-            "room": "null"
-        }, 
-        {
-            "destination": "bathroom_cabinet", 
-            "relation": "IN", 
-            "room": "null"
-        }
     ],
     "painkillers": [
         {
@@ -10016,6 +9685,281 @@
         {
             "destination": "sauce_pan", 
             "relation": "IN", 
+            "room": "null"
+        }
+    ],
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    "toothpaste": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "toothbrush": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "garbagecan",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "toiletpaper": [
+        {
+            "destination": "garbagecan",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "toilet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
+    "towel": [
+        {
+            "destination": "kitchencounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "washingmachine",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "dishwashingliquid": [
+        {
+            "destination": "washingmachine",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "closet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "shelf",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "wallshelf",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "towelrolled": [
+        {
+            "destination": "kitchencounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "washingmachine",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "barsoap": [
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "closet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "shelf",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "wallshelf",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "alcohol": [
+        {
+            "destination": "kitchencounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "kitchentable",
+            "relation": "ON",
+            "room": "null"
+        }
+    ],
+    "washingsponge": [
+        {
+            "destination": "kitchencounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "sink",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "garbagecan",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "bathroomcounter",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "dishwasher",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        }
+    ],
+    "paper": [
+        {
+            "destination": "nightstand",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "bookshelf",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "folder",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "cabinet",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "garbagecan",
+            "relation": "IN",
+            "room": "null"
+        },
+        {
+            "destination": "desk",
+            "relation": "ON",
+            "room": "null"
+        },
+        {
+            "destination": "kitchentable",
+            "relation": "ON",
             "room": "null"
         }
     ],
