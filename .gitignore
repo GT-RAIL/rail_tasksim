@@ -169,3 +169,8 @@ fabric.properties
 test*/
 test*.py
 data/*
+*.zip
+*.x86_64
+
+# Unity sim
+simulation/exec_linux_07_01_Data/
