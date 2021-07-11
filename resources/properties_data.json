@@ -1573,12 +1573,17 @@
         "CONTAINERS",
         "MOVABLE"
     ],
-    "towel": [
+    "ac": [
         "GRABBABLE",
         "COVER_OBJECT",
         "MOVABLE"
     ],
     "towelrolled": [
+        "GRABBABLE",
+        "COVER_OBJECT",
+        "MOVABLE"
+    ],
+    "towel": [
         "GRABBABLE",
         "COVER_OBJECT",
         "MOVABLE"
