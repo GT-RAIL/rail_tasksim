@@ -6,7 +6,7 @@ import os
 import json
 from augmentation_utils import *
 
-dump_preconds = False
+dump_preconds = True
 rooms = [x.lower() for x in [
         'Kitchen',
         'Bathroom',
@@ -364,7 +364,7 @@ def get_preconds_script(script_lines):
     return precond_dict
 
 
-path_input = 'SET YOUR PATH HERE'
+path_input = 'dataset/long_scripts'
 path_scripts = '{}/withoutconds/*/*.txt'.format(path_input)
 
 all_scripts = sorted(glob.glob(path_scripts))
@@ -380,8 +380,8 @@ for script_name in all_scripts:
         precond_dict = get_preconds_script(content)
     except ScriptFail as e:
         continue
-    with open(script_name_out, 'r') as f:
-        previous_preconds = json.load(f)
+    # with open(script_name_out, 'r') as f:
+    #     previous_preconds = json.load(f)
 
     if dump_preconds:
         json_file = script_name_out

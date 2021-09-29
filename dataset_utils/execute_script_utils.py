@@ -26,7 +26,7 @@ def parse_exec_script_file(file_name):
 
     script = []
     for elem in script_raw:
-        script.append(re.sub('[0-9].', '', elem))
+        script.append(re.sub('[0-9]\.', '', elem))
 
     return title, description, script
 
@@ -77,7 +77,7 @@ def render_script(comm, script, init_graph, scene_num, render_args):
         intersection_objects = list(set(objects_script).intersection(objects_missing))
         message_missing = 'Some objects appearing in the script were not properly initialized'
         if len(intersection_objects) > 0:
-            return {'succes_expand': False, 
+            return {'success_expand': False, 
                     'message': (message_missing, intersection_objects)}
         else:
             render_args['skip_execution'] = render_args['image_synthesis'] is None

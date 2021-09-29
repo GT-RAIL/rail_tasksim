@@ -169,3 +169,10 @@ fabric.properties
 test*/
 test*.py
 data/*
+*.zip
+*.x86_64
+dataset/*/*
+
+# Unity sim
+simulation/exec_linux_07_01_Data/
+simulation/__MACOSX

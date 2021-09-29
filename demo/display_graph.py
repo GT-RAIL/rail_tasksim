@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 import PIL
 import numpy as np
 
-import plotly.plotly as py
+import chart_studio.plotly as py
 import plotly.graph_objs as go
 
 import networkx as nx
@@ -14,7 +14,7 @@ import networkx as nx
 
 
 def fake_bb(ax):
-    ax.set_aspect('equal')
+    # ax.set_aspect('equal')
     X = np.array([-10,5])
     Y = np.array([-10, 5])
     Z = np.array([-1, 6])
@@ -88,7 +88,7 @@ def display(graph):
     nodes = graph['nodes']
     fig = plt.figure()
     ax = plt.axes(projection='3d')
-    ax.set_aspect('equal')
+    # ax.set_aspect('equal')
     fake_bb(ax)
     xdata = []
     ydata = []
@@ -128,7 +128,7 @@ def display(graph):
                     bbox=dict(boxstyle="round", fc="w"),
                     arrowprops=dict(arrowstyle="->"))
     annot.set_visible(False)
-    ax.axis('equal')
+    # ax.axis('equal')
     ax.legend()
     text=ax.text(0,0,0,"", va="bottom", ha="left")
     def on_press(event):

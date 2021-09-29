@@ -8,6 +8,8 @@ from termcolor import colored
 from tqdm import tqdm
 from multiprocessing import Pool
 
+sys.path.append(os.path.join(os.path.dirname(os.path.abspath(__file__)),os.path.pardir))
+
 import evolving_graph.utils as utils
 from evolving_graph.scripts import read_script, read_script_from_string, read_script_from_list_string, ScriptParseException
 from evolving_graph.execution import ScriptExecutor
@@ -298,9 +300,9 @@ def check_whole_set(dir_path, graph_path):
         multiple_graphs = False
 
     info = {}
-    if os.path.isfile('data/executable_info.json'):
-        with open('data/executable_info.json', 'r') as f:
-            info = json.load(f)
+    # if os.path.isfile('data/executable_info.json'):
+        # with open('data/executable_info.json', 'r') as f:
+        #     info = json.load(f)
     n = max(len(program_txt_files) // (num_process*4), 1)
     program_txt_files = np.array(program_txt_files)
     pool = Pool(processes=num_process)
@@ -429,10 +431,10 @@ def modify_script(script):
 if __name__ == '__main__':
     cont = sys.argv[1]
     if int(cont) == 0:
-        translated_path = translate_graph_dict(path='example_graphs/TestScene7_graph.json')
-        translated_path = ['example_graphs/TrimmedTestScene7_graph.json']
+        translated_path = translate_graph_dict(path='../example_graphs/TestScene7_graph.json')
+        translated_path = ['../example_graphs/TrimmedTestScene7_graph.json']
     else:
-        translated_path = [translate_graph_dict(path='example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
-        translated_path = ['example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
-    programs_dir = 'data/input_scripts_preconds_release/programs_processed_precond_nograb_morepreconds'
+        translated_path = [translate_graph_dict(path='../example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
+        translated_path = ['../example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
+    programs_dir = 'dataset/long_scripts'
     check_whole_set(programs_dir, graph_path=translated_path)
