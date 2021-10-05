@@ -1,0 +1,1 @@
+[{"is_off": ["lightswitch", "1"]}, {"is_off": ["lightswitch", "2"]}, {"plugged": ["lightswitch", "1"]}, {"plugged": ["lightswitch", "2"]}, {"atreach": [["lightswitch", "2"], ["lightswitch", "1"]]}, {"location": [["lightswitch", "1"], ["living_room", "1"]]}, {"location": [["lightswitch", "1"], ["kitchen", "1"]]}, {"location": [["lightswitch", "2"], ["living_room", "1"]]}]

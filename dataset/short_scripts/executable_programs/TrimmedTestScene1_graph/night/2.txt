@@ -1,0 +1,8 @@
+Lock door
+Turn the lock.
+
+
+[WALK] <bedroom> (1.67)
+[WALK] <door> (1.1000)
+[CLOSE] <door> (1.1000)
+[WALK] <bed> (1.105)

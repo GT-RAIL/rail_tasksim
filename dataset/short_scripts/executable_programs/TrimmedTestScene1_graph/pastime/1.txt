@@ -1,0 +1,13 @@
+Pet cat
+You walk to the living room and find the cat. You look at the cat and touch it to pet it.
+
+
+[WALK] <home_office> (1.319)
+[WALK] <cat> (1.1000)
+[FIND] <cat> (1.1000)
+[TURNTO] <cat> (1.1000)
+[LOOKAT] <cat> (1.1000)
+[TOUCH] <cat> (1.1000)
+[GRAB] <cat> (1.1000)
+[WALK] <sofa> (1.352)
+[PUTBACK] <cat> (1.1000) <sofa> (1.352)

@@ -1,0 +1,16 @@
+Walk to bed room
+Turn lights off and sleep
+
+[Walk] <lightswitch> (1)
+[Switchoff] <lightswitch> (1)
+[Walk] <bed> (1)
+[Sit] <bed> (1)
+[Lie] <bed> (1)
+
+
+
+[WALK] <light> (1.169)
+[SWITCHOFF] <light> (1.169)
+[WALK] <bed> (1.105)
+[SIT] <bed> (1.105)
+[LIE] <bed> (1.105)

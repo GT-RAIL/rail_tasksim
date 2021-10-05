@@ -1,0 +1,12 @@
+Pick up phone
+stand up, walk to Entrance Hall, walk to table, lift the phone
+
+
+[Walk] <entrance_hall> (1)
+[Walk] <phone> (1)
+[Find] <phone> (1)
+[Grab] <phone> (1)
+[SwitchOn] <phone> (1)
+[SwitchOff] <phone> (1)
+[Find] <table> (1)
+[Putback] <phone> (1) <table> (1)

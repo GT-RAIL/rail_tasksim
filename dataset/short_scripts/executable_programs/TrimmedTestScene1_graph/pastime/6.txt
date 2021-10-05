@@ -1,0 +1,14 @@
+Read book
+Take a book, open it and read it
+
+
+[WALK] <home_office> (1.319)
+[WALK] <book> (1.1000)
+[FIND] <book> (1.1000)
+[GRAB] <book> (1.1000)
+[FIND] <chair> (1.356)
+[SIT] <chair> (1.356)
+[READ] <book> (1.1000)
+[STANDUP]
+[FIND] <bookshelf> (2.354)
+[PUTBACK] <book> (1.1000) <bookshelf> (2.354)
