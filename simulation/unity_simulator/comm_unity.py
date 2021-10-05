@@ -2,6 +2,7 @@ import base64
 import collections
 import time
 import io
+import os
 import json
 import requests
 from PIL import Image
@@ -117,9 +118,9 @@ class UnityCommunication(object):
 
     def render_script(self, script, randomize_execution=False, random_seed=-1, processing_time_limit=10,
                       skip_execution=False, find_solution=True, output_folder='Output/', file_name_prefix="script",
-                      frame_rate=5, image_synthesis=['normal'], capture_screenshot=False, save_pose_data=False,
+                      frame_rate=10, image_synthesis=['normal'], capture_screenshot=False, save_pose_data=False,
                       image_width=640, image_height=480, gen_vid=True,
-                      save_scene_states=False, character_resource='Chars/Male1', camera_mode='AUTO'):
+                      save_scene_states=False, character_resource='Chars/Male1', camera_mode='PERSON_TOP'):
         """
         :param script: a list of script lines
         :param randomize_execution: randomly choose elements
@@ -149,6 +150,7 @@ class UnityCommunication(object):
                   'save_pose_data': save_pose_data, 'save_scene_states': save_scene_states,
                   'character_resource': character_resource, 'camera_mode': camera_mode,
                   'image_width': image_width, 'image_height': image_height}
+        print("camera mode is : ",camera_mode)
         response = self.post_command({'id': str(time.time()), 'action': 'render_script',
                                       'stringParams': [json.dumps(params)] + script})
         if response['success']:
@@ -156,12 +158,19 @@ class UnityCommunication(object):
                 generate_video(image_synthesis, output_folder, file_name_prefix, frame_rate)
         return response['success'], response['message']
 
+        try:
+            message = json.loads(response['message'])
+        except ValueError:
+            message = response['message']
+        
+        return response['success'], message
+
 def generate_video(image_syn, output_folder, prefix, frame_rate):
     import os
     import subprocess
     
-    curr_folder = os.path.dirname(os.path.realpath(__file__))
-    vid_folder = '{}/../{}/{}/'.format(curr_folder, output_folder, prefix)
+    par_folder = os.path.abspath(os.path.join(os.path.dirname(os.path.realpath(__file__)),os.pardir, os.pardir))
+    vid_folder = os.path.join(par_folder, output_folder, prefix)
     
     for vid_mod in image_syn:
         subprocess.call(['ffmpeg', '-i',

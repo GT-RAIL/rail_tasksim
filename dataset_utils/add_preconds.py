@@ -364,7 +364,7 @@ def get_preconds_script(script_lines):
     return precond_dict
 
 
-path_input = 'dataset/long_scripts'
+# path_input = 'dataset/short_scripts'
 path_scripts = '{}/withoutconds/*/*.txt'.format(path_input)
 
 all_scripts = sorted(glob.glob(path_scripts))
@@ -379,6 +379,7 @@ for script_name in all_scripts:
     try:
         precond_dict = get_preconds_script(content)
     except ScriptFail as e:
+        print(e)
         continue
     # with open(script_name_out, 'r') as f:
     #     previous_preconds = json.load(f)

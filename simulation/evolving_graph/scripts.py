@@ -124,7 +124,7 @@ def parse_script_line(string, index):
 
     action_match = re.search(patt_action, string.strip())
     if not action_match:
-        raise ScriptParseException('Cannot parse action')
+        raise ScriptParseException(f'Cannot parse action in {string.strip()}')
     action_string = action_match.group(1).upper()
     if action_string not in Action.__members__:
         raise ScriptParseException('Unknown action "{}"', action_string)

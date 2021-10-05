@@ -46,8 +46,9 @@ def obtain_objects_from_message(message):
     return objects_missing
 
 # Given a path from executable_programs, and a graph, executes the script
-def render_script_from_path(comm, path_executable_file, path_graph, render_args):
-    scene_id = obtain_scene_id_from_path(path_graph)
+def render_script_from_path(comm, path_executable_file, path_graph, render_args, scene_id = None):
+    if scene_id is None:
+        scene_id = obtain_scene_id_from_path(path_graph)
     title, description, script = parse_exec_script_file(path_executable_file)
     with open(path_graph, 'r') as f:
         content = json.load(f)

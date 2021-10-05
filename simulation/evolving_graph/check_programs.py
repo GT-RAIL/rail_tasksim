@@ -52,6 +52,8 @@ def dump_one_data(txt_file, script, graph_state_list, id_mapping, graph_path):
     new_f.write(prefix)
     new_f.write('\n\n\n')
 
+    
+
     for script_line in script:
         script_line_str = '[{}]'.format(script_line.action.name)
         if script_line.object():
@@ -198,6 +200,8 @@ def check_one_program(helper, script, precond, graph_dict, w_graph_list, modify_
     graph = EnvironmentGraph(graph_dict)
     name_equivalence = utils.load_name_equivalence()
     executor = ScriptExecutor(graph, name_equivalence)
+    for l in script._script_lines:
+        print(str(l))
     executable, final_state, graph_state_list = executor.execute(script, w_graph_list=w_graph_list)
 
     if executable:
@@ -366,7 +370,7 @@ def check_whole_set(dir_path, graph_path):
     info["executable_prog_len"] = executable_program_length
     info["non_executable_prog_len"] = not_executable_program_length
     print("Executable program average length: {:.2f}, not executable program average length: {:.2f}".format(executable_program_length, not_executable_program_length))
-    json.dump(info, open("data/executable_info.json", 'w'))
+    json.dump(info, open("dataset/executable_info.json", 'w'))
 
 
 def check_executability(input):
@@ -431,10 +435,9 @@ def modify_script(script):
 if __name__ == '__main__':
     cont = sys.argv[1]
     if int(cont) == 0:
-        translated_path = translate_graph_dict(path='../example_graphs/TestScene7_graph.json')
-        translated_path = ['../example_graphs/TrimmedTestScene7_graph.json']
+        translated_path = translate_graph_dict(path='example_graphs/TestScene1_graph.json')
+        translated_path = ['example_graphs/TrimmedTestScene1_graph.json']
     else:
-        translated_path = [translate_graph_dict(path='../example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
-        translated_path = ['../example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
-    programs_dir = 'dataset/long_scripts'
-    check_whole_set(programs_dir, graph_path=translated_path)
+        translated_path = [translate_graph_dict(path='example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
+        translated_path = ['example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
+    check_whole_set(path_input, graph_path=translated_path)

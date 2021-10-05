@@ -240,6 +240,9 @@ class EnvironmentGraph(object):
     def get_node(self, node_id: int):
         return self._node_map.get(node_id, None)
 
+    def get_relations_from_node(self, from_node: Node):
+        return [r for nid,r in self._edge_map.keys() if nid == from_node.id]
+
     def get_nodes_from(self, from_node: Node, relation: Relation):
         return self._get_node_maps_from(from_node.id, relation).values()
 
