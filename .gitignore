@@ -171,7 +171,7 @@ test*.py
 data/*
 *.zip
 *.x86_64
-# dataset/*/*
+dataset/*
 
 # Unity sim
 simulation/exec_linux_07_01_Data/
