@@ -1,0 +1,11 @@
+Make a Sandwich
+Eat
+
+
+[Walk] <table> (1)
+[Find] <chair> (1)
+[Sit] <chair> (1)
+[Grab] <food_bread> (1)
+[Eat] <food_bread> (1)
+[PutBack] <food_bread> (1) <plate> (1)
+[Standup]

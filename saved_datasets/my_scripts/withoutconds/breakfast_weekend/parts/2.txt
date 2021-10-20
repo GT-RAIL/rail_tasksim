@@ -1,0 +1,9 @@
+Eat peanut butter sandwich for breakfast in bed
+Eat peanut butter sandwich
+
+
+[Find] <plate> (1)
+[Grab] <plate> (1)
+[Walk] <couch> (1)
+[Sit] <couch> (1)
+[Standup]

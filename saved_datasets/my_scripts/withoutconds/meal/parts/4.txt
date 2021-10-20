@@ -1,0 +1,9 @@
+Make a Sandwich
+Put cheese on bread
+
+
+[Walk] <sink> (1)
+[Grab] <plate> (1)
+[Wash] <plate> (1)
+[Walk] <kitchen_cabinet> (1)
+[PutBack] <plate> (1) <kitchen_cabinet> (1)

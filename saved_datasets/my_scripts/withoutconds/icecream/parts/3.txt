@@ -1,0 +1,11 @@
+Eat ice cream
+Return ice cream
+
+
+[Walk] <table> (1)
+[Find] <food_ice_cream> (1)
+[Grab] <food_ice_cream> (1)
+[Walk] <freezer> (1)
+[Open] <freezer> (1)
+[PutBack] <food_ice_cream> (1) <freezer> (1)
+[Close] <freezer> (1)

@@ -1,0 +1,12 @@
+Eat ice cream
+Put utensils in sink
+
+
+[Walk] <table> (1)
+[Find] <bowl> (1)
+[Grab] <bowl> (1)
+[Find] <spoon> (1)
+[Grab] <spoon> (1)
+[Walk] <sink> (1)
+[PutBack] <bowl> (1) <sink> (1)
+[PutBack] <spoon> (1) <sink> (1)

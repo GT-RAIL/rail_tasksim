@@ -1,0 +1,27 @@
+Do laundry
+Turn machine off and put clothes in the dresser
+
+
+[Walk] <washing_machine> (1)
+[Find] <washing_machine> (1)
+[SwitchOff] <washing_machine> (1)
+[Open] <washing_machine> (1)
+[Find] <clothes_pants> (1)
+[Grab] <clothes_pants> (1)
+[Walk] <dresser> (1)
+[Open] <dresser> (1)
+[PutBack] <clothes_pants> (1) <dresser> (1)
+[Walk] <washing_machine> (1)
+[Find] <clothes_dress> (1)
+[Grab] <clothes_dress> (1)
+[Walk] <dresser> (1)
+[PutBack] <clothes_dress> (1) <dresser> (1)
+[Walk] <washing_machine> (1)
+[Find] <clothes_jacket> (1)
+[Grab] <clothes_jacket> (1)
+[Walk] <dresser> (1)
+[PutBack] <clothes_jacket> (1) <dresser> (1)
+[Close] <dresser> (1)
+[Walk] <washing_machine> (1)
+[Find] <washing_machine> (1)
+[Close] <washing_machine> (1)

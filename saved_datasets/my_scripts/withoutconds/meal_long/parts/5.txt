@@ -1,0 +1,13 @@
+Have dinner
+Eat the dinner
+
+
+[Find] <chair> (1)
+[Sit] <chair> (1)
+[Grab] <food_vegetable> (1)
+[Eat] <food_vegetable> (1)
+[PutBack] <food_vegetable> (1) <plate> (1)
+[Grab] <food_chicken> (1)
+[Eat] <food_chicken> (1)
+[PutBack] <food_chicken> (1) <plate> (1)
+[Standup]

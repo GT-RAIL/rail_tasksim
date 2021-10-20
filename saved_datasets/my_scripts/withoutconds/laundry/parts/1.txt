@@ -1,0 +1,22 @@
+Do laundry
+Put clothes in a basket
+
+
+[Walk] <basket_for_clothes> (1)
+[Find] <basket_for_clothes> (1)
+[Grab] <basket_for_clothes> (1)
+[Walk] <dresser> (1)
+[Open] <dresser> (1)
+[Find] <clothes_pants> (1)
+[Grab] <clothes_pants> (1)
+[PutBack] <clothes_pants> (1) <basket_for_clothes> (1)
+[Find] <clothes_dress> (1)
+[Grab] <clothes_dress> (1)
+[PutBack] <clothes_dress> (1) <basket_for_clothes> (1)
+[Find] <clothes_jacket> (1)
+[Grab] <clothes_jacket> (1)
+[PutBack] <clothes_jacket> (1) <basket_for_clothes> (1)
+[Close] <dresser> (1)
+[Walk] <washing_machine> (1)
+[Find] <washing_machine> (1)
+[PutBack] <basket_for_clothes> (1) <washing_machine> (1)

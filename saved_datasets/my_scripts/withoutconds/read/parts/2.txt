@@ -1,0 +1,11 @@
+Read book
+Read book
+
+
+[Walk] <couch> (1)
+[Find] <book> (1)
+[Grab] <book> (1)
+[Sit] <couch> (1)
+[Read] <book> (1)
+[Putback] <book> (1) <couch> (1)
+[StandUp]

@@ -1,0 +1,9 @@
+Eat ice cream
+Eat ice cream for dessert
+
+
+[Walk] <table> (1)
+[Find] <chair> (1)
+[Sit] <chair> (1)
+[Eat] <bowl> (1)
+[Standup]

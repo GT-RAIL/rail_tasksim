@@ -1,0 +1,24 @@
+Have dinner
+Wash utensils in sink
+
+
+[Walk] <sink> (1)
+[Grab] <plate> (1)
+[Wash] <plate> (1)
+[Walk] <kitchen_cabinet> (1)
+[PutBack] <plate> (1) <kitchen_cabinet> (1)
+[Walk] <sink> (1)
+[Grab] <fork> (1)
+[Wash] <fork> (1)
+[Walk] <kitchen_cabinet> (1)
+[PutBack] <fork> (1) <kitchen_cabinet> (1)
+[Walk] <sink> (1)
+[Grab] <fryingpan> (1)
+[Wash] <fryingpan> (1)
+[Walk] <kitchen_cabinet> (1)
+[PutBack] <fryingpan> (1) <kitchen_cabinet> (1)
+[Walk] <sink> (1)
+[Grab] <cutting_board> (1)
+[Wash] <cutting_board> (1)
+[Walk] <kitchen_cabinet> (1)
+[PutBack] <cutting_board> (1) <kitchen_cabinet> (1)
