@@ -1,12 +1,12 @@
 Eat coffee and toast for breakfast
-Eat coffee and toast
+Put b1 utensils in sink
 
 
 [Walk] <table> (1)
-[Find] <chair> (1)
-[Sit] <chair> (1)
+[Find] <plate> (1)
+[Grab] <plate> (1)
+[Find] <coffee_cup> (1)
 [Grab] <coffee_cup> (1)
-[Drink] <coffee_cup> (1)
-[PutBack] <coffee_cup> (1) <table> (1)
-[Eat] <food_bread> (1)
-[Standup]
+[Walk] <sink> (1)
+[PutBack] <plate> (1) <sink> (1)
+[PutBack] <coffee_cup> (1) <sink> (1)

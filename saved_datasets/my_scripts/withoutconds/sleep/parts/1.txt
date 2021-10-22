@@ -1,13 +1,12 @@
 Go to sleep
-Put alarm clock in bedroom, turn off lights, and go to sleep
+Read and sleep
 
 
-[Walk] <bookshelf> (1)
-[Find] <alarm_clock> (1)
-[Grab] <alarm_clock> (1)
+[Walk] <bed> (1)
 [Find] <book> (1)
 [Grab] <book> (1)
-[Find] <nightstand> (1)
-[PutBack] <alarm_clock> (1) <nightstand> (1)
-[SwitchOn] <alarm_clock> (1)
+[Sit] <bed> (1)
+[Read] <book> (1)
 [PutBack] <book> (1) <nightstand> (1)
+[Lie] <bed> (1)
+[Sleep]

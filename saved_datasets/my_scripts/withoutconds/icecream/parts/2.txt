@@ -1,9 +1,11 @@
 Eat ice cream
-Eat ice cream for dessert
+Put away icecream
 
 
 [Walk] <table> (1)
-[Find] <chair> (1)
-[Sit] <chair> (1)
-[Eat] <bowl> (1)
-[Standup]
+[Find] <food_ice_cream> (1)
+[Grab] <food_ice_cream> (1)
+[Walk] <freezer> (1)
+[Open] <freezer> (1)
+[PutBack] <food_ice_cream> (1) <freezer> (1)
+[Close] <freezer> (1)

@@ -1,10 +1,13 @@
 Read book
-Read the book
+Get a book
 
 
-[Walk] <couch> (1)
+[Walk] <living_room> (1)
+[Walk] <bookshelf> (1)
 [Find] <book> (1)
 [Grab] <book> (1)
+[Find] <couch> (1)
+[Walk] <couch> (1)
 [Sit] <couch> (1)
 [Read] <book> (1)
 [Putback] <book> (1) <couch> (1)

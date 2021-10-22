@@ -1,9 +1,16 @@
 Eat peanut butter sandwich for breakfast in bed
-Eat peanut butter sandwich
+Put bw utensils in sink
 
 
-[Find] <plate> (1)
-[Grab] <plate> (1)
-[Walk] <couch> (1)
-[Sit] <couch> (1)
-[Standup]
+[Walk] <sink> (1)
+[PutBack] <plate> (1) <sink> (1)
+[Walk] <table> (1)
+[Find] <food_peanut_butter> (1)
+[Grab] <food_peanut_butter> (1)
+[Walk] <fridge> (1)
+[PutBack] <food_peanut_butter> (1) <fridge> (1)
+[Walk] <table> (1)
+[Find] <knife> (1)
+[Grab] <knife> (1)
+[Walk] <sink> (1)
+[PutBack] <knife> (1) <sink> (1)

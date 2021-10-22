@@ -1,13 +1,20 @@
 Have dinner
-Eat the dinner
+Return lml utensils
 
 
-[Find] <chair> (1)
-[Sit] <chair> (1)
-[Grab] <food_vegetable> (1)
-[Eat] <food_vegetable> (1)
-[PutBack] <food_vegetable> (1) <plate> (1)
-[Grab] <food_chicken> (1)
-[Eat] <food_chicken> (1)
-[PutBack] <food_chicken> (1) <plate> (1)
-[Standup]
+[Find] <plate> (1)
+[Grab] <plate> (1)
+[Find] <fork> (1)
+[Grab] <fork> (1)
+[Walk] <sink> (1)
+[PutBack] <plate> (1) <sink> (1)
+[PutBack] <fork> (1) <sink> (1)
+[Walk] <stove> (1)
+[Find] <fryingpan> (1)
+[Grab] <fryingpan> (1)
+[Walk] <table> (1)
+[Find] <cutting_board> (1)
+[Grab] <cutting_board> (1)
+[Walk] <sink> (1)
+[PutBack] <fryingpan> (1) <sink> (1)
+[PutBack] <cutting_board> (1) <sink> (1)
