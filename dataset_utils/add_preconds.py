@@ -364,12 +364,13 @@ def get_preconds_script(script_lines):
     return precond_dict
 
 
-# path_input = 'dataset/short_scripts'
+# path_input = 'dataset/good_scripts'
 path_scripts = '{}/withoutconds/*/*.txt'.format(path_input)
 
 all_scripts = sorted(glob.glob(path_scripts))
 cont_bad = 0
 for script_name in all_scripts:
+    print('Adding preconds for ',script_name)
     script_name_in = script_name
     script_name_out = script_name.replace('withoutconds', 'initstate').replace('.txt', '.json')
 

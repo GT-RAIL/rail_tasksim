@@ -239,8 +239,8 @@ class graph_dict_helper(object):
         script_object_ids = [node["id"] for node in filter(lambda v: v["id"] >= 1000 and v["id"] < 2000, graph_dict["nodes"])]
         random_object_ids = [node["id"] for node in filter(lambda v: v["id"] >= 2000, graph_dict["nodes"])]
 
-        self.script_objects_id = max(script_object_ids) if len(script_object_ids) != 0 else 1000
-        self.random_objects_id = max(random_object_ids) if len(random_object_ids) != 0 else 2000
+        self.script_objects_id = max(script_object_ids)+1 if len(script_object_ids) != 0 else 1000
+        self.random_objects_id = max(random_object_ids)+1 if len(random_object_ids) != 0 else 2000
 
     def check_binary(self, graph_dict, id_checker, verbose):
         

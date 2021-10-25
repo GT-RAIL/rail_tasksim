@@ -112,15 +112,15 @@ class ScriptParseException(common.Error):
     pass
 
 
-def parse_script_line(string, index):
+def parse_script_line(string, index, custom_patt_action=r'^\[(\w+)\]', custom_patt_params=r'\<(.+?)\>\s*\((.+?)\)'):
     """
     :param string: script line in format [action] <object> (object_instance) <subject> (object_instance)
     :return: ScriptLine objects; raises ScriptParseException
     """
     params = []
 
-    patt_action = r'^\[(\w+)\]'
-    patt_params = r'\<(.+?)\>\s*\((.+?)\)'
+    patt_action = custom_patt_action
+    patt_params = custom_patt_params
 
     action_match = re.search(patt_action, string.strip())
     if not action_match:
@@ -170,6 +170,22 @@ def read_script(file_name):
                 index += 1
     return Script(script_lines)
 
+# def read_script_and_add_ids(file_name, ids_by_class):
+#     script_lines = []
+#     with open(file_name) as f:
+#         index = 1
+#         for line in f:
+#             if '[' not in line:
+#                 continue
+#             line = line.strip()
+            
+#             if len(line) > 0 and not line.startswith('#'):
+#                 new_line = parse_script_line(line, index)
+#                 for p in new_line.parameters:
+#                     p.instance = ids_by_class[p.name]
+#                 script_lines.append(new_line)
+#                 index += 1
+#     return Script(script_lines)
 
 def read_script_from_list_string(list_string):
     script_lines = []
