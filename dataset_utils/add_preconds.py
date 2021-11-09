@@ -364,7 +364,7 @@ def get_preconds_script(script_lines):
     return precond_dict
 
 
-# path_input = 'dataset/good_scripts'
+path_input = 'SET YOUR PATH HERE'
 path_scripts = '{}/withoutconds/*/*.txt'.format(path_input)
 
 all_scripts = sorted(glob.glob(path_scripts))
