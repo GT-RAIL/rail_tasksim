@@ -2,6 +2,7 @@ Eat ice cream
 Eat ice cream for dessert
 
 
+## Serve ice cream
 [WALK] <dining_room> (1.201)
 [WALK] <freezer> (1.289)
 [OPEN] <freezer> (1.289)
@@ -20,6 +21,7 @@ Eat ice cream for dessert
 [WALK] <table> (1.226)
 [PUTBACK] <bowl> (1.1009) <table> (1.226)
 [PUTBACK] <spoon> (1.1008) <bowl> (1.1009)
+## Eat ice cream
 [GRAB] <food_ice_cream> (1.1020)
 [PUTBACK] <food_ice_cream> (1.1020) <bowl> (1.1009)
 [FIND] <chair> (1.1003)
@@ -27,10 +29,12 @@ Eat ice cream for dessert
 [EAT] <bowl> (1.1009)
 [GRAB] <food_ice_cream> (1.1020)
 [STANDUP]
+## Put away ice cream
 [WALK] <freezer> (1.289)
 [OPEN] <freezer> (1.289)
 [PUTBACK] <food_ice_cream> (1.1020) <freezer> (1.289)
 [CLOSE] <freezer> (1.289)
+## Put away bowl and spoon
 [WALK] <table> (1.226)
 [FIND] <bowl> (1.1009)
 [GRAB] <bowl> (1.1009)
@@ -39,6 +43,7 @@ Eat ice cream for dessert
 [WALK] <sink> (1.231)
 [PUTBACK] <bowl> (1.1009) <sink> (1.231)
 [PUTBACK] <spoon> (1.1008) <sink> (1.231)
+## Wash bowl and spoon
 [WALK] <sink> (1.231)
 [GRAB] <bowl> (1.1009)
 [WASH] <bowl> (1.1009)

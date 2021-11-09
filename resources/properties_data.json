@@ -724,6 +724,7 @@
     ],
     "food_ice_cream": [
         "GRABBABLE",
+        "EATABLE",
         "MOVABLE",
         "CREAM"
     ],

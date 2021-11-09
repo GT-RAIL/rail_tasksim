@@ -2,6 +2,7 @@ Eat milk and cereal for breakfast
 Prepare cereal and milk
 
 
+## Prepare cereal and milk
 [WALK] <dining_room> (1.201)
 [WALK] <kitchen_cabinet> (1.1002)
 [OPEN] <kitchen_cabinet> (1.1002)
@@ -31,10 +32,13 @@ Prepare cereal and milk
 [WALK] <table> (1.226)
 [FIND] <bowl> (1.1009)
 [PUTBACK] <spoon> (1.1008) <bowl> (1.1009)
+## Eat cereal and milk
+[WALK] <table> (1.226)
 [FIND] <chair> (1.1003)
 [SIT] <chair> (1.1003)
 [EAT] <food_cereal> (1.1030)
 [STANDUP]
+## Put bowl and spoon in sink
 [FIND] <food_cereal> (1.1030)
 [GRAB] <food_cereal> (1.1030)
 [WALK] <kitchen_cabinet> (1.1002)
@@ -55,6 +59,7 @@ Prepare cereal and milk
 [WALK] <sink> (1.231)
 [PUTBACK] <bowl> (1.1009) <sink> (1.231)
 [PUTBACK] <spoon> (1.1008) <sink> (1.231)
+## Wash bowl and spoon
 [WALK] <sink> (1.231)
 [GRAB] <bowl> (1.1009)
 [WASH] <bowl> (1.1009)

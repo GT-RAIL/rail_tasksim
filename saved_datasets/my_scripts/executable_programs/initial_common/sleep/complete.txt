@@ -2,20 +2,22 @@ Go to sleep
 Put alarm clock in bedroom, turn off lights, and go to sleep
 
 
-[WALK] <bookshelf> (1.101)
+## Get the alarm clock and book to bed
+[WALK] <bookshelf> (1.354)
 [FIND] <alarm_clock> (1.1022)
 [GRAB] <alarm_clock> (1.1022)
-[FIND] <book> (1.1021)
-[GRAB] <book> (1.1021)
+[FIND] <book> (1.1023)
+[GRAB] <book> (1.1023)
 [FIND] <nightstand> (1.100)
 [PUTBACK] <alarm_clock> (1.1022) <nightstand> (1.100)
 [SWITCHON] <alarm_clock> (1.1022)
-[PUTBACK] <book> (1.1021) <nightstand> (1.100)
+[PUTBACK] <book> (1.1023) <nightstand> (1.100)
+## Go to sleep
 [WALK] <bed> (1.105)
-[FIND] <book> (1.1021)
-[GRAB] <book> (1.1021)
+[FIND] <book> (1.1023)
+[GRAB] <book> (1.1023)
 [SIT] <bed> (1.105)
-[READ] <book> (1.1021)
-[PUTBACK] <book> (1.1021) <nightstand> (1.100)
+[READ] <book> (1.1023)
+[PUTBACK] <book> (1.1023) <nightstand> (1.100)
 [LIE] <bed> (1.105)
 [SLEEP]

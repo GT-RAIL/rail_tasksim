@@ -21,7 +21,7 @@ verbose = True
 dump = True
 multi_process = True
 num_process = os.cpu_count()
-max_nodes = 300
+max_nodes = 900
 
 
 def dump_one_data(txt_file, script, graph_state_list, id_mapping, graph_path):
@@ -158,7 +158,7 @@ def translate_graph_dict(path):
     return translated_path
 
 
-def check_one_program(helper, script, precond, graph_dict, w_graph_list, modify_graph=True, place_other_objects=True, id_mapping={}, **info):
+def check_one_program(helper, script, precond, graph_dict, w_graph_list, modify_graph=True, place_other_objects=False, id_mapping={}, **info):
 
     helper.initialize(graph_dict)
     script, precond = modify_objects_unity2script(helper, script, precond)
@@ -198,6 +198,8 @@ def check_one_program(helper, script, precond, graph_dict, w_graph_list, modify_
         helper.modify_script_with_specified_id(script, id_mapping, **info)
 
     graph = EnvironmentGraph(graph_dict)
+    with open('dataset/my_scripts/temp.json', 'w') as f:
+        json.dump(graph_dict, f)
     name_equivalence = utils.load_name_equivalence()
     executor = ScriptExecutor(graph, name_equivalence)
     for l in script._script_lines:
@@ -228,7 +230,7 @@ def check_script(program_str, precond, graph_path, inp_graph_dict=None,
         graph_dict = inp_graph_dict
     message, executable, final_state, graph_state_list, id_mapping, info, modif_script = check_one_program(
         helper, script, precond, graph_dict, w_graph_list=True, modify_graph=modify_graph,
-        id_mapping=id_mapping, place_other_objects=True, **info)
+        id_mapping=id_mapping, place_other_objects=False, **info)
 
     return message, final_state, graph_state_list, graph_dict, id_mapping, info, helper, modif_script
 
@@ -433,11 +435,12 @@ def modify_script(script):
 
 
 if __name__ == '__main__':
-    cont = sys.argv[1]
-    if int(cont) == 0:
-        translated_path = translate_graph_dict(path='example_graphs/TestScene1_graph.json')
-        translated_path = ['example_graphs/TrimmedTestScene1_graph.json']
-    else:
-        translated_path = [translate_graph_dict(path='example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
-        translated_path = ['example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
-    check_whole_set(path_input, graph_path=translated_path)
+    # cont = sys.argv[1]
+    # if int(cont) == 0:
+    # translated_path = translate_graph_dict(path='example_graphs/TestScene1_graph.json')
+        # translated_path = ['example_graphs/TrimmedTestScene1_graph.json']
+    # else:
+    #     translated_path = [translate_graph_dict(path='example_graphs/TestScene{}_graph.json'.format(i+1)) for i in range(6)]
+    #     translated_path = ['example_graphs/TrimmedTestScene{}_graph.json'.format(i+1) for i in range(6)]
+    translated_path = os.path.join(path_input,'initial_common.json')
+    check_whole_set(path_input, translated_path)

@@ -36,20 +36,20 @@ def setup():
     comm = UnityCommunication()
     return comm
 
-SCRIPT_FILE = "dataset/programs_processed/executable_programs/TrimmedTestScene1_graph/results_intentions_march-13-18/file3_1.txt"
+SCRIPT_FILE = "dataset/programs_processed_precond_nograb_morepreconds/executable_programs/TrimmedTestScene1_graph/results_intentions_march-13-18/file3_1.txt"
 GRAPH_FILE = SCRIPT_FILE.replace('executable_programs','init_and_final_graphs')
 GRAPH_FILE = GRAPH_FILE.replace('.txt','.json')
 
 if __name__ == "__main__":
     # # OPTION ONE: use existing code
-    if (False):
+    if (True):
         utils.render_script_from_path(setup(), 
                                   SCRIPT_FILE,
                                   GRAPH_FILE,
                                   {"processing_time_limit": 120, "image_width": 320, "image_height": 240, "image_synthesis": ['normal'], "gen_vid": True, "file_name_prefix": "test"})
 
     # OPTION TWO: what the above runs "under the hood"
-    if (True):
+    if (False):
         # get comm
         comm = setup()
         status = comm.reset(0)

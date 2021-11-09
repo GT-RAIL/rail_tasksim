@@ -2,6 +2,7 @@ Do laundry
 Remove laundry from the dryer and fold it on the bed before putting it away
 
 
+## Collect clothes to wash
 [WALK] <basket_for_clothes> (1.1011)
 [FIND] <basket_for_clothes> (1.1011)
 [GRAB] <basket_for_clothes> (1.1011)
@@ -16,10 +17,12 @@ Remove laundry from the dryer and fold it on the bed before putting it away
 [FIND] <clothes_jacket> (1.1012)
 [GRAB] <clothes_jacket> (1.1012)
 [PUTBACK] <clothes_jacket> (1.1012) <basket_for_clothes> (1.1011)
+[FIND] <dresser> (1.108)
 [CLOSE] <dresser> (1.108)
 [WALK] <washing_machine> (1.1014)
 [FIND] <washing_machine> (1.1014)
 [PUTBACK] <basket_for_clothes> (1.1011) <washing_machine> (1.1014)
+## Put clothes in the washer and start it
 [WALK] <washing_machine> (1.1014)
 [FIND] <washing_machine> (1.1014)
 [OPEN] <washing_machine> (1.1014)
@@ -38,6 +41,7 @@ Remove laundry from the dryer and fold it on the bed before putting it away
 [PUTBACK] <clothes_jacket> (1.1012) <washing_machine> (1.1014)
 [CLOSE] <washing_machine> (1.1014)
 [SWITCHON] <washing_machine> (1.1014)
+## Take clothes out of washer and put them away
 [WALK] <washing_machine> (1.1014)
 [FIND] <washing_machine> (1.1014)
 [SWITCHOFF] <washing_machine> (1.1014)
