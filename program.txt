@@ -1,0 +1,6 @@
+## 1-2 mins
+[Walk] <dining_room>
+## 2-3 mins
+[Walk] <food_apple>
+## 3-4 mins
+[Grab] <food_apple>
