@@ -9,8 +9,9 @@ from evolving_graph.environment import EnvironmentGraph
 from evolving_graph.execution import ScriptExecutor
 import evolving_graph.utils as utils
 
-scene_num = str(7)
-base_graph_file = 'example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
+scene_num = str(2)
+reference_graph_file = 'example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
+base_graph_file = 'example_graphs/CustomBareScene'+scene_num+'_graph.json'
 init_graph_file = 'example_graphs/CustomScene'+scene_num+'_graph.json'
 unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorjamb']
 
@@ -23,12 +24,29 @@ unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorj
 #                                 script_file, graph_file,
 #                                 {"processing_time_limit": 500, "image_width": 320, "image_height": 240, "image_synthesis": ['normal'], "gen_vid": True, "file_name_prefix": "test", "camera_mode": 'PERSON_TOP'}, scene_id=scene_num)
 
+def remove_nodes_from_graph(graph_file, nodes_to_remove, target_graph_file):
+    with open (graph_file,'r') as f:
+        graph_dict = json.load(f)
+    trimmed_graph = {'nodes':[], 'edges':[]}
+    node_ids_to_remove = []
+    for node in graph_dict['nodes']:
+        if node['class_name'] in nodes_to_remove:
+            node_ids_to_remove.append(node['id'])
+        else:
+            trimmed_graph['nodes'].append(node)
+    for edge in graph_dict['edges']:
+        if edge['from_id'] in node_ids_to_remove or edge['to_id'] in node_ids_to_remove:
+            continue
+        trimmed_graph['edges'].append(edge)
+    with open (target_graph_file,'w') as f:
+        json.dump(trimmed_graph, f)
+
 class GraphReader():
     def __init__(self, graph_file=init_graph_file):
         with open (graph_file,'r') as f:
             self.graph_dict = json.load(f)
         nodes = {n['id']:n['class_name'] for n in self.graph_dict['nodes']}
-        nodes_by_room = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        nodes_by_room = {n['class_name']:{n['id']:n['class_name']} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         node_rooms = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_map = {'<'+n['class_name']+'>': '<'+n['class_name']+'> ('+str(n['id'])+')' for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
 
