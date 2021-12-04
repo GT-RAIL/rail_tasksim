@@ -2,7 +2,7 @@ base_graph.add("after_shave", "INSIDE", ref_nodes['bathroom']['bathroom_cabinet'
 base_graph.add("alarm_clock", "ON", ref_nodes['bedroom']['nightstand'])
 base_graph.add("bag", "ON", ref_nodes['home_office']['dresser'])
 base_graph.add("basket_for_clothes", "ON", ref_nodes['dining_room']['washing_machine'])
-base_graph.add("blanket", "ON", ref_nodes['bedroom']['bed'])
+base_graph.add("blanket", "ON", ref_nodes['home_office']['sofa'])
 base_graph.add("bleach", "INSIDE", ref_nodes['dining_room']['kitchen_cabinet'])
 base_graph.add("blender", "ON", ref_nodes['dining_room']['kitchen_counter'])
 base_graph.add("blow_dryer", "INSIDE", ref_nodes['bathroom']['bathroom_cabinet'])
