@@ -1,0 +1,15 @@
+
+{
+    "getting_out_of_bed" : [[6,0],[9,0]],
+    "brushing_teeth" : [[6,0],[9,0]],
+    "showering" : [[7,0],[9,0]],
+    "breakfast" : [[7,0],[9,0]],
+    "getting_dressed" : [[9,0],[10,0]],
+    "leave_home" : [[10,0],[12,0]],
+    "coming_back_home" : [[5,0],[6,0]],
+    "watching_tv" : [[5,0],[6,0]],
+    "dinner" : [[6,0],[8,0]],
+    "take_out_trash" : [[8,0],[9,0]],
+    "taking_medication" : [[8,30],[9,30]],
+    "sleeping" : [[10,0],[11,0]]
+}
