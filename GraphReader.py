@@ -96,8 +96,13 @@ class GraphReader():
     
     def add(self, obj, relation, parent_id):
         assert(relation in ["INSIDE","ON"])
-        # self.graph_dict['nodes'].append({"id": new_obj_id, "class_name": obj, "category": "placable_objects", "properties": self.object_properties[obj], "states": self.object_states[obj], "prefab_name": None, "bounding_box": None})
-        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
+        object_states = []
+        try:
+            object_states = self.object_states[obj]
+        except:
+            pass
+        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
+        # self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
         self.graph_dict['edges'].append({"from_id":self.new_obj_id, "relation_type":relation, "to_id":parent_id})
         for e in self.graph_dict['edges']:
             if e is not None:
