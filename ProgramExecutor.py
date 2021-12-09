@@ -13,7 +13,6 @@ def read_program(file_name, node_map):
         for line in f:
             if line.startswith('##'):
                 header = line[2:].strip()
-                print(header)
                 action_headers.append(header)
                 action_scripts.append(lines)
                 lines = []
@@ -26,9 +25,10 @@ def read_program(file_name, node_map):
                 for full_name, name_id in node_map.items():
                     mapped_line = mapped_line.replace(full_name, name_id)
                 scr_line = parse_script_line(mapped_line, index, custom_patt_params = r'\<(.+?)\>\s*\((.+?)\)')
-                print(scr_line)
                 lines.append(scr_line)
                 index += 1
+        action_scripts.append(lines)
+        action_scripts = action_scripts[1:]
     return action_headers, action_scripts
 
 def execute_program(program_file, graph_file, node_map):
