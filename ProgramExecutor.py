@@ -36,11 +36,13 @@ def execute_program(program_file, graph_file, node_map):
         init_graph = EnvironmentGraph(json.load(f))
     action_headers, action_scripts = read_program(program_file, node_map)
     name_equivalence = utils.load_name_equivalence()
-    executor = ScriptExecutor(init_graph, name_equivalence)
-    graphs = []
-    for header, script in zip(action_headers, action_scripts):
-        success, state, _ = executor.execute(Script(script), w_graph_list=False)
+    graphs = [init_graph]
+    for script in action_scripts:
+        executor = ScriptExecutor(graphs[-1], name_equivalence)
+        success, _, graph_list = executor.execute(Script(script), w_graph_list=True)
         if not success:
-            raise RuntimeError(f'Execution of {header} failed')
-        graphs.append(state._graph)
+            script_string = '\n  - '.join([str(l) for l in script])
+            raise RuntimeError(f'Execution of the following script failed because {executor.info.get_error_string()} \n  - {script_string}')
+        graphs.append(EnvironmentGraph(graph_list[-1]))
+    print("Execution successful!!")
     return action_headers, graphs

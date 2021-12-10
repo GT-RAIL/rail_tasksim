@@ -5,7 +5,7 @@ from dataset_utils import execute_script_utils as utils
 from evolving_graph import scripts
 
 from evolving_graph.scripts import Script, parse_script_line
-from evolving_graph.environment import EnvironmentGraph
+from evolving_graph.environment import EnvironmentGraph, State
 from evolving_graph.execution import ScriptExecutor
 import evolving_graph.utils as utils
 
@@ -15,6 +15,14 @@ base_graph_file = 'example_graphs/CustomBareScene'+scene_num+'_graph.json'
 init_graph_file = 'example_graphs/CustomScene'+scene_num+'_graph.json'
 unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorjamb']
 
+state_choices = {"closed" : "CLOSED",
+                 "open" : "CLOSED",
+                 "off" : "OFF",
+                 "on" : "OFF",
+                 "dirty" : "CLEAN",
+                 "clean" : "CLEAN",
+                 "plugged" : "PLUGGED_IN",
+                 "unplugged" : "PLUGGED_IN"}
 # def setup():
 #     comm = UnityCommunication()
 #     return comm
@@ -98,7 +106,12 @@ class GraphReader():
         assert(relation in ["INSIDE","ON"])
         object_states = []
         try:
-            object_states = self.object_states[obj]
+            for state in self.object_states[obj]:
+                if state in state_choices.keys():
+                    object_states.append(state_choices[state])
+                else:
+                    print('Ignoring unsupported state ',state)
+                object_states = list(set(object_states))
         except:
             pass
         self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
