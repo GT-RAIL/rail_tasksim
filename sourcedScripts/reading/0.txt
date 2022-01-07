@@ -1,0 +1,25 @@
+## 10-15
+[Walk] <home_office>
+[Walk] <bookshelf_home_office>
+[Find] <book>
+[Grab] <book>
+[Walk] <sofa_home_office>
+[Sit] <sofa_home_office>
+[Read] <book>
+[Putback] <book> <sofa_home_office>
+[StandUp]
+## 10-15
+[Walk] <sofa_home_office>
+[Find] <book>
+[Grab] <book>
+[Sit] <sofa_home_office>
+[Read] <book>
+[Putback] <book> <sofa_home_office>
+[StandUp]
+## 3-5
+[Walk] <sofa_home_office>
+[Find] <book>
+[Grab] <book>
+[Walk] <home_office>
+[Walk] <bookshelf_home_office>
+[Putback] <book> <bookshelf_home_office>

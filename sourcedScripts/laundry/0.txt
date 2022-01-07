@@ -1,0 +1,81 @@
+## 10-15
+[Walk] <basket_for_clothes>
+[Find] <basket_for_clothes>
+[Grab] <basket_for_clothes>
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[PutBack] <clothes_pants> <basket_for_clothes>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[PutBack] <clothes_dress> <basket_for_clothes>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[PutBack] <clothes_jacket> <basket_for_clothes>
+[Close] <dresser>
+[Walk] <washing_machine>
+[Find] <washing_machine>
+[PutBack] <basket_for_clothes> <washing_machine>
+## 2-3
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <laundry_detergent>
+[Grab] <laundry_detergent>
+[Close] <kitchen_cabinet>
+[Find] <washing_machine>
+[PutBack] <laundry_detergent> <washing_machine>
+## 4-6
+[Walk] <washing_machine>
+[Find] <washing_machine>
+[Open] <washing_machine>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[PutBack] <clothes_pants> <washing_machine>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[PutBack] <clothes_dress> <washing_machine>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[PutBack] <clothes_jacket> <washing_machine>
+[Close] <washing_machine>
+## 2-3
+[Find] <washing_machine>
+[SwitchOn] <washing_machine>
+## 2-3
+[Walk] <washing_machine>
+[Find] <washing_machine>
+[SwitchOff] <washing_machine>
+## 3-5
+[Find] <washing_machine>
+[Find] <laundry_detergent>
+[Grab] <laundry_detergent>
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[PutIn] <laundry_detergent> <kitchen_cabinet>
+[Close] <kitchen_cabinet>
+## 1-3
+[Find] <washing_machine>
+[Open] <washing_machine>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Walk] <dresser>
+[Open] <dresser>
+[PutBack] <clothes_pants> <dresser>
+## 1-3
+[Walk] <washing_machine>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Walk] <dresser>
+[PutBack] <clothes_dress> <dresser>
+## 1-3
+[Walk] <washing_machine>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Walk] <dresser>
+[PutBack] <clothes_jacket> <dresser>
+[Close] <dresser>
+## 1-2
+[Walk] <washing_machine>
+[Find] <washing_machine>
+[Close] <washing_machine>
