@@ -102,7 +102,7 @@ class GraphReader():
             self.object_properties = json.load(f)
         self.new_obj_id = 1000
     
-    def add(self, obj, relation, parent_id):
+    def add(self, obj, relation, parent_id, category="placable_objects"):
         assert(relation in ["INSIDE","ON"])
         object_states = []
         try:
@@ -114,8 +114,8 @@ class GraphReader():
                 object_states = list(set(object_states))
         except:
             pass
-        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
-        # self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": "placable_objects", "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
+        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
+        # self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
         self.graph_dict['edges'].append({"from_id":self.new_obj_id, "relation_type":relation, "to_id":parent_id})
         for e in self.graph_dict['edges']:
             if e is not None:
