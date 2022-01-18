@@ -1,0 +1,8 @@
+-## 2-5
+[Lie] <bed>
+[WakeUp]
+[TurnTo] <alarm_clock>
+[SwitchOff] <alarm_clock>
+[Move] <blanket>
+[StandUp]
+[Open] <curtain_bedroom>
