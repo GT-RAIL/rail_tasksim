@@ -15,7 +15,7 @@
 ## 420-560
 [Walk] <bed>
 [Find] <bed>
-[Sit] <bed>
+[Lie] <bed>
 [Sleep]
 ## 1-5
 [Wakeup]
