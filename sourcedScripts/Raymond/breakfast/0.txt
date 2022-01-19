@@ -1,0 +1,29 @@
+## 0-1
+[Walk] <dining_room>
+[Walk] <food_bread>
+## 0-1
+[Find] <food_bread>
+[Grab] <food_bread>
+[Find] <chef_knife>
+[Grab] <chef_knife>
+## 1-2
+[Find] <food_bread>
+[Drop] <food_bread>
+[Cut] <food_bread> 
+[Find] <chef_knife>
+[Drop] <chef_knife>
+[Eat] <food_bread>
+## 0-1
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <kitchen_counter>
+[PutBack] <food_bread> <kitchen_counter>
+## 1-2
+[Walk] <chef_knife>
+[Find] <chef_knife>
+[Grab] <chef_knife>
+[Walk] <faucet_dining_room>
+[Rinse] <chef_knife>
+[Walk] <kitchen_counter>
+[PutBack] <chef_knife> <kitchen_counter>
+
