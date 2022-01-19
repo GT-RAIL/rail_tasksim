@@ -699,12 +699,12 @@ class TouchExecutor(ActionExecutor):
 class LieExecutor(ActionExecutor):
 
     _MAX_OCCUPANCIES = {
-        'couch': 2,
+        'couch': 5,
         'bathtub': 2,
-        'bed': 3,
-        'loveseat': 2,
-        'sofa': 2,
-        'bench': 1
+        'bed': 7,
+        'loveseat': 4,
+        'sofa': 6,
+        'bench': 3
     }
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):

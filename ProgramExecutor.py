@@ -79,7 +79,7 @@ def execute_program(program_file, graph_file, node_map):
         # print([str(l) for l in script])
         # print_graph_difference(graphs[-2],graphs[-1])
         # input('Press something...')
-    executor = ScriptExecutor(EnvironmentGraph(graphs[-1]), name_equivalence)
+    executor = ScriptExecutor(EnvironmentGraph(graphs[0]), name_equivalence)
     success, _, _ = executor.execute(Script(whole_program), w_graph_list=True)
     if not success:
         raise RuntimeError(f'Execution of the full script failed because {executor.info.get_error_string()}')
