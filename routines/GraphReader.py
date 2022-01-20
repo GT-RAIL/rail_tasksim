@@ -1,6 +1,8 @@
 import json
+import os
 import sys
-sys.path.append('simulation')
+sys.path.append('..')
+sys.path.append('../simulation')
 from dataset_utils import execute_script_utils as utils
 from evolving_graph import scripts
 
@@ -10,9 +12,10 @@ from evolving_graph.execution import ScriptExecutor
 import evolving_graph.utils as utils
 
 scene_num = str(2)
-reference_graph_file = 'example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
-base_graph_file = 'example_graphs/CustomBareScene'+scene_num+'_graph.json'
-init_graph_file = 'example_graphs/CustomScene'+scene_num+'_graph.json'
+base_dir = os.path.join(os.path.dirname(__file__), os.pardir)
+reference_graph_file = base_dir+'/example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
+base_graph_file = base_dir+'/example_graphs/CustomBareScene'+scene_num+'_graph.json'
+init_graph_file = base_dir+'/example_graphs/CustomScene'+scene_num+'_graph.json'
 unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorjamb']
 
 state_choices = {"closed" : "CLOSED",
@@ -96,9 +99,9 @@ class GraphReader():
         for l in self.expanded_nodes_by_room.values():
             self.node_map.update({f'<{key}>':f'<{val[0]}> ({val[1]})' for key,val in l.items()})
         
-        with open ('resources/object_states.json','r') as f:
+        with open (base_dir+'/resources/object_states.json','r') as f:
             self.object_states = json.load(f)
-        with open ('resources/properties_data.json','r') as f:
+        with open (base_dir+'/resources/properties_data.json','r') as f:
             self.object_properties = json.load(f)
         self.new_obj_id = 1000
     

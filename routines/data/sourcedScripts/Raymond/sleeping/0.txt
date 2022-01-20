@@ -1,0 +1,24 @@
+## 0-1
+[Walk] <bedroom>
+[Walk] <dresser>
+## 1-2
+[Find] <dresser>
+[Open] <dresser>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Puton] <pajamas>
+[Find] <dresser>
+[Close] <dresser>
+## 0-1
+[Walk] <light_bedroom>
+[Switchoff] <light_bedroom>
+## 420-560
+[Walk] <bed>
+[Find] <bed>
+[Lie] <bed>
+[Sleep]
+## 1-5
+[Wakeup]
+[Standup]
+
+

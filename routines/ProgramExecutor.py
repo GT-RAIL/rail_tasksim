@@ -1,4 +1,6 @@
 import json
+import sys
+sys.path.append('..')
 from evolving_graph.scripts import Script, parse_script_line
 from evolving_graph.environment import EnvironmentGraph
 from evolving_graph.execution import ScriptExecutor

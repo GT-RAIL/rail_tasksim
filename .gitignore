@@ -176,3 +176,5 @@ dataset/*
 # Unity sim
 simulation/exec_linux_07_01_Data/
 simulation/__MACOSX
+scripted_routines/*
+routines/data/sourcedRoutines/*
