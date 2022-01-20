@@ -216,14 +216,14 @@ class GreetExecutor(ActionExecutor):
 class SitExecutor(ActionExecutor):
 
     _MAX_OCCUPANCIES = {
-        'couch': 4,
-        'bed': 4,
-        'chair': 1,
-        'loveseat': 2,
-        'sofa': 4,
+        'couch': 5,
+        'bed': 7,
+        'chair': 2,
+        'loveseat': 4,
+        'sofa': 6,
         'toilet': 1,
-        'pianobench': 2,
-        'bench': 2
+        'pianobench': 3,
+        'bench': 3
     }
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):

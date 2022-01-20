@@ -105,11 +105,13 @@ def execute_program(program_file, graph_file, node_map):
     executor = ScriptExecutor(EnvironmentGraph(graphs[-1]), name_equivalence)
     print('Checking final state...',end='')
     executor.check_final_state()
-    print('Final state OK')
-    print('Checking second run...',end='')
-    success, _, _ = executor.execute(Script(whole_program), w_graph_list=True)
-    if not success:
-        raise RuntimeError(f'Execution of the full script failed because {executor.info.get_error_string()}')
-    print("Execution successful!!")
+    print('Final state OK\n')
+    try:
+        print('Trying a second run...',end='')
+        success, _, _ = executor.execute(Script(whole_program), w_graph_list=True)
+        if not success:
+            raise RuntimeError(f'Execution failed because {executor.info.get_error_string()}')
+        print("Execution successful!!")
+    except Exception as e: print (e)
 
     return action_headers, graphs

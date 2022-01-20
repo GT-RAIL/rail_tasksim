@@ -7,6 +7,7 @@
 [PutBack] <alarm_clock> <nightstand>
 [Find] <phone>
 [Grab] <phone>
+[SwitchOff] <phone>
 [Find] <nightstand>
 [PutBack] <phone> <nightstand>
 [Walk] <bed>
@@ -17,6 +18,7 @@
 [Find] <alarm_clock>
 [Grab] <alarm_clock>
 [SwitchOff] <alarm_clock>
+[PutBack] <alarm_clock> <nightstand>
 ## 2-5
 [Find] <phone>
 [Grab] <phone>
@@ -27,8 +29,6 @@
 [PutBack] <phone> <nightstand>
 ## 1-2
 [StandUp]
-[Find] <curtain_bedroom>
-[Open] <curtain_bedroom>
 [Find] <blanket>
 [Grab] <blanket>
 [Find] <bed>
