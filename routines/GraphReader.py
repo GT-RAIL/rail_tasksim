@@ -18,14 +18,34 @@ base_graph_file = base_dir+'/example_graphs/CustomBareScene'+scene_num+'_graph.j
 init_graph_file = base_dir+'/example_graphs/CustomScene'+scene_num+'_graph.json'
 unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorjamb']
 
-state_choices = {"closed" : "CLOSED",
-                 "open" : "CLOSED",
-                 "off" : "OFF",
-                 "on" : "OFF",
-                 "dirty" : "CLEAN",
-                 "clean" : "CLEAN",
-                 "plugged" : "PLUGGED_IN",
-                 "unplugged" : "PLUGGED_IN"}
+def get_object_states(available_states, custom_options):
+    object_states = []
+    if "closed" in available_states or "open" in available_states:
+        if "OPEN" in custom_options:
+            object_states.append("OPEN")
+        else:
+            object_states.append("CLOSED")
+
+    if "off" in available_states or "on" in available_states:
+        if "ON" in custom_options:
+            object_states.append("ON")
+        else:
+            object_states.append("OFF")
+
+    if "dirty" in available_states or "clean" in available_states:
+        if "DIRTY" in custom_options:
+            object_states.append("DIRTY")
+        else:
+            object_states.append("CLEAN")
+
+    if "plugged" in available_states or "unplugged" in available_states:
+        if "PLUGGED_OUT" in custom_options:
+            object_states.append("PLUGGED_OUT")
+        else:
+            object_states.append("PLUGGED_IN")
+
+    return object_states
+
 # def setup():
 #     comm = UnityCommunication()
 #     return comm
@@ -105,18 +125,13 @@ class GraphReader():
             self.object_properties = json.load(f)
         self.new_obj_id = 1000
     
-    def add(self, obj, relation, parent_id, category="placable_objects"):
+    def add(self, obj, relation, parent_id, category="placable_objects", custom_states=[]):
         assert(relation in ["INSIDE","ON"])
-        object_states = []
-        try:
-            for state in self.object_states[obj]:
-                if state in state_choices.keys():
-                    object_states.append(state_choices[state])
-                else:
-                    print('Ignoring unsupported state ',state)
-                object_states = list(set(object_states))
-        except:
-            pass
+        if obj in self.object_states.keys():
+            object_states = get_object_states(self.object_states[obj], custom_states)
+        else:
+            object_states = []
+            print(f'States not found for {obj}')
         self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
         # self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
         self.graph_dict['edges'].append({"from_id":self.new_obj_id, "relation_type":relation, "to_id":parent_id})
