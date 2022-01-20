@@ -8,6 +8,7 @@
 [Close] <cupboard>
 [Walk] <table_dining_room>
 [PutBack] <bowl> <table_dining_room>
++<bowl>
 ## 3-5
 [Find] <food_cereal>
 [Find] <cupboard>
@@ -37,10 +38,13 @@
 [Walk] <table_dining_room>
 [Find] <bowl>
 [PutBack] <spoon> <bowl>
++<spoon>
 ## 8-10
 [WALK] <table_dining_room>
 [Find] <food_cereal>
 [Eat] <food_cereal>
+-<spoon>
+-<bowl>
 ## 2-3
 [Find] <food_cereal>
 [Grab] <food_cereal>

@@ -12,6 +12,7 @@
 [Find] <table_dining_room>
 [PutBack] <plate> <table_dining_room>
 [PutBack] <food_bread> <plate>
++<plate>
 ## 3-5
 [Walk] <fridge>
 [Open] <fridge>
@@ -20,6 +21,7 @@
 [Close] <fridge>
 [Walk] <table_dining_room>
 [PutBack] <food_cheese> <table_dining_room>
++<food_cheese>
 ## 8-10
 [Walk] <table_dining_room>
 [Find] <food_bread>
@@ -27,6 +29,8 @@
 [Eat] <food_bread>
 [Find] <plate>
 [PutBack] <food_bread> <plate>
+-<food_cheese>
+-<plate>
 ## 2-3
 [Walk] <table_dining_room>
 [Find] <food_cheese>

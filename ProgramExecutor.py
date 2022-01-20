@@ -35,20 +35,39 @@ def print_graph_difference(g1,g2):
 def read_program(file_name, node_map):
     action_headers = []
     action_scripts = []
+    action_objects_in_use = []
+
+    def obj_class_id_from_string(string_in):
+        class_id = [a[1:-1] for a in string_in.split(' ')]
+        return (int(class_id[1]), class_id[0])
+
     with open(file_name) as f:
         lines = []
         full_program = []
+        obj_start, obj_end = [], []
         index = 1
+        object_use = {'start':[], 'end':[]}
         for line in f:
             if line.startswith('##'):
                 header = line[2:].strip()
                 action_headers.append(header)
                 action_scripts.append(lines)
+                object_use['start'].append(obj_start)
+                object_use['end'].append(obj_end)
                 lines = []
+                obj_start, obj_end = [], []
                 index = 1
+            line = line.strip()
+            if line.startswith('+'):
+                obj = obj_class_id_from_string(node_map[line[1:]])
+                obj_start.append(obj)
+                continue
+            if line.startswith('-'):
+                obj = obj_class_id_from_string(node_map[line[1:]])
+                obj_end.append(obj)
+                continue
             if '[' not in line:
                 continue
-            line = line.strip()
             if len(line) > 0 and not line.startswith('#'):
                 mapped_line = line
                 for full_name, name_id in node_map.items():
@@ -60,12 +79,12 @@ def read_program(file_name, node_map):
                 index += 1
         action_scripts.append(lines)
         action_scripts = action_scripts[1:]
-    return action_headers, action_scripts, full_program
+    return action_headers, action_scripts, object_use, full_program
 
 def execute_program(program_file, graph_file, node_map):
     with open (graph_file,'r') as f:
         init_graph = EnvironmentGraph(json.load(f))
-    action_headers, action_scripts, whole_program = read_program(program_file, node_map)
+    action_headers, action_scripts, action_obj_use, whole_program = read_program(program_file, node_map)
     name_equivalence = utils.load_name_equivalence()
     graphs = [init_graph.to_dict()]
     print('Checking scripts...')
