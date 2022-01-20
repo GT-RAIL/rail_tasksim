@@ -1311,6 +1311,15 @@ class ScriptExecutor(object):
 
         return True, state, graph_state_list
 
+    def check_final_state(self):
+        state = EnvironmentState(self.graph, self.name_equivalence, instance_selection=True)
+        char_node = _get_character_node(state)
+        holding_nodes = _find_nodes_from(state, char_node, [Relation.HOLDS_LH, Relation.HOLDS_RH])
+        assert (len(holding_nodes) == 0), f'Character must not be holding {[h.class_name for h in holding_nodes]}'
+        assert State.SITTING not in char_node.states, 'Character must not be sitting down'
+        assert State.LYING not in char_node.states, 'Character must not be lying down'
+
+
     @classmethod
     def call_action_method(cls, script: Script, state: EnvironmentState, info: ExecutionInfo):
         executor = cls._action_executors.get(script[0].action, UnknownExecutor())

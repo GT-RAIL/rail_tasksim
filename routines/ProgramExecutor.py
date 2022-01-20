@@ -89,7 +89,7 @@ def execute_program(program_file, graph_file, node_map):
     action_headers, action_scripts, action_obj_use, whole_program = read_program(program_file, node_map)
     name_equivalence = utils.load_name_equivalence()
     graphs = [init_graph.to_dict()]
-    print('Checking scripts...')
+    print('Checking scripts...',end='')
     for script in action_scripts:
         executor = ScriptExecutor(EnvironmentGraph(graphs[-1]), name_equivalence)
         success, state, graph_list = executor.execute(Script(script), w_graph_list=True)
@@ -100,9 +100,16 @@ def execute_program(program_file, graph_file, node_map):
         # print([str(l) for l in script])
         # print_graph_difference(graphs[-2],graphs[-1])
         # input('Press something...')
-    executor = ScriptExecutor(EnvironmentGraph(graphs[0]), name_equivalence)
+    
+    print("Script segments OK")
+    executor = ScriptExecutor(EnvironmentGraph(graphs[-1]), name_equivalence)
+    print('Checking final state...',end='')
+    executor.check_final_state()
+    print('Final state OK')
+    print('Checking second run...',end='')
     success, _, _ = executor.execute(Script(whole_program), w_graph_list=True)
     if not success:
         raise RuntimeError(f'Execution of the full script failed because {executor.info.get_error_string()}')
     print("Execution successful!!")
+
     return action_headers, graphs
