@@ -1,0 +1,28 @@
+## 4-5
+[Walk] <dining_room>
+[Walk] <food_bread>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <kitchen_counter>
+[Putback] <food_bread> <kitchen_counter>
+
+## 4-5
+[Find] <cupboard>
+[Open] <cupboard>
+[Find] <jelly> 
+[Grab] <jelly>
+[Close] <cupboard>
+[Walk] <kitchen_counter>
+[Find] <food_bread>
+[Putback] <jelly> <food_bread>
+[Grab] <food_bread>
+[Eat] <food_bread>
+[Putback] <food_bread> <kitchen_counter>
+
+## 2-3
+[Walk] <food_banana>
+[Find] <food_banana>
+[Grab] <food_banana>
+[Eat] <food_banana>
+[Walk] <kitchen_counter>
+[Putback] <food_banana> <kitchen_counter>

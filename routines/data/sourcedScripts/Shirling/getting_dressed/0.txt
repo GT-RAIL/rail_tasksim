@@ -1,0 +1,30 @@
+
+## 1-2
+[Walk] <clothes_shirt>
+[Find] <dresser>
+[Open] <dresser>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Puton] <clothes_shirt>
+
+## 1-2
+[Walk] <clothes_pants>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Puton] <clothes_pants>
+
+## 1-2
+[Walk] <clothes_socks>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Puton] <clothes_socks>
+[Find] <dresser>
+[Close] <dresser>
+
+## 5-6
+[Walk] <bathroom>
+[Find] <faucet_bathroom>
+[Switchon] <faucet_bathroom>
+[Find] <facial_cleanser>
+[Wash] <facial_cleanser>
+[Switchoff] <faucet_bathroom>
