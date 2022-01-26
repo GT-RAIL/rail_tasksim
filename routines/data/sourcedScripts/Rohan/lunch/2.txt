@@ -1,0 +1,21 @@
+# 1 - 2
+[Walk] <kitchen_counter>
+
+#3-4
+[Find] <food_apple>
+[Grab] <food_apple>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <table_dining_room>
+[Open] <fridge>
+[Find] <food_egg>
+[Grab] <food_egg>
+[Close] <fridge>
+
+#10-15
+[Walk] <table_dining_room>
+[Sit] <table_dining_room>
+
+#2-3
+[Wipe] <plate>
+[Putback] <plate> <fork>

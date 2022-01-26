@@ -1,0 +1,78 @@
+## 1-2 
+[Walk] <dining_room>
+[Walk] <sink_dining_room>
+## 1-2
+[Find] <dishwasher>
+[Open] <dishwasher>
+[Find] <sponge>
+[Grab] <sponge>
+## 1-2
+[Find] <sponge>
+[Find] <dish_soap>
+[Grab] <dish_soap>
+[Pour] <dish_soap> <sponge>
+[Drop] <dish_soap>
+## 1-2
+[Walk] <cupboard>
+[Open] <cupboard>
+[Walk] <knife>
+[Find] <knife>
+[Grab] <knife>
+[Find] <dishwasher>
+[Close] <cupboard>
+[Wash] <knife>
+[Rinse] <knife>
+[Wipe] <knife>
+[Walk] <dishwasher>
+[Putin] <knife> <dishwasher> 
+## 2-3
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <sauce_pan>
+[Find] <dishwasher>
+[Walk] <sauce_pan>
+[Grab] <sauce_pan>
+[Close] <cupboard>
+[Wash] <sauce_pan>
+[Rinse] <sauce_pan>
+[Wipe] <sauce_pan>
+[Walk] <dishwasher>
+[Putin] <sauce_pan> <dishwasher> 
+
+## 2-3
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <fryingpan>
+[Walk] <fryingpan>
+[Grab] <fryingpan>
+[Close] <cupboard>
+[Find] <dishwasher>
+[Wash] <fryingpan>
+[Rinse] <fryingpan>
+[Wipe] <fryingpan>
+[Walk] <dishwasher>
+[Putin] <fryingpan> <dishwasher>
+
+## 3-4
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <cookingpot>
+[Find] <dishwasher>
+[Grab] <cookingpot>
+[Close] <cupboard>
+[Wash] <cookingpot>
+[Rinse] <cookingpot>
+[Wipe] <cookingpot>
+[Walk] <dishwasher>
+[Putin] <cookingpot> <dishwasher>
+
+## 45-60
+
+[Find] <dishwasher>
+[Find] <dish_soap>
+[Walk] <dishwasher>
+[Walk] <dish_soap>
+[Grab] <dish_soap>
+[Pour] <dish_soap> <dishwasher>
+[Close] <dishwasher>
+[Switchon] <dishwasher>

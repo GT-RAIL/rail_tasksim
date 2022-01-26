@@ -1,0 +1,23 @@
+##1-2 
+[Walk] <dining_room>
+[Walk] <sink_dining_room>
+##10-15
+[Open] <dishwasher>
+[Find] <sponge>
+[Grab] <sponge>
+[Find] <dish_soap>
+[Grab] <dish_soap>
+[Pour] <dish_soap> <sponge>
+[Drop] <dish_soap>
+[Find] <knife>
+[Wash] <knife>
+[Wipe] <knife>
+[Putin] <knife> <dishwasher> 
+[Find] <sauce_pan>
+[Wash] <sauce_pan>
+[Wipe] <sauce_pan>
+[Putin] <sauce_pan> <dishwasher> 
+[Find] <coffee_cup>
+[Wash] <coffee_cup>
+[Wipe] <coffee_cup>
+[Putin] <coffee_cup> <dishwasher>
