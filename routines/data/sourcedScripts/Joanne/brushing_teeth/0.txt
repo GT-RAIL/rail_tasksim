@@ -1,0 +1,28 @@
+## 1-2
+Walk dining_room
+## 1-2
+Open cupboard
+Find drinking_glass
+Grab drinking_glass
+Close cupboard
+## 1-2
+Switchon faucet_bathroom
+Pour water drinking_glass
+Switchoff faucet_bathroom
+## 1-2 
+Walk bathroom
+## 1-2
+Find toothbrush
+Grab toothbrush
+# 1-2 
+Find tooth_paste
+Grab tooth_paste
+## 1-2 
+Scrub tooth_brush
+## 1-2 
+Rinse tooth_brush
+## 1-2
+Pour mouthwash drinking_glass
+## 1-2
+Rinse drinking_glass 
+Grab drinking_glass
