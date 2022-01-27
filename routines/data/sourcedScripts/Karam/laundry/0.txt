@@ -1,0 +1,251 @@
+## 1-2
+[Walk] <dining_room>
+[Find] <basket_for_clothes>
+[Grab] <basket_for_clothes>
+# 1-2
+[Open] <basket_for_clothes>
+[Walk] <bedroom>
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Putin] <clothes_dress> <basket_for_clothes>
+[Find] <clothes_gloves>
+[Grab] <clothes_gloves>
+[Putin] <clothes_gloves> <basket_for_clothes>
+[Find] <clothes_hat>
+[Grab] <clothes_hat>
+[Putin] <clothes_hat> <basket_for_clothes>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Putin] <clothes_jacket> <basket_for_clothes>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Putin] <clothes_pants> <basket_for_clothes>
+[Find] <clothes_scarf>
+[Grab] <clothes_scarf>
+[Putin] <clothes_scarf> <basket_for_clothes>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Putin] <clothes_shirt> <basket_for_clothes>
+[Find] <clothes_skirt>
+[Grab] <clothes_skirt>
+[Putin] <clothes_skirt> <basket_for_clothes>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Putin] <clothes_socks> <basket_for_clothes>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Putin] <clothes_underwear> <basket_for_clothes>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Putin] <pajamas> <basket_for_clothes>
+[Find] <dresser>
+[Close] <dresser>
+[Find] <basket_for_clothes>
+[Grab] <basket_for_clothes>
+[Close] <basket_for_clothes>
+# 3-4
+[Walk] <dining_room>
+[Walk] <washing_machine>
+[Putback] <basket_for_clothes> <washing_machine>
+[Walk] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <laundry_detergent>
+[Grab] <laundry_detergent>
+[Find] <kitchen_cabinet>
+[Close] <kitchen_cabinet>
+[Walk] <washing_machine>
+[Find] <washing_machine>
+[Open] <washing_machine>
+[Pour] <laundry_detergent> <washing_machine>
+[Putback] <laundry_detergent> <washing_machine>
+# 2-3
+[Grab] <basket_for_clothes>
+[Open] <basket_for_clothes>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Find] <washing_machine>
+[Putin] <clothes_dress> <washing_machine>
+[Find] <clothes_gloves>
+[Grab] <clothes_gloves>
+[Find] <washing_machine>
+[Putin] <clothes_gloves> <washing_machine>
+[Find] <clothes_hat>
+[Grab] <clothes_hat>
+[Find] <washing_machine>
+[Putin] <clothes_hat> <washing_machine>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Find] <washing_machine>
+[Putin] <clothes_jacket> <washing_machine>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Find] <washing_machine>
+[Putin] <clothes_pants> <washing_machine>
+[Find] <clothes_scarf>
+[Grab] <clothes_scarf>
+[Find] <washing_machine>
+[Putin] <clothes_scarf> <washing_machine>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Find] <washing_machine>
+[Putin] <clothes_shirt> <washing_machine>
+[Find] <clothes_skirt>
+[Grab] <clothes_skirt>
+[Find] <washing_machine>
+[Putin] <clothes_skirt> <washing_machine>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Find] <washing_machine>
+[Putin] <clothes_socks> <washing_machine>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Find] <washing_machine>
+[Putin] <clothes_underwear> <washing_machine>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Find] <washing_machine>
+[Putin] <pajamas> <washing_machine>
+[Close] <basket_for_clothes>
+[Putback] <basket_for_clothes> <washing_machine>
+# 0-1
+[Switchon] <washing_machine>
+# 0-1
+[Switchoff] <washing_machine>
+# 7-8
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Find] <drying_rack>
+[Putback] <clothes_dress> <drying_rack>
+[Find] <clothes_gloves>
+[Grab] <clothes_gloves>
+[Find] <drying_rack>
+[Putback] <clothes_gloves> <drying_rack>
+[Find] <clothes_hat>
+[Grab] <clothes_hat>
+[Find] <drying_rack>
+[Putback] <clothes_hat> <drying_rack>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Find] <drying_rack>
+[Putback] <clothes_jacket> <drying_rack>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Find] <drying_rack>
+[Putback] <clothes_pants> <drying_rack>
+[Find] <clothes_scarf>
+[Grab] <clothes_scarf>
+[Find] <drying_rack>
+[Putback] <clothes_scarf> <drying_rack>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Find] <drying_rack>
+[Putback] <clothes_shirt> <drying_rack>
+[Find] <clothes_skirt>
+[Grab] <clothes_skirt>
+[Find] <drying_rack>
+[Putback] <clothes_skirt> <drying_rack>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Find] <drying_rack>
+[Putback] <clothes_socks> <drying_rack>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Find] <drying_rack>
+[Putback] <clothes_underwear> <drying_rack>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Find] <drying_rack>
+[Putback] <pajamas> <drying_rack>
+[Find] <washing_machine>
+[Close] <washing_machine>
+# 1-2
+[Find] <washing_machine>
+[Find] <basket_for_clothes>
+[Grab] <basket_for_clothes>
+[Open] <basket_for_clothes>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Putin] <clothes_dress> <basket_for_clothes>
+[Find] <clothes_gloves>
+[Grab] <clothes_gloves>
+[Putin] <clothes_gloves> <basket_for_clothes>
+[Find] <clothes_hat>
+[Grab] <clothes_hat>
+[Putin] <clothes_hat> <basket_for_clothes>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Putin] <clothes_jacket> <basket_for_clothes>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Putin] <clothes_pants> <basket_for_clothes>
+[Find] <clothes_scarf>
+[Grab] <clothes_scarf>
+[Putin] <clothes_scarf> <basket_for_clothes>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Putin] <clothes_shirt> <basket_for_clothes>
+[Find] <clothes_skirt>
+[Grab] <clothes_skirt>
+[Putin] <clothes_skirt> <basket_for_clothes>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Putin] <clothes_socks> <basket_for_clothes>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Putin] <clothes_underwear> <basket_for_clothes>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Putin] <pajamas> <basket_for_clothes>
+# 5-7
+[Walk] <bedroom>
+[Find] <dresser>
+[Putback] <basket_for_clothes> <dresser>
+[Open] <dresser>
+[Find] <clothes_dress>
+[Grab] <clothes_dress>
+[Find] <dresser>
+[Putin] <clothes_dress> <dresser>
+[Find] <clothes_gloves>
+[Grab] <clothes_gloves>
+[Find] <dresser>
+[Putin] <clothes_gloves> <dresser>
+[Find] <clothes_hat>
+[Grab] <clothes_hat>
+[Find] <dresser>
+[Putin] <clothes_hat> <dresser>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Find] <dresser>
+[Putin] <clothes_jacket> <dresser>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Find] <dresser>
+[Putin] <clothes_pants> <dresser>
+[Find] <clothes_scarf>
+[Grab] <clothes_scarf>
+[Find] <dresser>
+[Putin] <clothes_scarf> <dresser>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Find] <dresser>
+[Putin] <clothes_shirt> <dresser>
+[Find] <clothes_skirt>
+[Grab] <clothes_skirt>
+[Find] <dresser>
+[Putin] <clothes_skirt> <dresser>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Find] <dresser>
+[Putin] <clothes_socks> <dresser>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Find] <dresser>
+[Putin] <clothes_underwear> <dresser>
+[Find] <pajamas>
+[Grab] <pajamas>
+[Find] <dresser>
+[Putin] <pajamas> <dresser>
+[Close] <basket_for_clothes>
+[Close] <dresser>

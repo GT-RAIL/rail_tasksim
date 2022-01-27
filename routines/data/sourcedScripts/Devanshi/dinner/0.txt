@@ -1,0 +1,132 @@
+##1-2
+[walk] <dining_room>
+[find] <kettle>
+[find] <fridge>
+[open] <fridge>
+[find] <milk>
+[grab] <milk>
+[close] <fridge>
+[find] <kettle>
+[putin] <milk> <kettle>
+[find] <cupboard>
+[open] <cupboard>
+[find] <kettle>
+[grab] <kettle>
+[find] <cupboard>
+[putin] <kettle> <cupboard>
+## 3-6
+[find] <plate>
+[find] <cupboard>
+[grab] <plate>
+[find] <kitchen_counter>
+[putback] <plate> <kitchen_counter>
+[find] <oil>
+[grab] <oil>
+[find] <kitchen_counter>
+[putback] <oil> <kitchen_counter>
+[find] <pot>
+[grab] <pot>
+[find] <kitchen_counter>
+[putback] <pot> <kitchen_counter>
+## 6-7
+[find] <food_rice>
+[grab] <food_rice>
+[find] <kitchen_counter>
+[putback] <food_rice> <kitchen_counter>
+[find] <fridge>
+[open] <fridge>
+[find] <food_vegetable>
+[grab] <food_vegetable>
+[find] <fridge>
+[close] <fridge>
+## 7-8
+[find] <kitchen_counter>
+[putback] <food_vegetable> <kitchen_counter>
+[find] <oil>
+[grab] <oil>
+[find] <cookingpot>
+[putback] <oil> <cookingpot>
+[find] <food_rice>
+[grab] <food_rice>
+[find] <cookingpot>
+[putback] <food_rice> <cookingpot>
+[find] <food_vegetable>
+[grab] <food_vegetable>
+## 8-9
+[find] <cookingpot>
+[putback] <food_vegetable> <cookingpot>
+[find] <cookingpot>
+[grab] <cookingpot>
+[find] <stove>
+[putback] <cookingpot> <stove>
+[find] <spoon>
+[grab] <spoon>
+[find] <cookingpot>
+[putback] <spoon> <cookingpot>
+## 9-112
+[find] <cookingpot>
+[grab] <cookingpot>
+[find] <table_dining_room>
+[putback] <cookingpot> <table_dining_room>
+[find] <plate>
+[grab] <plate>
+[find] <table_dining_room>
+[putback] <plate> <table_dining_room>
+[find] <spoon>
+[grab] <spoon>
+[find] <plate>
+[putback] <spoon> <plate>
+[find] <food_rice>
+[eat] <food_rice>
+[find] <food_vegetable>
+[eat] <food_vegetable>
+## 12-16
+[find] <plate>
+[grab] <plate>
+[find] <sink_dining_room>
+[putback] <plate> <sink_dining_room>
+[find] <cookingpot>
+[grab] <cookingpot>
+[find] <sink_dining_room>
+[putback] <cookingpot> <sink_dining_room>
+[find] <spoon>
+[grab] <spoon>
+[find] <sink_dining_room>
+[Rinse] <plate>
+[Rinse] <spoon>
+[Rinse] <cookingpot>
+[putback] <spoon> <sink_dining_room>
+## 16-17
+[walk] <dining_room>
+[find] <kitchen_cabinet>
+[open] <kitchen_cabinet>
+[find] <cloth_napkin>
+[grab] <cloth_napkin>
+[find] <plate>
+[wipe] <plate>
+[find] <spoon>
+[wipe] <spoon>
+## 17-18
+[find] <cookingpot>
+[wipe] <cookingpot>
+[find] <kitchen_cabinet>
+[putin] <cloth_napkin><kitchen_cabinet>
+[close] <kitchen_cabinet>
+[find] <cupboard>
+[find] <plate>
+[grab] <plate>
+[putin] <plate> <cupboard>
+[find] <spoon>
+[grab] <spoon>
+## 18-19
+[find] <cupboard>
+[putin] <spoon> <cupboard>
+[find] <cookingpot>
+[grab] <cookingpot>
+[find] <cupboard>
+[putin] <cookingpot> <cupboard>
+[close] <cupboard>
+
+
+
+

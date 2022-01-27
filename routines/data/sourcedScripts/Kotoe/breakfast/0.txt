@@ -1,0 +1,115 @@
+## 3-5
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <ground_coffee>
+[Grab] <ground_coffee>
+[Walk] <kitchen_counter>
+[Find] <coffe_maker>
+[Open] <coffe_maker>
+[Find] <coffee_filter>
+[Grab] <coffee_filter>
+[Find] <coffe_maker>
+[Putin] <coffee_filter> <coffe_maker>
+[Putin] <ground_coffee> <coffee_filter>
+[Find] <mug>
+[Grab] <mug>
+[Find] <coffe_maker>
+[Putin] <mug> <coffe_maker>
+[Close] <coffe_maker>
+[Switchon] <coffe_maker>
+## 3-5
+[Find] <ground_coffee>
+[Grab] <ground_coffee>
+[Walk] <cupboard>
+[Putin] <ground_coffee> <cupboard>
+[Close] <cupboard>
+[Walk] <fridge>
+[Open] <fridge>
+[Find] <food_egg>
+[Grab] <food_egg>
+[Find] <fridge>
+[Close] <fridge>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <sauce_pan>
+[Grab] <sauce_pan>
+## 10-12
+[Walk] <stove>
+[Putback] <sauce_pan> <stove>
+[Switchon] <stove>
+[Putin] <food_egg> <sauce_pan>
+[Switchoff] <stove>
+## 3-5
+[Walk] <cupboard>
+[Find] <plate>
+[Grab] <plate>
+[Close] <cupboard>
+[Walk] <kitchen_counter>
+[Putback] <plate> <kitchen_counter>
+[Find] <food_egg>
+[Grab] <food_egg>
+[Find] <plate>
+[Putback] <food_egg> <plate>
+[Find] <plate>
+[Grab] <plate>
+[Find] <coffe_maker>
+[Switchoff] <coffe_maker>
+[Open] <coffe_maker>
+[Find] <mug>
+[Grab] <mug>
+[Close] <coffe_maker>
+## 1-2
+[Walk] <table_dining_room>
+[Putback] <mug> <table_dining_room>
+[Putback] <plate> <table_dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <fork>
+[Grab] <fork>
+[Close] <cupboard>
+[Walk] <table_dining_room>
+[Find] <plate>
+[Putback] <fork> <plate> 
+## 15-20
+[Find] <mug>
+[Grab] <mug>
+[Drink] <mug>
+[Putback] <mug> <table_dining_room>
+[Find] <plate>
+[Grab] <plate>
+[Find] <food_egg>
+[Grab] <food_egg>
+[Eat] <food_egg>
+[Putback] <food_egg> <plate>
+[Find] <mug>
+[Grab] <mug>
+## 5-6
+[Walk] <sink_dining_room>
+[Putback] <mug> <sink_dining_room>
+[Putback] <plate> <sink_dining_room>
+[Find] <faucet_dining_room>
+[Switchon] <faucet_dining_room>
+[Rinse] <mug>
+[Rinse] <plate>
+[Switchoff] <faucet_dining_room>
+[Find] <mug>
+[Wipe] <mug>
+[Find] <plate>
+[Wipe] <plate>
+[Grab] <mug>
+## 1-2
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <mug> <cupboard>
+[Find] <plate>
+[Grab] <plate>
+[Find] <cupboard>
+[Putin] <plate> <cupboard>
+[Close] <cupboard> 
+
+
+
+
+
+

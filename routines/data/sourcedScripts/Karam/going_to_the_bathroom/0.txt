@@ -1,0 +1,24 @@
+## 0-1
+[Walk] <bathroom>
+[Find] <light_bathroom>
+[Switchon] <light_bathroom>
+[Find] <toilet>
+# 1-10
+[Sit] <toilet>
+[Standup]
+# 2-3
+[Find] <sink_bathroom>
+[Find] <faucet_bathroom>
+[Switchon] <faucet_bathroom>
+[Find] <faucet_bathroom>
+[Switchoff] <faucet_bathroom>
+[Find] <napkin>
+[Grab] <napkin>
+[Find] <light_bathroom>
+[Switchoff] <light_bathroom>
+# 0-1
+[Walk] <dining_room>
+[Find] <trashcan>
+[Open] <trashcan>
+[Putin] <napkin> <trashcan>
+[Close] <trashcan>
