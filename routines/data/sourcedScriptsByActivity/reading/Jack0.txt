@@ -1,0 +1,23 @@
+## 1-2
+[Walk] <bedroom>
+[Walk] <bookshelf_bedroom>
+[Find] <book>
+[Grab] <book>
+
+## 1-2
+[Walk] <home_office>
+[Walk] <sofa_home_office>
+[Sit] <sofa_home_office>
++<book>
+
+## 200-300
+[Find] <book>
+[Read] <book>
+-<book>
+
+## 1-2
+[Standup]
+[Walk] <bedroom>
+[Walk] <bookshelf_bedroom>
+[Find] <book>
+[Putback] <book> <bookshelf_bedroom>

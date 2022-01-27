@@ -1,0 +1,33 @@
+## 2 - 3
+[Walk] <dining_room>
+[Walk] <sink_dining_room>
+## 1 - 2
+[Find] <dishtowel>
+[Grab] <dishtowel>
+## 1 - 2 
+[Find] <cupboard>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <cookingpot>
+[Grab] <cookingpot>
++<cookingpot>
+[Find] <cupboard>
+[Walk] <cupboard>
+[Close] <cupboard>
+[Find] <sink_dining_room>
+## 2 - 3
+[Find] <cookingpot>
+[Wash] <cookingpot>
+[Find] <sink_dining_room>
+[Putback] <cookingpot> <sink_dining_room>
+[Find] <dishtowel>
+[Grab] <dishtowel>
+[Wipe] <cookingpot>
+-<cookingpot>
+[Putback] <dishtowel> <sink_dining_room>
+## 1 - 2
+[Find] <cookingpot>
+[Grab] <cookingpot>
+[Walk] <dishrack>
+[Find] <dishrack>
+[Putin] <cookingpot> <dishrack>

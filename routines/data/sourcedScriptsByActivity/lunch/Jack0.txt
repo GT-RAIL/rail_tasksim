@@ -1,0 +1,53 @@
+## 0-2
+[Walk] <dining_room>
+[Walk] <fridge>
+[Open] <fridge>
+
+## 0-1
+[Find] <food_chicken>
+[Grab] <food_chicken>
+[Close] <fridge>
+
+## 2-3
+[Walk] <oven>
+[Find] <oven>
+[Open] <oven>
+[Putin] <food_chicken> <oven>
+[Close] <oven>
+[Switchon] <oven>
+
+## 25-30
+[Walk] <bed>
+[Lie] <bed>
+[Sleep]
+[Standup]
+
+## 0-1
+[Walk] <oven>
+[Find] <oven>
+[Switchoff] <oven>
+[Open] <oven>
+[Find] <food_chicken>
+[Grab] <food_chicken>
+[Close] <oven>
+
+## 0-1
+[Find] <table_dining_room>
+[Putback] <food_chicken> <table_dining_room>
++<food_chicken>
+
+## 10-15
+[Find] <bench>
+[Sit] <bench>
+[Eat] <food_chicken>
+[Standup]
+-<food_chicken>
+
+## 2-3
+[Find] <food_chicken>
+[Grab] <food_chicken>
+[Walk] <fridge>
+[Find] <fridge>
+[Open] <fridge>
+[Putin] <food_chicken> <fridge>
+[Close] <fridge>

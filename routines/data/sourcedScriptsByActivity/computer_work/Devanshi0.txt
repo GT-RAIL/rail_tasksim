@@ -1,0 +1,63 @@
+## 1-2
+[walk] <dining_room>
+[walk] <drinking_glass>
+## 3-5
+[find] <drinking_glass>
+[grab] <drinking_glass>
+[drink]<drinking_glass>
+[find] <desk_home_office>
+[PutBack] <drinking_glass><desk_home_office>
+[walk] <home_office>
+## 5-7
+[find] <notebook>
+[grab] <notebook>
+[find] <highlighter>
+[grab] <highlighter>
+[find] <desk_home_office>
+[PutBack] <highlighter> <desk_home_office>
+[find] <pen>
+[grab] <pen>
+[find] <desk_home_office>
+[PutBack] <pen> <desk_home_office>
+[PutBack] <notebook> <desk_home_office>
++<notebook>
++<pen>
++<highlighter>
+[find] <printer>
+[push] <printer>
+## 7-11
+[walk] <bedroom>
+[find] <bag>
+[grab] <bag>
++<bag>
+[walk] <home_office>
+[find] <headset>
+[grab] <headset>
++<headset>
+[find] <computer_home_office>
+[type] <computer_home_office>
+## 11-15
+[find] <chair_home_office>
+[sit] <chair_home_office>
+[Standup]
+-<headset>
+-<notebook>
+-<pen>
+-<highlighter>
+## 1-3
+[find] <desk_home_office>
+[PutBack] <headset> <desk_home_office>
+[PutBack] <bag> <desk_home_office>
+-<bag>
+## 3-5
+[find] <drinking_glass>
+[grab] <drinking_glass>
+[find] <kitchen_counter>
+[PutBack] <drinking_glass><kitchen_counter>
+## 3-5
+[find] <bag>
+[grab] <bag>
+[find] <dresser>
+[PutBack] <bag><dresser>
+
+

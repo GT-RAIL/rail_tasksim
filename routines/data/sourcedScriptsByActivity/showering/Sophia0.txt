@@ -1,0 +1,60 @@
+## 1-2
+[Walk] <bathroom>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+## 1-2
+[Find] <face_soap>
+[Grab] <face_soap>
+[Find] <shampoo>
+[Grab] <shampoo>
+## 1-2
+[Walk] <shower>
+[Putin] <face_soap> <shower>
++<face_soap>
+[Putin] <shampoo> <shower>
++<shampoo>
+[Walk] <bathroom_cabinet>
+## 1-2
+[Find] <conditioner>
+[Grab] <conditioner>
+[Walk] <shower>
+[Putin] <conditioner> <shower>
++<conditioner>
+## 1-2
+[Walk] <towel_rack>
+[Find] <towel>
+[Grab] <towel>
+## 1-2
+[Walk] <shower>
+[Putin] <towel> <shower>
++<towel>
+## 5-20
+Switchon <shower>
+Switchoff <shower>
+-<face_soap>
+-<shampoo>
+-<conditioner>
+-<towel>
+## 1-2
+[Grab] <face_soap>
+[Grab] <shampoo>
+[Walk] <bathroom_cabinet>
+## 1-2
+[Putin] <face_soap> <bathroom_cabinet>
+[Putin] <shampoo> <bathroom_cabinet>
+[Walk] <shower>
+## 1-2
+[Grab] <conditioner>
+[Walk] <bathroom_cabinet>
+[Putin] <conditioner> <bathroom_cabinet>
+## 1-2
+[Find] <hairdryer>
+[Grab] <hairdryer>
+## 5-10
+[Walk] <bathroom_counter>
+[Switchon] <hairdryer>
+[Switchoff] <hairdryer>
+## 1-2
+[Walk] <bathroom_cabinet>
+[Putin] <hairdryer> <bathroom_cabinet>
+[Close] <bathroom_cabinet>

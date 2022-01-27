@@ -1,0 +1,27 @@
+## 0-1
+[Walk] <curtain_bedroom>
+
+## 1-2
+[Walk] <light_bedroom>
+[Switchoff] <light_bedroom>
+
+## 1-2
+[Walk] <alarm_clock>
+[Switchon] <alarm_clock>
++<alarm_clock>
+[Walk] <bed>
+
+## 480-500
+[Find] <bed>
+[Lie] <bed>
+
+## 1-2
+[Standup]
+[Walk] <alarm_clock>
+[Find] <alarm_clock>
+[Switchoff] <alarm_clock>
+-<alarm_clock>
+
+## 1-2
+[Walk] <curtain_bedroom>
+[Open] <curtain_bedroom>
