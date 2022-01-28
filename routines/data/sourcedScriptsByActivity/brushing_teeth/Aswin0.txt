@@ -1,0 +1,13 @@
+## 5 - 8
+[Walk] <bathroom>
+[Find] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <toothbrush>
+[Grab] <toothbrush>
+[Find] <tooth_paste>
+[Grab] <tooth_paste>
+[Putin] <tooth_paste><toothbrush>
+[Rinse] <toothbrush>
+[Wash] <toothbrush>
+[Putback] <toothbrush><bathroom_cabinet>
+[Close] <bathroom_cabinet>   
