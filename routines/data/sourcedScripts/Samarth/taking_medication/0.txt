@@ -1,0 +1,46 @@
+## 1-2
+[Walk] <dining_room>
+[Find] <cupboard>
+[Walk] <cupboard>
+[Open] <cupboard>
+
+## 1-2
+[Find] <water_glass>
+[Grab] <water_glass>
+[Close] <cupboard>
+
+## 2-3
+[Find] <faucet_dining_room>
+[Walk] <faucet_dining_room>
+[Switchon] <faucet_dining_room>
+[Find] <water>
+[Grab] <water>
+[Pour] <water> <water_glass>
+[Switchoff] <faucet_dining_room>
+
+## 2-3
+[Walk] <bathroom>
+[Find] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <bathroom_counter>
+[Putback] <water_glass> <bathroom_counter>
+[Find] <painkillers>
+[Grab] <painkillers>
+
+## 1-2
+[Open] <painkillers>
+[Find] <water_glass>
+[Pour] <painkillers> <water_glass>
+
+## 1-2
+[Grab] <water_glass>
+[Drink] <water_glass>
+
+## 1-2
+[Putback] <painkillers> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
+
+## 1-2
+[Walk] <dining_room>
+[Find] <faucet_dining_room>
+[Putback] <water_glass> <faucet_dining_room>
