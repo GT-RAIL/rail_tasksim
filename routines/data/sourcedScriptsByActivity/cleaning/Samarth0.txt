@@ -1,0 +1,71 @@
+## 1-2
+[Walk] <dining_room>
+[Find] <cupboard>
+[Open] <cupboard>
+
+## 2-3
+[Find] <sponge>
+[Grab] <sponge>
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+
+## 1-2
+[Walk] <sink_dining_room>
+[Find] <sink_dining_room>
+[Putback] <sponge> <sink_dining_room>
+[Putback] <drinking_glass> <sink_dining_room>
++<drinking_glass>
+
+## 1-2
+[Walk] <cupboard>
+[Find] <dish_soap>
+[Grab] <dish_soap>
+[Close] <cupboard>
+
+## 3-4
+[Walk] <sink_dining_room>
+[Find] <sink_dining_room>
+[Putback] <dish_soap> <sink_dining_room>
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Find] <faucet_dining_room>
+[Switchon] <faucet_dining_room>
+[Rinse] <drinking_glass>
+[Find] <sink_dining_room>
+[Putback] <drinking_glass> <sink_dining_room>
+
+## 2-3
+[Find] <dish_soap>
+[Grab] <dish_soap>
+[Find] <sponge>
+[Grab] <sponge>
+[Pour] <dish_soap> <sponge>
+[Find] <sink_dining_room>
+[Putback] <dish_soap> <sink_dining_room>
+
+## 2-3
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Wash] <drinking_glass>
+[Find] <sink_dining_room>
+[Putback] <sponge> <sink_dining_room>
+[Putback] <drinking_glass> <sink_dining_room>
+-<drinking_glass>
+
+## 2-3
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Find] <paper_towel>
+[Grab] <paper_towel>
+[Wipe] <drinking_glass>
+[Find] <kitchen_counter>
+[Putback] <paper_towel> <kitchen_counter>
+[Putback] <drinking_glass> <kitchen_counter>
+
+## 1-2
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putback] <drinking_glass> <cupboard>
+[Close] <cupboard>
