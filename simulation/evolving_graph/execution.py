@@ -33,7 +33,7 @@ class ExecutionInfo(object):
 
     def get_error_string(self):
         return ','.join(self.messages)
-
+    
 
 # ActionExecutor-s
 ###############################################################################
@@ -92,7 +92,7 @@ class WalkExecutor(ActionExecutor):
 
                 # close to object in hands
                 char_node = _get_character_node(state)
-                char_room = _get_room_node(state, char_node)
+                char_room = _get_room_node(state, node)
                 nodes_in_hands = _find_nodes_from(state, char_node, relations=[Relation.HOLDS_LH, Relation.HOLDS_RH])
                 for node_in_hands in nodes_in_hands:
                     changes.append(DeleteEdges(NodeInstance(node_in_hands), [Relation.INSIDE, Relation.CLOSE, Relation.FACING], AnyNode(), delete_reverse=True))
@@ -115,6 +115,11 @@ class WalkExecutor(ActionExecutor):
         
         char_room = _get_room_node(state, char_node)
         node_room = _get_room_node(state, node)
+        ### Maithili : You can always walk outside :) 
+        if node_room.class_name == 'outside':
+            return True
+        if char_room.class_name == 'outside' and node_room.class_name == 'dining_room':
+            return True
 
         doors = state.get_nodes_by_attr('class_name', 'door')
         doorjambs = state.get_nodes_by_attr('class_name', 'doorjamb')
@@ -221,7 +226,7 @@ class SitExecutor(ActionExecutor):
         'chair': 2,
         'loveseat': 4,
         'sofa': 6,
-        'toilet': 1,
+        'toilet': 3,
         'pianobench': 3,
         'bench': 3
     }
@@ -296,6 +301,20 @@ class GrabExecutor(ActionExecutor):
                            AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(node), add_reverse=True), 
                            AddEdges(CharacterNode(), new_relation, NodeInstance(node)), 
                            AddEdges(NodeInstance(node), Relation.INSIDE, NodeInstance(char_room))]
+                ### Maithili : Grab all objects on/inside the one being grabbed
+                nodes_inside_grabbed = _find_nodes_to(state, node, [Relation.INSIDE])
+                nodes_on_grabbed = _find_nodes_to(state, node, [Relation.ON])
+                for indirect_node in nodes_inside_grabbed + nodes_on_grabbed:
+                    changes += [DeleteEdges(NodeInstance(indirect_node), [Relation.ON, Relation.INSIDE, Relation.CLOSE], AnyNode(), delete_reverse=True),
+                           AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(indirect_node), add_reverse=True), 
+                           AddEdges(CharacterNode(), new_relation, NodeInstance(indirect_node)), 
+                           AddEdges(NodeInstance(indirect_node), Relation.INSIDE, NodeInstance(char_room))]
+                for indirect_node in nodes_inside_grabbed:
+                    changes += [AddEdges(NodeInstance(indirect_node), Relation.CLOSE, NodeInstance(node), add_reverse=True),
+                                AddEdges(NodeInstance(indirect_node), Relation.INSIDE, NodeInstance(node))]
+                for indirect_node in nodes_on_grabbed:
+                    changes += [AddEdges(NodeInstance(indirect_node), Relation.CLOSE, NodeInstance(node), add_reverse=True),
+                                AddEdges(NodeInstance(indirect_node), Relation.ON, NodeInstance(node))]
                 new_close, relation = _find_first_node_from(state, node, [Relation.ON, Relation.INSIDE, Relation.CLOSE])
                 if new_close is not None:
                     changes += [AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(new_close), add_reverse=True),
@@ -386,13 +405,21 @@ class PutExecutor(ActionExecutor):
         if src_node is None or dest_node is None:
             info.script_object_found_error(current_line.object() if src_node is None else current_line.subject())
         elif _check_puttable(state, src_node, dest_node, self.relation, info):
-            yield state.change_state(
-                [DeleteEdges(CharacterNode(), [Relation.HOLDS_LH, Relation.HOLDS_RH], NodeInstance(src_node)),
-                 AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
-                 AddEdges(NodeInstance(src_node), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
-                 AddEdges(NodeInstance(src_node), self.relation, NodeInstance(dest_node)),
-                 ClearExecDataKey((Action.GRAB, src_node.id))]
-            )
+            ### Maithili: Putting checks to put everything on/inside the src object + if dest_obj is being held, src objects are held too
+            nodes_to_put = _find_nodes_to(state, src_node, [Relation.INSIDE, Relation.ON]) + [src_node]
+            changes = [ClearExecDataKey((Action.GRAB, src_node.id))]
+            ## if destination node is being held, these will be held in that hand
+            holding_hand = _find_holding_hand(state, dest_node)
+            for node in nodes_to_put:
+                changes += [DeleteEdges(CharacterNode(), [Relation.HOLDS_LH, Relation.HOLDS_RH], NodeInstance(node)),
+                    DeleteEdges(NodeInstance(node), [Relation.INSIDE, Relation.ON, Relation.CLOSE], AnyNode()),
+                    AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
+                    AddEdges(NodeInstance(node), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
+                    AddEdges(NodeInstance(node), self.relation, NodeInstance(dest_node)),
+                    AddEdges(NodeInstance(node), Relation.INSIDE, NodeInstance(_get_room_node(state, _get_character_node(state))))]
+                if holding_hand is not None:
+                    changes += [AddEdges(CharacterNode(), holding_hand, NodeInstance(node))]
+            yield state.change_state(changes)
 
 
 class PutBackExecutor(ActionExecutor):
@@ -753,16 +780,18 @@ class PourExecutor(ActionExecutor):
         if src_node is None or dest_node is None:
             info.script_object_found_error(current_line.object() if src_node is None else current_line.subject())
         elif self._check_pourable(state, src_node, dest_node, info):
-            changes = [AddEdges(NodeInstance(src_node), Relation.INSIDE, NodeInstance(dest_node))]
+            ### Maithili : Suppressed pour action (no change happens on pour)            
+            changes = []
+            # changes = [AddEdges(NodeInstance(src_node), Relation.INSIDE, NodeInstance(dest_node))]
             if src_node.class_name == 'water':
                 changes += [DeleteEdges(CharacterNode(), [Relation.HOLDS_LH, Relation.HOLDS_RH], NodeInstance(src_node))]
             yield state.change_state(changes)
 
     def _check_pourable(self, state: EnvironmentState, src_node: GraphNode, dest_node: GraphNode, info: ExecutionInfo):
 
-        if Property.POURABLE not in src_node.properties and Property.DRINKABLE not in src_node.properties:
-            info.error('{} is not pourable or drinkable', src_node)
-            return False
+        # if Property.POURABLE not in src_node.properties and Property.DRINKABLE not in src_node.properties and Property.CREAM not in src_node.properties:
+        #     info.error('{} is not pourable or drinkable', src_node)
+        #     return False
 
         if Property.RECIPIENT not in dest_node.properties and dest_node.class_name not in ["hands_both", "sponge", "face"]:
             info.error('{} is not recipient', dest_node)
@@ -1020,19 +1049,20 @@ class EatExecutor(ActionExecutor):
         if not _is_character_close_to(state, node):
             info.error('{} is not close to {}', _get_character_node(state), node)
             return False
-            
-        if Property.EATABLE in node.properties:
-            return True
-        else:
-            nodes_in_objs = _find_nodes_to(state, node, relations=[Relation.ON])
-            if len(nodes_in_objs) == 0:
-                info.error('{} is not eatable', node)
-                return False
-            elif any([Property.EATABLE in node.properties for node in nodes_in_objs]):
-                return True
-            else:
-                info.error('none of object on {} is eatable', node)
-                return False
+        ### Maithili : Suppressed eat checks            
+        # if Property.EATABLE in node.properties:
+        #     return True
+        # else:
+        #     nodes_in_objs = _find_nodes_to(state, node, relations=[Relation.ON])
+        #     if len(nodes_in_objs) == 0:
+        #         info.error('{} is not eatable', node)
+        #         return False
+        #     elif any([Property.EATABLE in node.properties for node in nodes_in_objs]):
+        #         return True
+        #     else:
+        #         info.error('none of object on {} is eatable', node)
+        #         return False
+        return True
 
 
 class SleepExecutor(ActionExecutor):

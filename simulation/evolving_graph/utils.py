@@ -8,7 +8,7 @@ from evolving_graph.environment import EnvironmentGraph, Property, Room
 from evolving_graph.execution import SitExecutor, LieExecutor
 
 
-random.seed(123)
+# random.seed(123)
 
 
 def load_graph(file_name):

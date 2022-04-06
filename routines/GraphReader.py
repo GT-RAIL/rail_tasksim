@@ -16,7 +16,7 @@ base_dir = os.path.join(os.path.dirname(__file__), os.pardir)
 reference_graph_file = base_dir+'/example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
 base_graph_file = base_dir+'/example_graphs/CustomBareScene'+scene_num+'_graph.json'
 init_graph_file = base_dir+'/example_graphs/CustomScene'+scene_num+'_graph.json'
-unnecessary_nodes = ['floor','wall','ceiling','window','character','door','doorjamb']
+unnecessary_nodes = ['floor','wall','ceiling','window','character','doorjamb']
 
 def get_object_states(available_states, custom_options):
     object_states = []
@@ -139,8 +139,9 @@ class GraphReader():
             if e is not None:
                 if e['from_id'] == parent_id and e['relation_type'] in ["INSIDE","ON"]:
                     ne = e.copy()
-                    ne.update({"from_id":self.new_obj_id})
+                    ne.update({"from_id":self.new_obj_id, "from_class":obj})
                     self.graph_dict['edges'].append(ne)
+        self.usable_nodes_by_room['dining_room'][obj] = self.new_obj_id
         self.new_obj_id += 1
     
     def write(self, filename):

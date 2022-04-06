@@ -340,6 +340,7 @@
     ],
     "coffee_filter": [
         "GRABBABLE",
+        "RECIPIENT",
         "HAS_PAPER",
         "MOVABLE"
     ],
@@ -1422,7 +1423,9 @@
         "CLOTHES",
         "MOVABLE"
     ],
-    "shower": [],
+    "shower": [
+        "HAS_SWITCH"
+    ],
     "shredder": [
         "HAS_SWITCH",
         "CONTAINERS",

@@ -16,7 +16,7 @@ from evolving_graph.execution import ScriptExecutor
 from evolving_graph.environment import EnvironmentGraph
 
 
-random.seed(123)
+# random.seed(123)
 verbose = True
 dump = True
 multi_process = True
