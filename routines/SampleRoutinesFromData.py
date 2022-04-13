@@ -13,6 +13,7 @@ import multiprocessing
 import sys
 
 from sklearn.utils import resample
+from torch import initial_seed
 sys.path.append('..')
 sys.path.append('../simulation')
 
@@ -26,7 +27,9 @@ from ProgramExecutor import read_program
 from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options
 from postprocess_viz import dump_visuals
 
-# random.seed(23424)
+set_seed = 23424
+random.seed(set_seed)
+np.random.seed(set_seed)
 
 def time_mins(mins, hrs, day=0):
     return (((day)*24)+hrs)*60+mins
@@ -77,7 +80,8 @@ edge_classes = ["INSIDE", "ON"]
 class SamplingFailure(Exception):
     pass
 
-def get_script_files_list():
+def get_script_files_list(n):
+    random.seed(initial_seed+n)
     files_list = {}
     directory = os.path.join('data/sourcedScriptsByActivity')
     for activity in os.listdir(directory):
@@ -88,6 +92,7 @@ def get_script_files_list():
         files_list[activity] = f
     files_list["come_home"] = files_list["leave_home"]
     files_list["leaving_home_and_coming_back"] = files_list["leave_home"]
+    random.seed(initial_seed)
     return files_list
 
 # %% Activity
@@ -459,15 +464,15 @@ def main(sampler_name, output_directory, verbose, script_files_list):
     sampler = ScheduleDistributionSampler(type=sampler_name)
     sampler.plot(os.path.join(output_directory,'schedule_distribution.jpg'))
 
-    pool = multiprocessing.Pool()
+    # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
         make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), verbose)
         # pool.apply_async(make_routine, args = (routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     for routine_num in range(info['num_test_routines']):
         make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), verbose)
         # pool.apply_async(make_routine, args=(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
-    pool.close()
-    pool.join()
+    # pool.close()
+    # pool.join()
 
     use_per_script = {('_'.join(path.split('/')[-2:]))[:-4]:0 for path in glob.glob('data/sourcedScriptsByActivity/*/*.txt')}
     activity_over_time = {act:{t:0 for t in np.arange(info['start_time'], info['end_time'], 5)} for act in activity_map.values()}
@@ -589,22 +594,26 @@ if __name__ == "__main__":
         else:
             raise InterruptedError()
 
-    script_files = get_script_files_list()
-
+    n = 0
     if args.loop_through_all:
         os.makedirs(args.path)
         if args.sampler.lower() == 'persona':
             for p in persona_options:
-                main(p, os.path.join(args.path,p), args.verbose, script_files)
+                n += 1
+                main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n))
         if args.sampler.lower() == 'individual':
             for i in individual_options:
-                main(i, os.path.join(args.path,i), args.verbose, script_files)
+                n += 1
+                main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n))
     else:
         if args.sampler.lower() == 'persona':
-            main(random.choice(persona_options), args.path, args.verbose, script_files)
+            n += 1
+            main(random.choice(persona_options), args.path, args.verbose, get_script_files_list(n))
         elif args.sampler.lower() == 'individual':
-            main(random.choice(individual_options), args.path, args.verbose, script_files)
+            n += 1
+            main(random.choice(individual_options), args.path, args.verbose, get_script_files_list(n))
         else:
-            main(random.choice(persona_options + individual_options), args.path, args.verbose, script_files)
+            n += 1
+            main(random.choice(persona_options + individual_options), args.path, args.verbose, get_script_files_list(n))
     
     dump_visuals(args.path)

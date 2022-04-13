@@ -1,0 +1,695 @@
+{
+    "breakfast": {
+        "has": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "skips": [
+            "ACXP8KHFX06KR",
+            "A2146E0NJ4893F",
+            "A23KAJRDVCVGOE",
+            "AQ5KOKZQSZU0B"
+        ]
+    },
+    "lunch": {
+        "has": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "skips": [
+            "ACXP8KHFX06KR",
+            "A1KYKDX6XH90OT",
+            "APHOTULGVIEVH",
+            "AM4CVEUB9KITP"
+        ]
+    },
+    "dinner": {
+        "has": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "skips": [
+            "A26M997VYVK0E6"
+        ]
+    },
+    "computer_work": {
+        "less": [
+            "A1KYKDX6XH90OT",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A3GWCILDIQLY6U"
+        ],
+        "normal": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "more": [
+            "A26M997VYVK0E6",
+            "AQ5KOKZQSZU0B"
+        ]
+    },
+    "going_to_the_bathroom": {
+        "uses_bathroom": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "does_not_use_bathroom": []
+    },
+    "leave_home": {
+        "morning": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A2146E0NJ4893F",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A3GWCILDIQLY6U"
+        ],
+        "evening": [
+            "A34SIGOLUGKIHJ",
+            "AM4CVEUB9KITP"
+        ],
+        "multiple_times": [
+            "APHOTULGVIEVH",
+            "A1MS6RMVVATCNE"
+        ],
+        "not_at_all": [
+            "A2P65VCJIAZOYW",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ]
+    },
+    "come_home": {
+        "morning": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A2146E0NJ4893F",
+            "A33L61XKPX76DB"
+        ],
+        "evening": [
+            "A34SIGOLUGKIHJ",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A2E3V6BKN6ZRFX"
+        ],
+        "multiple_times": [
+            "A1KYKDX6XH90OT",
+            "A1MS6RMVVATCNE"
+        ],
+        "not_at_all": [
+            "A23KAJRDVCVGOE",
+            "A26M997VYVK0E6",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ]
+    },
+    "playing_music": {
+        "morning": [
+            "A1KYKDX6XH90OT",
+            "A23KAJRDVCVGOE",
+            "AM4CVEUB9KITP",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6"
+        ],
+        "evening": [
+            "A33L61XKPX76DB",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A2146E0NJ4893F",
+            "A2P65VCJIAZOYW",
+            "A2E3V6BKN6ZRFX",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y"
+        ],
+        "not_at_all": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W"
+        ]
+    },
+    "getting_dressed": {
+        "morning": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "evening": [
+            "A1MS6RMVVATCNE",
+            "A3GWCILDIQLY6U"
+        ],
+        "multiple_times": [
+            "A2K1QVO3F9M9Z9"
+        ],
+        "not_at_all": [
+            "A34SIGOLUGKIHJ",
+            "A2P65VCJIAZOYW"
+        ]
+    },
+    "cleaning": {
+        "morning": [
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "AM4CVEUB9KITP",
+            "A26M997VYVK0E6",
+            "A1SH1K3O9YE16Y"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "APHOTULGVIEVH",
+            "A1MS6RMVVATCNE",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A1KYKDX6XH90OT",
+            "A2E3V6BKN6ZRFX",
+            "A3GWCILDIQLY6U"
+        ],
+        "not_at_all": [
+            "ACXP8KHFX06KR",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A2P65VCJIAZOYW",
+            "A33L61XKPX76DB",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W"
+        ]
+    },
+    "socializing": {
+        "morning": [
+            "A1KYKDX6XH90OT",
+            "A2P65VCJIAZOYW",
+            "A26M997VYVK0E6"
+        ],
+        "evening": [
+            "ACXP8KHFX06KR",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A33L61XKPX76DB",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "A2K1QVO3F9M9Z9",
+            "A1MS6RMVVATCNE",
+            "A2E3V6BKN6ZRFX",
+            "A1SH1K3O9YE16Y"
+        ],
+        "not_at_all": [
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP"
+        ]
+    },
+    "listening_to_music": {
+        "morning": [
+            "A34SIGOLUGKIHJ"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "A1MS6RMVVATCNE",
+            "A3GWCILDIQLY6U",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "ACXP8KHFX06KR",
+            "A1KYKDX6XH90OT",
+            "A2146E0NJ4893F",
+            "A23KAJRDVCVGOE",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A1SH1K3O9YE16Y"
+        ],
+        "not_at_all": [
+            "A15VCKELIEEPJN",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A8UJNIY9R8S7W"
+        ]
+    },
+    "taking_medication": {
+        "morning": [
+            "ACXP8KHFX06KR",
+            "A1KYKDX6XH90OT",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A26M997VYVK0E6",
+            "A8UJNIY9R8S7W"
+        ],
+        "evening": [
+            "A2E3V6BKN6ZRFX",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A22HIX1M4QXZBB",
+            "A34SIGOLUGKIHJ"
+        ],
+        "not_at_all": [
+            "A1FVXS8IM5QYO8",
+            "A2146E0NJ4893F",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A33L61XKPX76DB",
+            "AQ5KOKZQSZU0B",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y"
+        ]
+    },
+    "take_out_trash": {
+        "morning": [
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "A33L61XKPX76DB"
+        ],
+        "evening": [
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "AQ5KOKZQSZU0B",
+            "A3GWCILDIQLY6U"
+        ],
+        "multiple_times": [
+            "A2P65VCJIAZOYW"
+        ],
+        "not_at_all": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A2E3V6BKN6ZRFX",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ]
+    },
+    "kitchen_cleaning": {
+        "morning": [
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "AM4CVEUB9KITP",
+            "A33L61XKPX76DB",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y"
+        ],
+        "not_at_all": [
+            "A1FVXS8IM5QYO8",
+            "A2146E0NJ4893F",
+            "A23KAJRDVCVGOE",
+            "A15VCKELIEEPJN",
+            "A2P65VCJIAZOYW"
+        ]
+    },
+    "wash_dishes": {
+        "morning": [
+            "A1FVXS8IM5QYO8",
+            "AM4CVEUB9KITP",
+            "A1MS6RMVVATCNE",
+            "A12VQHPT0YHMIS"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A2P65VCJIAZOYW",
+            "A1SH1K3O9YE16Y"
+        ],
+        "multiple_times": [
+            "A34SIGOLUGKIHJ",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B"
+        ],
+        "not_at_all": [
+            "A1KYKDX6XH90OT",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A26M997VYVK0E6",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U"
+        ]
+    },
+    "brushing_teeth": {
+        "morning": [
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A2E3V6BKN6ZRFX",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y"
+        ],
+        "evening": [
+            "A2P65VCJIAZOYW"
+        ],
+        "multiple_times": [
+            "A22HIX1M4QXZBB",
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "A33L61XKPX76DB",
+            "AQ5KOKZQSZU0B",
+            "A3GWCILDIQLY6U",
+            "A12VQHPT0YHMIS"
+        ],
+        "not_at_all": [
+            "A23KAJRDVCVGOE"
+        ]
+    },
+    "laundry": {
+        "morning": [
+            "A1FVXS8IM5QYO8",
+            "A1KYKDX6XH90OT",
+            "AM4CVEUB9KITP",
+            "A26M997VYVK0E6",
+            "A2E3V6BKN6ZRFX"
+        ],
+        "evening": [
+            "A33L61XKPX76DB",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A2P65VCJIAZOYW"
+        ],
+        "not_at_all": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A1MS6RMVVATCNE",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y"
+        ]
+    },
+    "hand_wash_clothes": {
+        "morning": [
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A2E3V6BKN6ZRFX",
+            "A1SH1K3O9YE16Y"
+        ],
+        "evening": [
+            "A2146E0NJ4893F",
+            "A2K1QVO3F9M9Z9",
+            "A3GWCILDIQLY6U"
+        ],
+        "multiple_times": [
+            "A1KYKDX6XH90OT"
+        ],
+        "not_at_all": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A15VCKELIEEPJN",
+            "AM4CVEUB9KITP",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A12VQHPT0YHMIS"
+        ]
+    },
+    "reading": {
+        "morning": [
+            "A1KYKDX6XH90OT",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A2P65VCJIAZOYW",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A2E3V6BKN6ZRFX"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "A33L61XKPX76DB",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "APHOTULGVIEVH",
+            "AM4CVEUB9KITP",
+            "A3GWCILDIQLY6U"
+        ],
+        "not_at_all": [
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "A15VCKELIEEPJN",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A1SH1K3O9YE16Y"
+        ]
+    },
+    "showering": {
+        "morning": [
+            "A22HIX1M4QXZBB",
+            "ACXP8KHFX06KR",
+            "A1FVXS8IM5QYO8",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "AM4CVEUB9KITP",
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A2E3V6BKN6ZRFX",
+            "AQ5KOKZQSZU0B",
+            "A1SH1K3O9YE16Y",
+            "A12VQHPT0YHMIS"
+        ],
+        "evening": [
+            "A34SIGOLUGKIHJ",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U"
+        ],
+        "multiple_times": [
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN"
+        ],
+        "not_at_all": [
+            "A1KYKDX6XH90OT",
+            "A2P65VCJIAZOYW"
+        ]
+    },
+    "vaccuum_cleaning": {
+        "morning": [
+            "A1KYKDX6XH90OT",
+            "A34SIGOLUGKIHJ",
+            "AM4CVEUB9KITP",
+            "AQ5KOKZQSZU0B"
+        ],
+        "evening": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "A1MS6RMVVATCNE",
+            "A2E3V6BKN6ZRFX",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [],
+        "not_at_all": [
+            "ACXP8KHFX06KR",
+            "A2146E0NJ4893F",
+            "APHOTULGVIEVH",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "A2P65VCJIAZOYW",
+            "A26M997VYVK0E6",
+            "A33L61XKPX76DB",
+            "A8UJNIY9R8S7W",
+            "A3GWCILDIQLY6U",
+            "A1SH1K3O9YE16Y"
+        ]
+    },
+    "watching_tv": {
+        "morning": [
+            "A1MS6RMVVATCNE",
+            "A26M997VYVK0E6",
+            "A1SH1K3O9YE16Y"
+        ],
+        "evening": [
+            "ACXP8KHFX06KR",
+            "A23KAJRDVCVGOE",
+            "A2K1QVO3F9M9Z9",
+            "A15VCKELIEEPJN",
+            "AQ5KOKZQSZU0B",
+            "A8UJNIY9R8S7W",
+            "A12VQHPT0YHMIS"
+        ],
+        "multiple_times": [
+            "A22HIX1M4QXZBB",
+            "A1FVXS8IM5QYO8",
+            "A34SIGOLUGKIHJ",
+            "A2146E0NJ4893F",
+            "AM4CVEUB9KITP",
+            "A2P65VCJIAZOYW",
+            "A33L61XKPX76DB",
+            "A3GWCILDIQLY6U"
+        ],
+        "not_at_all": [
+            "A1KYKDX6XH90OT",
+            "APHOTULGVIEVH",
+            "A2E3V6BKN6ZRFX"
+        ]
+    }
+}
