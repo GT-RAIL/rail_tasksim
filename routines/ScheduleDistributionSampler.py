@@ -1,20 +1,14 @@
 from argparse import ArgumentError
 import random
+import os
 import json
 from math import floor
-from tokenize import cookie_re
 import numpy as np
 # import seaborn as sns
 import matplotlib.pyplot as plt
 from postprocess_viz import color_map
 
 personas = {}
-
-# {"has":[], "skips":[]}, 
-# {"less":[], "normal":[], "more":[]}, 
-# {"uses_bathroom":[], "does_not_use_bathroom":[]}, 
-# {"morning":[], "evening":[], "multiple_times":[], "not_at_all":[]}, 
-
 # early riser, works long hours, has less time for chores
 personas['hard_worker'] = {
     'leave_home' : 'morning',
@@ -149,6 +143,13 @@ with open('data/personaBasedSchedules/individual_histograms.json') as f:
     individual_histograms = json.load(f)
     individual_options = list(individual_histograms.keys())
 
+seeds = {ind:i for i,ind in enumerate(individual_options)}
+seeds['hard_worker'] = len(individual_options)
+seeds['home_maker'] = len(individual_options) + 1
+seeds['work_from_home'] = len(individual_options) + 2
+seeds['senior'] = len(individual_options) + 3
+
+
 activity_map = {
 "brush_teeth" : "brushing_teeth",
 "bathe_shower" : "showering",
@@ -179,6 +180,16 @@ activity_map = {
 "sleep" : None
 }
 start_times = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
+
+def KLdivergence(act_hist1, act_hist2):
+    eps = 1e-7
+    activities = act_hist1.keys()
+    dist_p = np.array([act_hist1[act] for act in activities]) + eps
+    dist_p_norm = dist_p/sum(sum(dist_p))
+    # assert(np.isclose(sum(sum(dist_p)), len(start_times))), str(sum(sum(dist_p))) + ' , ' + str(len(start_times))
+    dist_q = np.array([act_hist2[act] for act in activities]) + eps
+    kl_div = sum(sum(dist_p_norm * np.log(dist_p/dist_q)))
+    return kl_div
 
 class ScheduleDistributionSampler():
     def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf")):
@@ -243,20 +254,38 @@ class ScheduleDistributionSampler():
     def remove(self, activity):
         self.removed_activities.append(activity)
 
-    def plot(self, filepath = None):
+    def plot(self, dirname = None):
         # clrs = sns.color_palette("pastel") + sns.color_palette("dark") + sns.color_palette()
         fig, ax = plt.subplots()
+        fig2, ax2 = plt.subplots()
+        fig3, ax3 = plt.subplots()
         fig.set_size_inches(27, 18.5)
+        fig2.set_size_inches(27, 18.5)
+        fig3.set_size_inches(27, 18.5)
+        activity_list = []
         base = np.zeros_like(self.activity_histogram[self.activities[0]])
-        for activity, histogram in self.activity_histogram.items():         
+        for idx, (activity, histogram) in enumerate(self.activity_histogram.items()):
             ax.bar(start_times, histogram, label=activity, bottom=base, color = color_map[activity])
             base += histogram
+            ax2.bar(start_times, histogram, bottom=idx, color = color_map[activity])
+            activity_list.append(activity)
+            ax3.plot(start_times, histogram, label=activity, color = color_map[activity], linewidth=2)
         ax.set_xticks(start_times)
+        ax2.set_xticks(start_times)
+        ax3.set_xticks(start_times)
         ax.set_xticklabels([str(s)+':00' for s in start_times])
+        ax2.set_xticklabels([str(s)+':00' for s in start_times])
+        ax3.set_xticklabels([str(s)+':00' for s in start_times])
+        ax2.set_yticks(np.arange(len(activity_list)))
+        ax2.set_yticklabels(activity_list)
         ax.set_title(self.label)
+        ax2.set_title(self.label)
+        ax3.set_title(self.label)
         plt.legend()
-        if filepath is not None:
-            plt.savefig(filepath)
+        if dirname is not None:
+            fig.savefig(os.path.join(dirname, 'sampling_distribution.jpeg'))
+            fig2.savefig(os.path.join(dirname, 'sampling_distribution_separated.jpeg'))
+            fig3.savefig(os.path.join(dirname, 'sampling_distribution_lines.jpeg'))
         else:
             plt.show()
 
