@@ -1,0 +1,10 @@
+playing_music
+02.txt
+[WALK] <home_office> (241) [1]
+[FIND] <instrument_guitar> (1124) [2]
+[GRAB] <instrument_guitar> (1124) [3]
+[WALK] <chair> (271) [4]
+[SIT] <chair> (271) [5]
+[STANDUP] [6]
+[WALK] <table> (270) [7]
+[PUTBACK] <instrument_guitar> (1124) <table> (270) [8]

@@ -1,0 +1,12 @@
+## 1-2
+[Find] <comforter>
+[Push] <comforter>
+-<comforter>
+[Standup]
+## 1-2
+[Walk] <nightstand>
+[Find] <alarm_clock>
+[Grab] <alarm_clock>
+[Switchoff] <alarm_clock>
+-<alarm_clock>
+[Putback] <alarm_clock> <nightstand>

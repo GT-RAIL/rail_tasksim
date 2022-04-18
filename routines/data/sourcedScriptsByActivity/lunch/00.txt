@@ -1,0 +1,49 @@
+## 4-6
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Find] <cupboard>
+[Open] <cupboard>
+[Find] <plate>
+[Grab] <plate>
+[Close] <cupboard>
+[Find] <kitchen_counter>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Find] <table_dining_room>
+[PutBack] <plate> <table_dining_room>
+[Pour] <food_bread> <plate>
+[PutBack] <food_bread> <table_dining_room>
++<plate>
+## 3-5
+[Walk] <fridge>
+[Open] <fridge>
+[Find] <food_cheese>
+[Grab] <food_cheese>
+[Close] <fridge>
+[Walk] <table_dining_room>
+[Pour] <food_cheese> <plate>
+[PutBack] <food_cheese> <table_dining_room>
+## 8-10
+[Eat] <food_bread>
+[Eat] <food_cheese>
+## 2-3
+[Walk] <table_dining_room>
+[Find] <food_cheese>
+[Grab] <food_cheese> 
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutIn] <food_cheese> <cupboard>
+[Close] <cupboard>
+## 4-6
+[Walk] <table_dining_room>
+[Find] <plate>
+[Grab] <plate>
+[Walk] <sink_dining_room>
+[PutIn] <plate> <sink_dining_room>
+[Walk] <sink_dining_room>
+[Grab] <plate>
+[Wash] <plate>
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutIn] <plate> <cupboard>
+[Close] <cupboard>

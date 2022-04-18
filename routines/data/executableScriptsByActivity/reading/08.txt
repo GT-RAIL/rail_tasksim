@@ -1,0 +1,16 @@
+reading
+08.txt
+[WALK] <bedroom> (162) [1]
+[WALK] <bookshelf> (196) [2]
+[FIND] <book> (1021) [3]
+[GRAB] <book> (1021) [4]
+[WALK] <home_office> (241) [5]
+[WALK] <sofa> (269) [6]
+[SIT] <sofa> (269) [7]
+[FIND] <book> (1021) [8]
+[READ] <book> (1021) [9]
+[STANDUP] [10]
+[WALK] <bedroom> (162) [11]
+[WALK] <bookshelf> (196) [12]
+[FIND] <book> (1021) [13]
+[PUTBACK] <book> (1021) <bookshelf> (196) [14]

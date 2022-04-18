@@ -1,0 +1,33 @@
+##0-1
+[Walk] <outside>
+[Find] <mail>
+[Grab] <mail>
+[Walk] <dining_room>
+
+##1-2
+[Walk] <dining_room>
+[Find] <bench>
+[Putback] <mail> <bench>
+[Find] <shoes>
+[Putoff] <shoes>
+
+
+##1-2
+[Walk] <bedroom>
+[Find] <light_bedroom>
+[Switchon] <light_bedroom>
+[Find] <dresser>
+[Open] <dresser>
+[Putoff] <clothes_jacket>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Find] <dresser>
+[Putin] <clothes_jacket> <dresser>
+[Close] <dresser>
+
+## 1-2
+[Walk] <spectacles>
+[Find] <spectacles>
+[Grab] <spectacles>
+[Find] <bathroom_counter>
+[Putback] <spectacles> <bathroom_counter>

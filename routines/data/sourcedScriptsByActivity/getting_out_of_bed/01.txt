@@ -1,0 +1,24 @@
+## 1-2
+[Walk] <bedroom>
+[Walk] <alarm_clock>
+[Grab] <alarm_clock>
+[Switchon] <alarm_clock>
++<alarm_clock>
+[Walk] <nightstand>
+[Putback] <alarm_clock> <nightstand>
+[Walk] <bed>
+[Sit] <bed>
+[Find] <comforter>
+[Pull] <comforter>
+[Lie] <bed>
+[Find] <comforter>
+[Push] <comforter>
+[Standup]
+
+## 1-2
+[Walk] <nightstand>
+[Find] <alarm_clock>
+[Grab] <alarm_clock>
+[Switchoff] <alarm_clock>
+-<alarm_clock>
+[Putback] <alarm_clock> <nightstand>

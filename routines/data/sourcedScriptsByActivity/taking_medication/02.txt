@@ -1,0 +1,41 @@
+##1-2
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <painkillers>
+[Grab] <painkillers>
+[Walk] <kitchen_counter>
+[Putback] <painkillers> <kitchen_counter>
+
+##2-3
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Walk] <cupboard>
+[Close] <cupboard>
+[Walk] <kitchen_counter>
+[Walk] <faucet_dining_room>
+[Switchon] <faucet_dining_room>
+[Switchoff] <faucet_dining_room>
+[Walk] <kitchen_counter>
+[Putback] <drinking_glass> <kitchen_counter>
+
+##2-3
+[Eat] <painkillers>
+[Grab] <drinking_glass>
+[Drink] <drinking_glass>
+
+##3-4
+[Walk] <faucet_dining_room>
+[Rinse] <drinking_glass>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <drinking_glass> <cupboard>
+[Close] <cupboard>
+
+##1-2
+[Walk] <kitchen_counter>
+[Grab] <painkillers>
+[Walk] <bathroom_cabinet>
+[Putin] <painkillers> <bathroom_cabinet>
+[Close] <bathroom_cabinet>

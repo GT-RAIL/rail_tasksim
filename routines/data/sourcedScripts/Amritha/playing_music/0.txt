@@ -1,0 +1,11 @@
+##10-20
+[Walk] <home_office>
+[Find] <instrument_guitar>
+[Grab] <instrument_guitar>
+[Walk] <chair_home_office>
+[Sit] <chair_home_office>
+
+##2-3
+[Standup]
+[Walk] <table_home_office>
+[Putback] <instrument_guitar> <table_home_office>

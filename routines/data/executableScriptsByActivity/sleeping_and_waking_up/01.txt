@@ -1,0 +1,9 @@
+sleeping_and_waking_up
+01.txt
+[FIND] <comforter> (1052) [1]
+[STANDUP] [3]
+[WALK] <nightstand> (192) [4]
+[FIND] <alarm_clock> (1013) [5]
+[GRAB] <alarm_clock> (1013) [6]
+[SWITCHOFF] <alarm_clock> (1013) [7]
+[PUTBACK] <alarm_clock> (1013) <nightstand> (192) [8]

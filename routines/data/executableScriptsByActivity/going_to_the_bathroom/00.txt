@@ -1,0 +1,15 @@
+going_to_the_bathroom
+00.txt
+[WALK] <bathroom> (1) [1]
+[FIND] <light> (39) [2]
+[SWITCHON] <light> (39) [3]
+[FIND] <toilet> (15) [4]
+[SIT] <toilet> (15) [5]
+[STANDUP] [6]
+[FIND] <sink> (19) [7]
+[FIND] <faucet> (20) [8]
+[SWITCHON] <faucet> (20) [9]
+[FIND] <faucet> (20) [10]
+[SWITCHOFF] <faucet> (20) [11]
+[FIND] <light> (39) [12]
+[SWITCHOFF] <light> (39) [13]

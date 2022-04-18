@@ -1,0 +1,10 @@
+## 1-3
+[Walk] <trashcan>
+[Find] <trashcan>
+[Open] <trashcan>
+[Find] <trashbag>
+[Grab] <trashbag>
+[Close] <trashcan>
+[Walk] <outside>
+[Drop] <trashbag>
+[Walk] <dining_room>

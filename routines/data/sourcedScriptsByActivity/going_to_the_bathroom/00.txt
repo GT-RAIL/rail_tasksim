@@ -1,0 +1,16 @@
+## 0-1
+[Walk] <bathroom>
+[Find] <light_bathroom>
+[Switchon] <light_bathroom>
+## 1-10
+[Find] <toilet>
+[Sit] <toilet>
+[Standup]
+## 2-3
+[Find] <sink_bathroom>
+[Find] <faucet_bathroom>
+[Switchon] <faucet_bathroom>
+[Find] <faucet_bathroom>
+[Switchoff] <faucet_bathroom>
+[Find] <light_bathroom>
+[Switchoff] <light_bathroom>

@@ -1,0 +1,12 @@
+brushing_teeth
+03.txt
+[WALK] <bathroom> (1) [1]
+[FIND] <bathroom_cabinet> (17) [2]
+[OPEN] <bathroom_cabinet> (17) [3]
+[FIND] <toothbrush> (1202) [4]
+[GRAB] <toothbrush> (1202) [5]
+[FIND] <tooth_paste> (1201) [6]
+[GRAB] <tooth_paste> (1201) [7]
+[PUTIN] <tooth_paste> (1201) <toothbrush> (1202) [8]
+[PUTBACK] <toothbrush> (1202) <bathroom_cabinet> (17) [11]
+[CLOSE] <bathroom_cabinet> (17) [12]

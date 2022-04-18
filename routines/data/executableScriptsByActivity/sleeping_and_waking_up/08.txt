@@ -1,0 +1,15 @@
+sleeping_and_waking_up
+08.txt
+[WALK] <curtain> (204) [1]
+[WALK] <light> (212) [2]
+[SWITCHOFF] <light> (212) [3]
+[WALK] <alarm_clock> (1013) [4]
+[SWITCHON] <alarm_clock> (1013) [5]
+[WALK] <bed> (197) [6]
+[FIND] <bed> (197) [7]
+[STANDUP] [9]
+[WALK] <alarm_clock> (1013) [10]
+[FIND] <alarm_clock> (1013) [11]
+[SWITCHOFF] <alarm_clock> (1013) [12]
+[WALK] <curtain> (204) [13]
+[OPEN] <curtain> (204) [14]

@@ -1,0 +1,14 @@
+getting_out_of_bed
+08.txt
+[WALK] <curtain> (204) [1]
+[WALK] <light> (212) [2]
+[WALK] <alarm_clock> (1013) [3]
+[SWITCHON] <alarm_clock> (1013) [4]
+[WALK] <bed> (197) [5]
+[FIND] <bed> (197) [6]
+[STANDUP] [8]
+[WALK] <alarm_clock> (1013) [9]
+[FIND] <alarm_clock> (1013) [10]
+[SWITCHOFF] <alarm_clock> (1013) [11]
+[WALK] <curtain> (204) [12]
+[OPEN] <curtain> (204) [13]

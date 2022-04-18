@@ -1,0 +1,27 @@
+## 0-1
+[Find] <food_apple>
+[Grab] <food_apple>
+
+## 1-2
+[Find] <trashcan>
+[Walk] <trashcan>
+[Open] <trashcan>
+[Find] <trashbag>
+[Putin] <food_apple> <trashbag>
+[Close] <trashcan>
+
+## 2-3
+[Find] <trashcan>
+[Walk] <trashcan>
+[Open] <trashcan>
+[Find] <trashbag>
+[Grab] <trashbag>
+[Close] <trashcan>
+
+## 0-1
+[Find] <outside>
+[Walk] <outside>
+[Drop] <trashbag>
+
+## 0-1
+[Walk] <dining_room>

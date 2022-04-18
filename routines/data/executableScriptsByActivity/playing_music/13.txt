@@ -1,0 +1,13 @@
+playing_music
+13.txt
+[WALK] <home_office> (241) [1]
+[FIND] <instrument_violin> (1126) [2]
+[GRAB] <instrument_violin> (1126) [3]
+[WALK] <bedroom> (162) [4]
+[FIND] <chair> (194) [5]
+[WALK] <chair> (194) [6]
+[SIT] <chair> (194) [7]
+[STANDUP] [8]
+[GRAB] <instrument_violin> (1126) [9]
+[WALK] <home_office> (241) [10]
+[PUTBACK] <instrument_violin> (1126) <home_office> (241) [11]

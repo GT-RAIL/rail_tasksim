@@ -1,0 +1,14 @@
+sleeping
+17.txt
+[WALK] <bedroom> (162) [1]
+[WALK] <dresser> (1008) [2]
+[FIND] <dresser> (1008) [3]
+[OPEN] <dresser> (1008) [4]
+[FIND] <pajamas> (1157) [5]
+[GRAB] <pajamas> (1157) [6]
+[FIND] <dresser> (1008) [8]
+[CLOSE] <dresser> (1008) [9]
+[WALK] <light> (212) [10]
+[WALK] <bed> (197) [11]
+[FIND] <bed> (197) [12]
+[STANDUP] [16]

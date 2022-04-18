@@ -1,0 +1,10 @@
+take_out_trash
+07.txt
+[WALK] <trashcan> (99) [1]
+[FIND] <trashcan> (99) [2]
+[OPEN] <trashcan> (99) [3]
+[FIND] <trashbag> (1206) [4]
+[GRAB] <trashbag> (1206) [5]
+[CLOSE] <trashcan> (99) [6]
+[WALK] <outside> (999) [7]
+[WALK] <dining_room> (41) [9]

@@ -1,0 +1,36 @@
+## 1-2
+[Find] <spectacles>
+[Walk] <bathroom>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <face_soap>
+[Grab] <face_soap>
+## 1-2
+[Rinse] <face_soap>
+[Putin] <face_soap> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
+
+## 3-4
+[Walk] <bedroom>
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Puton] <clothes_jacket>
+[Close] <dresser>
+[Walk] <bathroom>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <comb>
+[Grab] <comb>
+
+## 0-1
+[Putin] <comb> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
+
+## 1-2
+[Walk] <dining_room>
+[Walk] <door_dining_room>
+
+## 0-1
+[Walk] <outside>

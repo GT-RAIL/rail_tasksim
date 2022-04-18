@@ -1,0 +1,74 @@
+## 30-60
+[Walk] <bedroom>
+[Find] <cellphone>
+[Type] <cellphone>
+
+## 5-6
+[Walk] <home_office>
+[Find] <chessboard>
+[Grab] <chessboard>
+[Walk] <dining_room>
+[Putback] <chessboard> <dining_room>
+
+## 5-6
+[Walk] <home_office>
+[Find] <deck_of_cards>
+[Grab] <deck_of_cards>
+[Walk] <dining_room>
+[Find] <table_dining_room>
+[Putback] <deck_of_cards> <table_dining_room>
+
+## 10-12
+[Walk] <home_office>
+[Find] <sofa_home_office>
+[Push] <sofa_home_office>
+[Walk] <dining_room>
+
+
+## 6-8
+[Find] <cupboard>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <wine_glass>
+[Grab] <wine_glass>
+[Find] <table_dining_room>
+[Putback] <wine_glass> <table_dining_room>
+[Find] <cupboard>
+[Walk] <cupboard>
+[Close] <cupboard>
+
+## 120-180
+[Walk] <sofa_home_office>
+[Sit] <sofa_home_office>
+[Standup]
+
+## 3-4
+[Walk] <chessboard>
+[Find] <chessboard>
+[Grab] <chessboard>
+[Walk] <home_office>
+[Putback] <chessboard> <home_office>
+
+## 3-4
+[Walk] <dining_room>
+[Find] <deck_of_cards>
+[Grab] <deck_of_cards>
+[Walk] <home_office>
+[Putback] <deck_of_cards> <home_office>
+
+## 10-12
+[Walk] <dining_room>
+[Find] <sofa_home_office>
+[Walk] <sofa_home_office>
+[Push] <sofa_home_office>
+[Walk] <home_office>
+
+## 15-18
+[Walk] <bathroom>
+[Find] <napkin>
+[Grab] <napkin>
+[Walk] <dining_room>
+[Find] <table_dining_room>
+[Scrub] <table_dining_room>
+[Find] <trashcan>
+[Putback] <napkin> <trashcan>

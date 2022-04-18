@@ -1,0 +1,16 @@
+## 1-2
+[walk] <bedroom>
+[find] <light_bedroom>
+[switchon] <light_bedroom>
+[find] <alarm_clock>
+[find] <book>
+[grab] <book>
+## 3-4
+[find] <table_bedroom>
+[putback] <book> <table_bedroom>
+[find] <light_bedroom>
+[Switchoff] <light_bedroom>
+## 5-6
+[find] <bed>
+[sit] <bed>
+[sleep]

@@ -1,0 +1,14 @@
+sleeping
+04.txt
+[WALK] <bedroom> (162) [1]
+[FIND] <light> (212) [2]
+[SWITCHON] <light> (212) [3]
+[FIND] <alarm_clock> (1013) [4]
+[FIND] <book> (1021) [5]
+[GRAB] <book> (1021) [6]
+[FIND] <table> (199) [7]
+[PUTBACK] <book> (1021) <table> (199) [8]
+[FIND] <light> (212) [9]
+[SWITCHOFF] <light> (212) [10]
+[FIND] <bed> (197) [11]
+[SIT] <bed> (197) [12]

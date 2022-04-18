@@ -1,0 +1,11 @@
+sleeping
+01.txt
+[WALK] <bedroom> (162) [1]
+[WALK] <alarm_clock> (1013) [2]
+[GRAB] <alarm_clock> (1013) [3]
+[SWITCHON] <alarm_clock> (1013) [4]
+[WALK] <nightstand> (192) [5]
+[PUTBACK] <alarm_clock> (1013) <nightstand> (192) [6]
+[WALK] <bed> (197) [7]
+[SIT] <bed> (197) [8]
+[FIND] <comforter> (1052) [9]

@@ -1,0 +1,18 @@
+getting_out_of_bed
+01.txt
+[WALK] <bedroom> (162) [1]
+[WALK] <alarm_clock> (1013) [2]
+[GRAB] <alarm_clock> (1013) [3]
+[SWITCHON] <alarm_clock> (1013) [4]
+[WALK] <nightstand> (192) [5]
+[PUTBACK] <alarm_clock> (1013) <nightstand> (192) [6]
+[WALK] <bed> (197) [7]
+[SIT] <bed> (197) [8]
+[FIND] <comforter> (1052) [9]
+[FIND] <comforter> (1052) [12]
+[STANDUP] [14]
+[WALK] <nightstand> (192) [15]
+[FIND] <alarm_clock> (1013) [16]
+[GRAB] <alarm_clock> (1013) [17]
+[SWITCHOFF] <alarm_clock> (1013) [18]
+[PUTBACK] <alarm_clock> (1013) <nightstand> (192) [19]

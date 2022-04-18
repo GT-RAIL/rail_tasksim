@@ -1,0 +1,46 @@
+##1-2
+[Walk] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <disinfectant_wipes>
+[Grab] <disinfectant_wipes>
+
+##7-10
+[Walk] <kitchen_counter>
+[wipe] <kitchen_counter>
+[Walk] <table_dining_room>
+[wipe] <table_dining_room>
+[Walk] <bathroom_counter>
+[Wipe] <bathroom_counter>
+[Walk] <table_bedroom>
+[Wipe] <table_bedroom>
+
+##1-2
+[Walk] <kitchen_cabinet>
+[Putin] <disinfectant_wipes> <kitchen_cabinet>
+
+##10-12
+[Find] <vacuum_cleaner>
+[Walk] <vacuum_cleaner>
+[Grab] <vacuum_cleaner>
+[Walk] <bedroom>
+[Plugin] <vacuum_cleaner>
+[Switchon] <vacuum_cleaner>
+
+##10-12
+[Switchoff] <vacuum_cleaner>
+[Plugout] <vacuum_cleaner>
+[Walk] <home_office>
+[Plugin] <vacuum_cleaner>
+[Switchon] <vacuum_cleaner>
+
+##10-12
+[Switchoff] <vacuum_cleaner>
+[Plugout] <vacuum_cleaner>
+[Walk] <dining_room>
+[Plugin] <vacuum_cleaner>
+[Switchon] <vacuum_cleaner>
+
+##2-3
+[Walk] <kitchen_cabinet>
+[Putin] <vacuum_cleaner> <kitchen_cabinet>
+[Close] <kitchen_cabinet>

@@ -1,0 +1,35 @@
+## 0-1
+[Walk] <outside>
+[Find] <groceries>
+[Grab] <groceries>
+[Find] <mail>
+[Grab] <mail>
+
+## 3-5
+[Walk] <dining_room>
+[Find] <cupboard>
+[Putback] <mail> <cupboard>
+[Open] <cupboard>
+[Putin] <groceries> <cupboard>
+[Close] <cupboard>
+
+## 3-5
+[Walk] <dining_room>
+[Find] <cupboard>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <mail>
+[Grab] <mail>
+[Putin] <mail> <cupboard>
+[Close] <cupboard>
+
+## 1-2
+[Walk] <bedroom>
+[Putoff] <clothes_jacket>
+[Walk] <clothes_jacket>
+[Grab] <clothes_jacket>
+[Find] <dresser>
+[Walk] <dresser>
+[Open] <dresser>
+[Putback] <clothes_jacket> <dresser>
+[Close] <dresser>

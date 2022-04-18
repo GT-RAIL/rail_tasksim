@@ -1,0 +1,26 @@
+## 1-2
+[Walk] <bedroom>
+[Walk] <bag>
+[Find] <bag>
+[Grab] <bag>
+## 1-2
+[Walk] <dining_room>
+[Walk] <kitchen_cabinet>
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <trashbag>
+[Grab] <trashbag>
+## 0-2
+[Walk] <trashcan>
+[Drop] <trashbag>
+[Find] <trashcan>
+[Open] <trashcan>
+[Find] <trashbag>
+[Grab] <trashbag>
+[Putin] <trashbag> <trashcan>
+[Putin] <bag> <trashbag>
+## 0-1
+[Find] <trashbag>
+[Grab] <trashbag>
+[Walk] <shoe_rack>
+[Drop] <trashbag>

@@ -1,0 +1,21 @@
+## 1-2
+[Walk] <bathroom>
+[Walk] <toothbrush>
+[Find] <toothbrush>
+[Grab] <toothbrush>
+## 0-1
+[Walk] <bathroom_cabinet>
+[Find] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <tooth_paste>
+[Grab] <tooth_paste>
+[Putback] <tooth_paste> <toothbrush>
+## 2-3
+[Walk] <faucet_bathroom>
+[Switchon] <faucet_bathroom>
+[Rinse] <toothbrush>
+## 0-1
+[Wash] <toothbrush>
+[Walk] <toothbrush_holder>
+[Find] <toothbrush_holder>
+[Putback] <toothbrush> <toothbrush_holder>

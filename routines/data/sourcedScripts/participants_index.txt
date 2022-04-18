@@ -1,0 +1,1 @@
+{"Abhineet": 1, "Amritha": 2, "Aswin": 3, "Devanshi": 4, "Ethan": 5, "Henry": 6, "Ian": 7, "Jack": 8, "JackKeller": 9, "Jeffrey": 10, "Joanne": 11, "Karam": 12, "Karthik": 13, "Kotoe": 14, "Mackenzie": 15, "Maya": 16, "Raymond": 17, "Rohan": 18, "Samarth": 19, "Samina": 20, "Sophia": 21, "Vidushi": 22, "participants_index.txt": 23, "": 0, "Maithili": 0}

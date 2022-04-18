@@ -1,0 +1,69 @@
+## 1-2
+[Walk] <dining_room>
+[Find] <drinking_glass>
+[Grab] <drinking_glass>
+[Walk] <fridge>
+[Open] <fridge>
+[Find] <milk>
+[Grab] <milk>
+[Pour] <milk> <drinking_glass>
+[Putin] <milk> <fridge>
+[Close] <fridge>
+## 2-3
+[Walk] <table_dining_room>
+[Putback] <drinking_glass> <table_dining_room>
+[Walk] <kitchen_counter>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <fridge>
+[Open] <fridge>
+[Find] <food_jam>
+[Grab] <food_jam>
+[Close] <fridge>
+## 2-3
+[Walk] <kitchen_counter>
+[Putback] <food_bread> <kitchen_counter>
+[Putback] <food_jam> <food_bread>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <food_peanut_butter>
+[Grab] <food_peanut_butter>
+[Close] <cupboard>
+[Walk] <kitchen_counter>
+[Putback] <food_peanut_butter> <food_bread>
+[Grab] <food_bread>
+[Walk] <table_dining_room>
+[Putback] <food_bread> <table_dining_room>
+## 1-2
+[Walk] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <cloth_napkin>
+[Grab] <cloth_napkin>
+[Close] <kitchen_cabinet>
+## 8-10
+[Walk] <table_dining_room>
+[Putback] <cloth_napkin> <table_dining_room>
+[Grab] <drinking_glass>
+[Drink] <drinking_glass>
+[Putback] <drinking_glass> <table_dining_room>
+[Grab] <food_bread>
+[Eat] <food_bread>
+[Find] <trashcan>
+[Open] <trashcan>
+[Putin] <food_bread> <trashcan>
+[Close] <trashcan>
+[Walk] <table_dining_room>
+[Grab] <drinking_glass>
+[Walk] <sink_dining_room>
+[Wash] <drinking_glass>
+[Walk] <kitchen_counter>
+[Putback] <drinking_glass> <kitchen_counter>
+## 1-2
+[Walk] <table_dining_room>
+[Grab] <cloth_napkin>
+[Walk] <kitchen_counter>
+[Putback] <cloth_napkin> <kitchen_counter>
+
+
+
+

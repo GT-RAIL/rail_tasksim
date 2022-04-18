@@ -1,0 +1,92 @@
+## 0-1
+[Walk] <bathroom>
+
+## 1-2
+[Find] <bathroom_cabinet>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <shampoo>
+[Grab] <shampoo>
+[Close] <bathroom_cabinet>
+[Find] <shower>
+[Walk] <shower>
+[Putin] <shampoo> <shower>
+
+[Find] <bathroom_cabinet>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <conditioner>
+[Grab] <conditioner>
+[Close] <bathroom_cabinet>
+[Find] <shower>
+[Walk] <shower>
+[Putin] <conditioner> <shower>
+
+[Find] <bathroom_cabinet>
+[Walk] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <facial_cleanser>
+[Grab] <facial_cleanser>
+[Close] <bathroom_cabinet>
+[Find] <shower>
+[Walk] <shower>
+[Putin] <facial_cleanser> <shower>
+
+## 10-15
+[Find] <shampoo>
+[Grab] <shampoo>
+[Putin] <shampoo> <shower>
+[Find] <conditioner>
+[Grab] <conditioner>
+[Putin] <conditioner> <shower>
+[Find] <facial_cleanser>
+[Grab] <facial_cleanser>
+[Putin] <facial_cleanser> <shower>
+
+## 1-2
+[Find] <towel_rack>
+[Walk] <towel_rack>
+[Find] <towel>
+[Grab] <towel>
+[Find] <towel_rack>
+[Putback] <towel> <towel_rack>
+
+## 0-1
+[Walk] <bedroom>
+
+## 3-4
+[Find] <dresser>
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <clothes_underwear>
+[Grab] <clothes_underwear>
+[Puton] <clothes_underwear>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Puton] <clothes_pants>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Puton] <clothes_shirt>
+[Find] <clothes_socks>
+[Grab] <clothes_socks>
+[Puton] <clothes_socks>
+[Close] <dresser>
+
+## 0-1
+[Walk] <bathroom>
+[Find] <bathroom_counter>
+[Walk] <bathroom_counter>
+
+## 5-7
+[Find] <bathroom_cabinet>
+[Open] <bathroom_cabinet>
+[Find] <hairdryer>
+[Grab] <hairdryer>
+[Switchon] <hairdryer>
+[Switchoff] <hairdryer>
+[Putback] <hairdryer> <bathroom_cabinet>
+[Find] <hairbrush>
+[Grab] <hairbrush>
+[Putback] <hairbrush> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
+ 

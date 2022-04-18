@@ -1,0 +1,9 @@
+listening_to_music
+03.txt
+[WALK] <home_office> (241) [1]
+[FIND] <radio> (1170) [2]
+[GRAB] <radio> (1170) [3]
+[SWITCHON] <radio> (1170) [4]
+[WALK] <dining_room> (41) [5]
+[PUTBACK] <radio> (1170) <dining_room> (41) [6]
+[SWITCHOFF] <radio> (1170) [7]

@@ -1,0 +1,8 @@
+sleeping
+08.txt
+[WALK] <curtain> (204) [1]
+[WALK] <light> (212) [2]
+[WALK] <alarm_clock> (1013) [3]
+[SWITCHON] <alarm_clock> (1013) [4]
+[WALK] <bed> (197) [5]
+[FIND] <bed> (197) [6]

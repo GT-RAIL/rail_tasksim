@@ -1,0 +1,17 @@
+vaccuum_cleaning
+21.txt
+[WALK] <dining_room> (41) [1]
+[WALK] <kitchen_cabinet> (1004) [2]
+[OPEN] <kitchen_cabinet> (1004) [3]
+[FIND] <vacuum_cleaner> (1208) [4]
+[GRAB] <vacuum_cleaner> (1208) [5]
+[WALK] <dining_room> (41) [6]
+[SWITCHON] <vacuum_cleaner> (1208) [8]
+[SWITCHOFF] <vacuum_cleaner> (1208) [9]
+[WALK] <bedroom> (162) [11]
+[SWITCHON] <vacuum_cleaner> (1208) [13]
+[SWITCHOFF] <vacuum_cleaner> (1208) [14]
+[WALK] <dining_room> (41) [16]
+[WALK] <kitchen_cabinet> (1004) [17]
+[PUTIN] <vacuum_cleaner> (1208) <kitchen_cabinet> (1004) [18]
+[CLOSE] <kitchen_cabinet> (1004) [19]
