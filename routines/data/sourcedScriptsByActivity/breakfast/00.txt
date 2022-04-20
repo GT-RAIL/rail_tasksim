@@ -67,6 +67,8 @@
 [Grab] <spoon>
 [Walk] <sink_dining_room>
 [PutBack] <bowl> <sink_dining_room>
+[Find] <spoon>
+[Grab] <spoon>
 [PutBack] <spoon> <sink_dining_room>
 ## 10-12
 [Walk] <sink_dining_room>

@@ -23,6 +23,7 @@
 [Walk] <kitchen_counter>
 [Wash] <kitchen_counter>
 [Scrub] <kitchen_counter>
+[Putback] <kitchentowel> <kitchen_counter>
 
 ## 2-3
 [Walk] <drinking_glass>
