@@ -1,5 +1,5 @@
 from argparse import ArgumentError
-import random
+import random as random
 import os
 import json
 from math import floor
@@ -120,9 +120,9 @@ personas['basic'] = {
     'playing_music' : 'not_at_all',
     'getting_dressed' : 'not_at_all',
     'cleaning' : 'not_at_all',
-    'breakfast' : 'skips_breakfast',
+    'breakfast' : 'skips',
     'socializing' : 'not_at_all',
-    'lunch' : 'skips_lunch',
+    'lunch' : 'skips',
     'listening_to_music' : 'not_at_all',
     'taking_medication' : 'not_at_all',
     'take_out_trash' : 'not_at_all',
@@ -139,16 +139,23 @@ personas['basic'] = {
 
 
 persona_options = list(personas.keys())
-with open('data/personaBasedSchedules/individual_histograms.json') as f:
+with open('data/personaBasedSchedules/corrected_histograms.json') as f:
     individual_histograms = json.load(f)
     individual_options = list(individual_histograms.keys())
+
+with open('data/personaBasedSchedules/cluster_histograms.json') as f:
+    cluster_histograms = json.load(f)
+    cluster_histograms = {'cluster'+str(i):v for i,v in enumerate(cluster_histograms)}
+    cluster_options = list(cluster_histograms.keys())
 
 seeds = {ind:i for i,ind in enumerate(individual_options)}
 seeds['hard_worker'] = len(individual_options)
 seeds['home_maker'] = len(individual_options) + 1
 seeds['work_from_home'] = len(individual_options) + 2
 seeds['senior'] = len(individual_options) + 3
-
+so_far = len(individual_options) + 3
+for i,k in enumerate(cluster_options):
+    seeds[k] = so_far + int(i)
 
 activity_map = {
 "brush_teeth" : "brushing_teeth",
@@ -181,6 +188,21 @@ activity_map = {
 }
 start_times = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 
+compulsary_activities = ["brushing_teeth","showering","breakfast","dinner","lunch"]
+ 
+def get_opt_activities(seed):
+    opt_activities = list(personas['hard_worker'].keys())
+    opt_activities.remove("come_home")
+    random.seed(seed)
+    for act in compulsary_activities:
+        opt_activities.remove(act)
+    random.shuffle(opt_activities)
+    return opt_activities
+
+activity_lists = {k:[] for k in seeds}
+for k,s in seeds.items():
+    activity_lists[k] = get_opt_activities(s)
+
 def KLdivergence(act_hist1, act_hist2):
     eps = 1e-7
     activities = act_hist1.keys()
@@ -188,17 +210,42 @@ def KLdivergence(act_hist1, act_hist2):
     dist_p_norm = dist_p/sum(sum(dist_p))
     # assert(np.isclose(sum(sum(dist_p)), len(start_times))), str(sum(sum(dist_p))) + ' , ' + str(len(start_times))
     dist_q = np.array([act_hist2[act] for act in activities]) + eps
-    kl_div = sum(sum(dist_p_norm * np.log(dist_p/dist_q)))
+    dist_q_norm = dist_q/sum(sum(dist_q))
+    kl_div = sum(sum(dist_p_norm * np.log(dist_p_norm/dist_q_norm)))
     return kl_div
 
+def both_over_either(act_hist1, act_hist2):
+    eps = 1e-7
+    activities = act_hist1.keys()
+    dist_p = np.array([act_hist1[act] for act in activities]) + eps
+    dist_p_norm = dist_p/sum(sum(dist_p))
+    # assert(np.isclose(sum(sum(dist_p)), len(start_times))), str(sum(sum(dist_p))) + ' , ' + str(len(start_times))
+    dist_q = np.array([act_hist2[act] for act in activities]) + eps
+    dist_q_norm = dist_q/sum(sum(dist_q))
+    both = dist_p_norm*dist_q_norm + eps
+    either = dist_p_norm+dist_q_norm - dist_p_norm*dist_q_norm + eps
+    return both/either
+
 class ScheduleDistributionSampler():
-    def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf")):
+    def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf"), custom_label='custom', num_optional_activities=-1, filter_histograms = True):
         self.activity_histogram = {}
         with open('data/personaBasedSchedules/trait_histograms.json') as f:
             trait_histograms = json.load(f)
-        with open('data/personaBasedSchedules/individual_histograms.json') as f:
+        with open('data/personaBasedSchedules/corrected_histograms.json') as f:
             individual_histograms = json.load(f)
-        if type.upper() in individual_histograms.keys():
+        if isinstance(type, dict):
+            self.activity_histogram = type
+            self.label = custom_label
+            # for activity in type:
+            #     try:
+            #         self.activity_histogram[activity] = np.array(trait_histograms[activity][type[activity]])
+            #     except Exception as e:
+            #         print(activity, ' does not exist in the traits')
+        elif type in cluster_histograms.keys():
+            self.label = 'Cluster'+type
+            for activity, freq in cluster_histograms[type].items():
+                self.activity_histogram[activity] = np.array(freq)
+        elif type.upper() in individual_histograms.keys():
             self.label = type.upper()
             hist = individual_histograms[type.upper()]
             for activity, freq in hist.items():
@@ -210,14 +257,23 @@ class ScheduleDistributionSampler():
             for activity in persona:
                 try:
                     self.activity_histogram[activity] = np.array(trait_histograms[activity][persona[activity]])
+                    if filter_histograms:
+                        self.activity_histogram[activity] -= 1/6
+                        self.activity_histogram[activity] = max(0, self.activity_histogram[activity])
                 except Exception as e:
                     print(activity, ' does not exist in the traits for ', persona_name)
                     # raise e
         else:
             raise ArgumentError(f'Unknown value {type} for Schedule Sampler')
         
-        self.activities = list(self.activity_histogram.keys())
-        self.activities.remove("come_home")
+        opt_activities = activity_lists[type]
+        if num_optional_activities > 0:
+            if num_optional_activities < len(opt_activities):
+                opt_activities = opt_activities[:num_optional_activities]
+            else:
+                print(f'{num_optional_activities} activities not available. Using {len(opt_activities)} available activities.')
+
+        self.activities = compulsary_activities+opt_activities
         self.sampling_range = max(sum([np.array(self.activity_histogram[activity]) for activity in self.activities])) * idle_sampling_factor
         self.resample_after = resample_after
         self.left_house = False
@@ -256,36 +312,36 @@ class ScheduleDistributionSampler():
 
     def plot(self, dirname = None):
         # clrs = sns.color_palette("pastel") + sns.color_palette("dark") + sns.color_palette()
-        fig, ax = plt.subplots()
+        # fig, ax = plt.subplots()
         fig2, ax2 = plt.subplots()
-        fig3, ax3 = plt.subplots()
-        fig.set_size_inches(27, 18.5)
+        # fig3, ax3 = plt.subplots()
+        # fig.set_size_inches(27, 18.5)
         fig2.set_size_inches(27, 18.5)
-        fig3.set_size_inches(27, 18.5)
+        # fig3.set_size_inches(27, 18.5)
         activity_list = []
         base = np.zeros_like(self.activity_histogram[self.activities[0]])
         for idx, (activity, histogram) in enumerate(self.activity_histogram.items()):
-            ax.bar(start_times, histogram, label=activity, bottom=base, color = color_map[activity])
+            # ax.bar(start_times, histogram, label=activity, bottom=base, color = color_map[activity])
             base += histogram
             ax2.bar(start_times, histogram, bottom=idx, color = color_map[activity])
             activity_list.append(activity)
-            ax3.plot(start_times, histogram, label=activity, color = color_map[activity], linewidth=2)
-        ax.set_xticks(start_times)
+            # ax3.plot(start_times, histogram, label=activity, color = color_map[activity], linewidth=2)
+        # ax.set_xticks(start_times)
         ax2.set_xticks(start_times)
-        ax3.set_xticks(start_times)
-        ax.set_xticklabels([str(s)+':00' for s in start_times])
+        # ax3.set_xticks(start_times)
+        # ax.set_xticklabels([str(s)+':00' for s in start_times])
         ax2.set_xticklabels([str(s)+':00' for s in start_times])
-        ax3.set_xticklabels([str(s)+':00' for s in start_times])
+        # ax3.set_xticklabels([str(s)+':00' for s in start_times])
         ax2.set_yticks(np.arange(len(activity_list)))
         ax2.set_yticklabels(activity_list)
-        ax.set_title(self.label)
+        # ax.set_title(self.label)
         ax2.set_title(self.label)
-        ax3.set_title(self.label)
+        # ax3.set_title(self.label)
         plt.legend()
         if dirname is not None:
-            fig.savefig(os.path.join(dirname, 'sampling_distribution.jpeg'))
-            fig2.savefig(os.path.join(dirname, 'sampling_distribution_separated.jpeg'))
-            fig3.savefig(os.path.join(dirname, 'sampling_distribution_lines.jpeg'))
+            # fig.savefig(os.path.join(dirname, 'sampling_distribution.jpg'))
+            fig2.savefig(os.path.join(dirname, 'sampling_distribution_separated.jpg'))
+            # fig3.savefig(os.path.join(dirname, 'sampling_distribution_lines.jpg'))
         else:
             plt.show()
 

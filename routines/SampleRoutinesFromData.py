@@ -6,6 +6,7 @@ import glob
 import shutil
 import argparse
 from math import ceil
+from copy import deepcopy
 import numpy as np
 import matplotlib.pyplot as plt
 import random
@@ -22,8 +23,8 @@ from evolving_graph.environment import EnvironmentGraph
 
 from GraphReader import GraphReader, init_graph_file, scene_num
 from ProgramExecutor import read_program
-from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options, seeds
-from postprocess_viz import dump_visuals
+from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options, cluster_options, seeds
+# from postprocess_viz import dump_visuals
 
 set_seed = 23424
 random.seed(set_seed)
@@ -52,8 +53,8 @@ print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 
 info = {}
 info['dt'] = 10   # minutes
-info['num_train_routines'] = 50
-info['num_test_routines'] = 10
+info['num_train_routines'] = 35
+info['num_test_routines'] = 8
 info['weekend_days'] = []   #[day_num(day) for day in ['Saturday','Sunday']]
 info['start_time'] = time_mins(mins=0, hrs=6)
 info['end_time'] = time_mins(mins=0, hrs=24)
@@ -64,7 +65,7 @@ info['graphs_dt_apart'] = False
 
 info['min_activities'] = 1
 info['schedule_sampler_filter_num'] = 0 
-info['idle_sampling_factor'] = 1.0
+info['idle_sampling_factor'] = 1.2
 info['block_activity_for_hrs'] = 5
 
 info['breakfast_only'] = False
@@ -78,19 +79,21 @@ edge_classes = ["INSIDE", "ON"]
 class SamplingFailure(Exception):
     pass
 
-def get_script_files_list(sd):
-    random.seed(sd*sd*100)
+def get_script_files_list(n):
     files_list = {}
     directory = os.path.join('data/sourcedScriptsByActivity')
     for activity in os.listdir(directory):
         available_files = os.listdir(os.path.join(directory,activity))
         if not available_files:
             continue
-        f = random.choice(available_files)
+        available_files.sort()
+        nact = deepcopy(n) 
+        while nact >= len(available_files):
+            nact -= len(available_files)
+        f = available_files[nact]
         files_list[activity] = f
     files_list["come_home"] = files_list["leave_home"]
     files_list["leaving_home_and_coming_back"] = files_list["leave_home"]
-    random.seed(set_seed)
     return files_list
 
 # %% Activity
@@ -179,25 +182,21 @@ class Schedule():
         return all_actions
 
 class ScheduleFromHistogram(Schedule):
-    def __init__(self, sampler_name, script_files_list, type=None):
-        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'])
-        if info['breakfast_only']:
-            t = sampler.sample_time_for('breakfast')
-            self.activities = [Activity('breakfast', time_start_mins=t, stack_actions=True, script_file=script_files_list['breakfast'])]
-        else:
-            self.activities = []
-            t = info['start_time']
-            while t < info['end_time']:
-                activity_name = sampler(t)
-                if activity_name is None:
-                    t += info['dt']
-                    continue
-                new_activity = Activity(activity_name, time_start_mins=t, stack_actions=True, script_file=script_files_list[activity_name])
-                self.activities.append(new_activity)
-                t = new_activity.get_end_time() + 1
-            if len(self.activities) < info['min_activities']:
-                need = info['min_activities']
-                raise SamplingFailure(f'Could not sample enough activities. Sampled {len(self.activities)} need at least {need}')
+    def __init__(self, sampler_name, script_files_list, type=None, num_optional_activities=-1):
+        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        self.activities = []
+        t = info['start_time']
+        while t < info['end_time']:
+            activity_name = sampler(t)
+            if activity_name is None:
+                t += info['dt'] * 3
+                continue
+            new_activity = Activity(activity_name, time_start_mins=t, stack_actions=True, script_file=script_files_list[activity_name])
+            self.activities.append(new_activity)
+            t = new_activity.get_end_time() + 1
+        if len(self.activities) < info['min_activities']:
+            need = info['min_activities']
+            raise SamplingFailure(f'Could not sample enough activities. Sampled {len(self.activities)} need at least {need}')
 
 # %% run and get graphs
 
@@ -355,10 +354,10 @@ def get_used_objects(g1,g2):
     return utilized_object_ids
 
 # %% Make a routine
-def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, script_files_list, logs_dir, script_use_file=None, verbose=False):
+def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, script_files_list, logs_dir, script_use_file=None, num_optional_activities=-1, verbose=False):
     while True:
         try:
-            s = ScheduleFromHistogram(sampler_name, script_files_list)
+            s = ScheduleFromHistogram(sampler_name, script_files_list, num_optional_activities=num_optional_activities)
             actions = s.get_combined_script()
             graphs, times, obj_in_use, script_string, imp_obj = get_graphs(actions)
         except SamplingFailure as sf:
@@ -387,7 +386,7 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, script_fi
         return routine_out
 
 
-def main(sampler_name, output_directory, verbose, script_files_list):
+def main(sampler_name, output_directory, verbose, script_files_list, num_opt_act):
     scripts_train_dir = os.path.join(output_directory,'scripts_train')
     scripts_test_dir = os.path.join(output_directory,'scripts_test')
     routines_raw_train_dir = os.path.join(output_directory,'raw_routines_train')
@@ -406,17 +405,17 @@ def main(sampler_name, output_directory, verbose, script_files_list):
     os.makedirs(logs_dir_test)
     
     with open(os.path.join(output_directory,'scripts_available_to_use.txt'), 'w') as f:
-        script_usage = json.dump(script_files_list, f)
+        script_usage = json.dump(script_files_list, f, indent=4)
 
-    sampler = ScheduleDistributionSampler(type=sampler_name)
+    sampler = ScheduleDistributionSampler(type=sampler_name, num_optional_activities=num_opt_act)
     sampler.plot(output_directory)
 
     # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
-        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), verbose)
+        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
         # pool.apply_async(make_routine, args = (routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     for routine_num in range(info['num_test_routines']):
-        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), verbose)
+        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
         # pool.apply_async(make_routine, args=(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     # pool.close()
     # pool.join()
@@ -521,22 +520,23 @@ def main(sampler_name, output_directory, verbose, script_files_list):
     for k,v in info.items():
         print(k,' : ',v)
     with open(os.path.join(output_directory,'info.json'), 'w') as f:
-        json.dump(info, f)
+        json.dump(info, f, indent=4)
 
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run model on routines.')
     parser.add_argument('--path', type=str, default='data/generated_routine', help='Directory to output data in')
-    parser.add_argument('--sampler', type=str, help='Name of schedule sampler to use. This can be \'persona\', \'individual\' or an individual ID or persona name')
+    parser.add_argument('--sampler', type=str, help='Name of schedule sampler to use. This can be \'persona\', \'individual\', \'cluster\' or an individual ID or persona name')
     parser.add_argument('--loop_through_all', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--verbose', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
+    parser.add_argument('--num_optional_activities', default=-1, type=int, help='Number of activities to do in addition to the five')
 
     args = parser.parse_args()
 
     if os.path.exists(args.path):
         overwrite = input(args.path+' already exists. Do you want to overwrite it? (y/n)')
-        if overwrite:
+        if overwrite.lower() == 'y':
             shutil.rmtree(args.path)
         else:
             raise InterruptedError()
@@ -544,26 +544,33 @@ if __name__ == "__main__":
     n = 0
     if args.loop_through_all:
         os.makedirs(args.path)
+        pool = multiprocessing.Pool()
         if args.sampler.lower() == 'persona':
-            for p in persona_options:
-                n += 1
-                main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(seeds[p]))
+            for n,p in enumerate(persona_options):
+                # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
+                pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), args.num_optional_activities))
         if args.sampler.lower() == 'individual':
-            for i in individual_options:
-                n += 1
-                main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(seeds[i]))
+            for n,i in enumerate(individual_options):
+                # main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
+                pool.apply_async(main, args=(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), args.num_optional_activities))
+        if args.sampler.lower() == 'cluster':
+            for n,i in enumerate(cluster_options):
+                # main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
+                pool.apply_async(main, args=(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), args.num_optional_activities))
+        pool.close()
+        pool.join()
     else:
         if args.sampler.lower() == 'persona':
-            n += 1
             p = random.choice(persona_options)
-            main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(seeds[p]))
+            main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(0))
         elif args.sampler.lower() == 'individual':
-            n += 1
             i = random.choice(individual_options)
-            main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(seeds[i]))
+            main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(0))
+        elif args.sampler.lower() == 'cluster':
+            i = random.choice(cluster_options)
+            main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(0))
         else:
-            n += 1
             ip = random.choice(persona_options + individual_options)
-            main(ip, os.path.join(args.path,ip), args.verbose, get_script_files_list(seeds[ip]))
+            main(ip, os.path.join(args.path,ip), args.verbose, get_script_files_list(0))
     
-    dump_visuals(args.path)
+    # dump_visuals(args.path)

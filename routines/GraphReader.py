@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+from copy import deepcopy
 sys.path.append('..')
 sys.path.append('../simulation')
 from dataset_utils import execute_script_utils as utils
@@ -73,51 +74,77 @@ def remove_nodes_from_graph(graph_file, nodes_to_remove, target_graph_file):
         json.dump(trimmed_graph, f)
 
 class GraphReader():
-    def __init__(self, graph_file=init_graph_file):
-        with open (graph_file,'r') as f:
-            self.graph_dict = json.load(f)
+    def __init__(self, graph_dict={}, graph_file=''):
+        if graph_file != '':
+            with open(graph_file) as f:
+                self.graph_dict = json.load(f)
+        if len(graph_dict) > 0:
+            self.graph_dict = graph_dict
         nodes = {n['id']:n['class_name'] for n in self.graph_dict['nodes']}
         nodes_by_room = {n['class_name']:{n['id']:n['class_name']} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
-        node_rooms = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        self.node_rooms = {n['id']:n['class_name'] for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_map = {'<'+n['class_name']+'>': '<'+n['class_name']+'> ('+str(n['id'])+')' for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        self.usable_nodes = {}
+        self.node_ids = {}
 
-        edges = {}
+        remove_keys = []
+        # edges = {}
         for e in self.graph_dict['edges']:
             rel = e['relation_type']
             if rel != "CLOSE" and rel!= "FACING":
                 n1 = e['from_id']
                 n2 = e['to_id']
                 if nodes[n1] not in unnecessary_nodes and nodes[n2] not in unnecessary_nodes:
-                    edge_id = (nodes[n1],rel,nodes[n2])
-                    if edge_id not in edges:
-                        edges[edge_id] = e.update({'from_class':nodes[n1], 'to_class':nodes[n2]})
+                    # edge_id = (nodes[n1],rel,nodes[n2])
+                    # if edge_id not in edges:
+                    #     edges[edge_id] = e.update({'from_class':nodes[n1], 'to_class':nodes[n2]})
                     if nodes[n2] in nodes_by_room:
-                        nodes_by_room[nodes[n2]][n1] = nodes[n1]
-                        node_rooms[n1] = nodes[n2]
+                        add_alias = False
+                        if nodes[n1] not in self.usable_nodes:
+                            self.usable_nodes[nodes[n1]] = (n1, nodes[n1], nodes[n2])
+                        elif self.usable_nodes[nodes[n1]][2] != nodes[n2]:
+                            if nodes[n1] not in remove_keys:
+                                self.usable_nodes[nodes[n1]+'_'+self.usable_nodes[nodes[n1]][2]] = self.usable_nodes[nodes[n1]]
+                                remove_keys.append(nodes[n1])
+                            if nodes[n1]+'_'+nodes[n2] not in self.usable_nodes.keys():
+                                self.usable_nodes[nodes[n1]+'_'+nodes[n2]] = (n1, nodes[n1], nodes[n2])
+                            else:
+                                print(self.usable_nodes[nodes[n1]+'_'+nodes[n2]], 'exists!', end = ' ')
+                                add_alias = True
+                        else:
+                            print(self.usable_nodes[nodes[n1]], 'exists!', end = ' ')
+                            add_alias = True
 
-        self.usable_nodes_by_room = {}
-        for room,nodelist in nodes_by_room.items():
-            self.usable_nodes_by_room[room] = {}
-            for id, name in nodelist.items():
-                if name not in self.usable_nodes_by_room[room]:
-                    self.usable_nodes_by_room[room][name] = id
+                        if add_alias:
+                            base = nodes[n1]+'_'+nodes[n2]
+                            i = 1
+                            alias = base+str(i)
+                            while alias in self.usable_nodes.keys():
+                                i += 1
+                                alias = base+str(i)
+                            self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
+                            # while add_alias:
+                            #     alias = input(f'Enter alias for {nodes[n1]} in {nodes[n2]}. Press \'x\' to remove object')
+                            #     if alias.lower() == 'x' or alias == '':
+                            #         print('Removed')
+                            #         break
+                            #     elif alias not in self.usable_nodes.keys():
+                            #         self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
+                            #         print('Set to ',alias)
+                            #         add_alias = False
+                            #     else:
+                            #         ow = input('Already exists : {self.usable_nodes[alias]}, Do you want to overwrite? (y/n)')
+                            #         if ow.lower() == 'y':
+                            #             self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
+                            #             print('Set to ',alias)
+                            #             break
 
-        repeated_nodes = []
-        for l in self.usable_nodes_by_room.values():
-            repeated_nodes += list(l.keys())
-        repeated_nodes  = [n for n in repeated_nodes if repeated_nodes.count(n)>1]
-
-        self.expanded_nodes_by_room = {}
-        for room,nodelist in self.usable_nodes_by_room.items():
-            self.expanded_nodes_by_room[room] = {}
-            for name, id in nodelist.items():
-                full_name = name
-                if name in repeated_nodes:
-                    full_name += '_'+room
-                self.expanded_nodes_by_room[room][full_name] = (name,id)
-
-        for l in self.expanded_nodes_by_room.values():
-            self.node_map.update({f'<{key}>':f'<{val[0]}> ({val[1]})' for key,val in l.items()})
+        self.usable_nodes_by_room = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        for full_name,(id, nodeclass, room) in self.usable_nodes.items():
+            self.usable_nodes_by_room[room][full_name] = (nodeclass,id)
+            self.node_map[f'<{full_name}>'] = f'<{nodeclass}> ({id})'
+            self.node_rooms[id] = room
+            self.node_ids[full_name] = id
         
         with open (base_dir+'/resources/object_states.json','r') as f:
             self.object_states = json.load(f)
@@ -125,25 +152,54 @@ class GraphReader():
             self.object_properties = json.load(f)
         self.new_obj_id = 1000
     
-    def add(self, obj, relation, parent_id, category="placable_objects", custom_states=[]):
+    def add(self, obj, relation, parent_id, category="placable_objects", custom_states=[], verbose = False):
         assert(relation in ["INSIDE","ON"])
         if obj in self.object_states.keys():
             object_states = get_object_states(self.object_states[obj], custom_states)
         else:
             object_states = []
             print(f'States not found for {obj}')
-        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": self.object_properties[obj], "states": object_states, "prefab_name": None, "bounding_box": None})
-        # self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": [], "states": [], "prefab_name": None, "bounding_box": None})
+        self.graph_dict['nodes'].append({"id": self.new_obj_id, "class_name": obj, "category": category, "properties": self.object_properties[obj], "states": object_states})
         self.graph_dict['edges'].append({"from_id":self.new_obj_id, "relation_type":relation, "to_id":parent_id})
+        if verbose:
+            print('Adding   : ',self.graph_dict['nodes'][-1])
+            print('  Adding : ',self.graph_dict['edges'][-1])
+        room_name = None
         for e in self.graph_dict['edges']:
             if e is not None:
                 if e['from_id'] == parent_id and e['relation_type'] in ["INSIDE","ON"]:
                     ne = e.copy()
                     ne.update({"from_id":self.new_obj_id, "from_class":obj})
                     self.graph_dict['edges'].append(ne)
-        self.usable_nodes_by_room['dining_room'][obj] = self.new_obj_id
+                    if verbose:
+                        print('  Adding : ',self.graph_dict['edges'][-1])
+        self.usable_nodes_by_room[self.node_rooms[parent_id]][obj] = self.new_obj_id
+        self.node_rooms[self.new_obj_id] = self.node_rooms[parent_id]
         self.new_obj_id += 1
     
     def write(self, filename):
         with open (filename,'w') as f:
-            json.dump(self.graph_dict, f)
+            json.dump(self.graph_dict, f, indent=4)
+
+    def clean_graph(self):
+        new_nodes = []
+        for n in self.graph_dict['nodes']:
+            nc = dict(n)
+            if 'bounding_box' in nc:
+                del nc['bounding_box']
+            new_nodes.append(nc)
+        self.graph_dict['nodes'] = new_nodes
+
+    def write_node_map(self, filepath):
+        with open('../resources/class_name_equivalence.json') as f:
+            name_eq = json.load(f)
+        augmented_map = deepcopy(self.node_map)
+        for k,v in self.node_map.items():
+            for base, eqs in name_eq.items():
+                if base in k:
+                    for eq in eqs:
+                        print(k.replace(base,eq), v)
+                        augmented_map[k.replace(base,eq)] = v
+
+        with open(filepath, 'w') as f:
+            json.dump(augmented_map, f, indent=4)

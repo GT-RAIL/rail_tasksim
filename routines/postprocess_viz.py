@@ -50,15 +50,15 @@ color_map = {
 }
 
 color_map_trunc = deepcopy(color_map)
-color_map_trunc["vaccuum_cleaning"] = None 
-color_map_trunc["reading"] = None 
-color_map_trunc["going_to_the_bathroom"] = None 
-color_map_trunc["getting_dressed"] = None 
-color_map_trunc["kitchen_cleaning"] = None 
-color_map_trunc["take_out_trash"] = None 
-color_map_trunc["wash_dishes"] = None 
-color_map_trunc["playing_music"] = None 
-color_map_trunc["listening_to_music"] = None
+# color_map_trunc["vaccuum_cleaning"] = None 
+# color_map_trunc["reading"] = None 
+# color_map_trunc["going_to_the_bathroom"] = None 
+# color_map_trunc["getting_dressed"] = None 
+# color_map_trunc["kitchen_cleaning"] = None 
+# color_map_trunc["take_out_trash"] = None 
+# color_map_trunc["wash_dishes"] = None 
+# color_map_trunc["playing_music"] = None 
+# color_map_trunc["listening_to_music"] = None
 
 
 def time_human(time_mins):
@@ -107,7 +107,7 @@ def dump_visuals(root_dir):
                     ax.plot(times, freqs, label=act, color=color_map[act], linewidth=5)
                 bottoms += np.array(freqs)
             misclassification_prob = [min(sum(activity_freq[t].values())/num_routines, 1-max(activity_freq[t].values())/num_routines) for t in times]
-            ax.set_ylim([0,24*60])
+            ax.set_xlim([6*60,24*60])
             _ = ax.set_ylabel('Probability of Activity', fontsize=40)
             _ = ax.set_xlabel('Time', fontsize=40)
             _ = ax.set_xticks(np.arange(6*60,24*60+1, 3*60))
@@ -177,10 +177,11 @@ if __name__ == "__main__":
 
     dump_visuals(args.path)
 
+    assert os.path.exists(args.path)
+
     if args.move_visuals:
-        for f in glob.glob(dir+'/*/*.jpg'):
-            target_file = f.replace('sourcedRoutines','dataVisuals').replace('/schedule','_schedule')
-            if 'schedule' in f:
+        for f in glob.glob(args.path+'/*/*.jpg') + glob.glob(args.path+'/*/*.jpeg'):
+            target_file = f.replace('sourcedRoutines','dataVisuals').replace('/schedule','_schedule').replace('/sampling','_sampling')
+            if 'schedule' in f or 'sampling' in f:
                 if not os.path.exists(os.path.dirname(target_file)): os.makedirs(os.path.dirname(target_file))
-                target_file = target_file.replace('/schedule','_schedule')
                 shutil.copy(f, target_file)

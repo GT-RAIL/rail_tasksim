@@ -119,6 +119,12 @@ def execute_program(program_file, graph_file, node_map, verbose=False):
     success, state, graph_list = executor.execute(Script(lines), w_graph_list=True)
     print('exec info ---- ')
     print(executor.info.get_error_string())
+    if verbose:
+        print('This is how the scene changes after every set of actions...')
+        for script, graph, prev_graph in zip(lines,graph_list[1:],graph_list[:-1]):
+            print('Changes from ',script)
+            if verbose:
+                print_graph_difference(prev_graph,graph)
     if not success:
         error_str = executor.info.get_error_string()
         if 'inside other closed thing' in error_str:
@@ -132,10 +138,4 @@ def execute_program(program_file, graph_file, node_map, verbose=False):
     executor.check_final_state()
     print('Final state OK\n')
 
-    if verbose:
-        print('This is how the scene changes after every set of actions...')
-        for script, graph, prev_graph in zip(lines,graph_list[1:],graph_list[:-1]):
-            print('Changes from ',script)
-            if verbose:
-                print_graph_difference(prev_graph,graph)
     
