@@ -1,9 +1,13 @@
 ## 1-2
 [walk] <dining_room>
-[walk] <drinking_glass>
+[walk] <cupboard>
+[open] <cupboard>
+[find] <drinking_glass>
 ## 3-5
 [find] <drinking_glass>
 [grab] <drinking_glass>
+[walk] <cupboard>
+[close] <cupboard>
 [drink]<drinking_glass>
 [find] <desk_home_office>
 [PutBack] <drinking_glass><desk_home_office>

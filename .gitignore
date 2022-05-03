@@ -178,3 +178,8 @@ simulation/exec_linux_07_01_Data/
 simulation/__MACOSX
 scripted_routines/*
 routines/data/sourcedRoutines/*
+routines/data/dataVisuals*
+routines/data/originalExecutableScriptsByActivity
+routines/data/sourcedSchedules
+Output/
+routines/cluster_visuals/*

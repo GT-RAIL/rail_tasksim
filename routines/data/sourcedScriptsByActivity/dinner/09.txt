@@ -1,7 +1,11 @@
 ## 1-2
 [Walk] <dining_room>
+[Find] <cupboard>
+[Open] <cupboard>
 [Find] <drinking_glass>
 [Grab] <drinking_glass>
+[Find] <cupboard>
+[Close] <cupboard>
 [Walk] <fridge>
 [Open] <fridge>
 [Find] <milk>

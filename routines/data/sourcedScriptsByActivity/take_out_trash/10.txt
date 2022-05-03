@@ -8,6 +8,7 @@
 [Open] <trashcan>
 [Find] <trashbag>
 [Putin] <food_apple> <trashbag>
+[Find] <trashcan>
 [Close] <trashcan>
 
 ## 2-3
@@ -16,6 +17,7 @@
 [Open] <trashcan>
 [Find] <trashbag>
 [Grab] <trashbag>
+[Find] <trashcan>
 [Close] <trashcan>
 
 ## 0-1

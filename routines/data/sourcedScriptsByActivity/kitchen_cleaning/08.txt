@@ -27,7 +27,11 @@
 
 ## 2-3
 [Walk] <drinking_glass>
+[Find] <cupboard>
+[Open] <cupboard>
 [Grab] <drinking_glass>
+[Find] <cupboard>
+[Close] <cupboard>
 [Walk] <faucet_dining_room>
 [Rinse] <drinking_glass>
 [Wash] <drinking_glass>

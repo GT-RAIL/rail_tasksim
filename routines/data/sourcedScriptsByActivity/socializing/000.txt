@@ -1,0 +1,69 @@
+## 5-10
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <tea>
+[Grab] <tea>
+[Find] <coffee>
+[Grab] <coffee>
+[Walk] <table_dining_room>
+[Putback] <tea> <table_dining_room>
+[Putback] <coffee> <table_dining_room>
+[Walk] <cupboard>
+[Close] <cupboard>
+
+## 5-10
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <mug>
+[Grab] <mug>
+[Find] <coffee_cup>
+[Grab] <coffee_cup>
+[Walk] <table_dining_room>
+[Putback] <mug> <table_dining_room>
+[Putback] <coffee_cup> <table_dining_room>
+[Walk] <cupboard>
+[Close] <cupboard>
+
+## 20-40
+[Walk] <dining_room>
+[Walk] <bench>
+[Sit] <bench>
+[Standup]
+
+## 10-12
+[Walk] <table_dining_room>
+[Walk] <mug>
+[Grab] <mug>
+[Walk] <coffee_cup>
+[Grab] <coffee_cup>
+[Walk] <sink_dining_room>
+[Rinse] <mug>
+[Rinse] <coffee_cup>
+[Putback] <mug> <sink_dining_room>
+[Putback] <coffee_cup> <sink_dining_room>
+
+## 3-5
+[Walk] <cupboard>
+[Open] <cupboard>
+[Walk] <table_dining_room>
+[Find] <tea>
+[Grab] <tea>
+[Find] <coffee>
+[Grab] <coffee>
+[Walk] <cupboard>
+[Putback] <tea> <cupboard>
+[Putback] <coffee> <cupboard>
+[Close] <cupboard>
+
+## 4-7
+[Walk] <cupboard>
+[Open] <cupboard>
+[Walk] <sink_dining_room>
+[Grab] <mug>
+[Grab] <coffee_cup>
+[Walk] <cupboard>
+[Putin] <mug> <cupboard>
+[Putin] <coffee_cup> <cupboard>
+[Close] <cupboard>
