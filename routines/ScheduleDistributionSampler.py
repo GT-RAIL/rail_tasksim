@@ -8,154 +8,22 @@ import numpy as np
 import matplotlib.pyplot as plt
 from postprocess_viz import color_map
 
-personas = {}
-# early riser, works long hours, has less time for chores
-personas['hard_worker'] = {
-    'leave_home' : 'morning',
-    'come_home' : 'evening',
-    'playing_music' : 'not_at_all',
-    'getting_dressed' : 'morning',
-    'cleaning' : 'evening',
-    'breakfast' : 'has',
-    'socializing' : 'not_at_all',
-    'lunch' : 'skips',
-    'going_to_the_bathroom' : 'uses_bathroom',
-    'listening_to_music' : 'not_at_all',
-    'taking_medication' : 'not_at_all',
-    'take_out_trash' : 'not_at_all',
-    'kitchen_cleaning' : 'not_at_all',
-    'dinner' : 'has',
-    'wash_dishes' : 'evening',
-    'brushing_teeth' : 'multiple_times',
-    'laundry' : 'not_at_all',
-    'reading' : 'evening',
-    'showering' : 'multiple_times',
-    'computer_work' : 'less',
-    'vaccuum_cleaning' : 'not_at_all',
-    'watching_tv' : 'not_at_all',
-}
-
-# early riser, works from home, enjoys evenings with tv, music and friends 
-personas['work_from_home'] = {
-    'leave_home' : 'not_at_all',
-    'come_home' : 'not_at_all',
-    'playing_music' : 'evening',
-    'getting_dressed' : 'evening',
-    'cleaning' : 'evening',
-    'breakfast' : 'has',
-    'socializing' : 'evening',
-    'lunch' : 'has',
-    'going_to_the_bathroom' : 'uses_bathroom',
-    'listening_to_music' : 'evening',
-    'taking_medication' : 'multiple_times',
-    'take_out_trash' : 'evening',
-    'kitchen_cleaning' : 'not_at_all',
-    'dinner' : 'has',
-    'wash_dishes' : 'not_at_all',
-    'brushing_teeth' : 'morning',
-    'laundry' : 'not_at_all',
-    'reading' : 'evening',
-    'showering' : 'evening',
-    'computer_work' : 'normal',
-    'vaccuum_cleaning' : 'not_at_all',
-    'watching_tv' : 'evening',
-}
-
-# home maker, less computer work, lots of chores, enjoys evenings with tv, music and friends 
-personas['home_maker'] = {
-    'leave_home' : 'morning',
-    'come_home' : 'morning',
-    'playing_music' : 'evening',
-    'getting_dressed' : 'evening',
-    'cleaning' : 'evening',
-    'breakfast' : 'has',
-    'socializing' : 'evening',
-    'lunch' : 'has',
-    'going_to_the_bathroom' : 'uses_bathroom',
-    'listening_to_music' : 'evening',
-    'taking_medication' : 'evening',
-    'take_out_trash' : 'evening',
-    'kitchen_cleaning' : 'morning',
-    'dinner' : 'has',
-    'wash_dishes' : 'morning',
-    'brushing_teeth' : 'morning',
-    'laundry' : 'morning',
-    'reading' : 'evening',
-    'showering' : 'multiple_times',
-    'computer_work' : 'less',
-    'vaccuum_cleaning' : 'morning',
-    'watching_tv' : 'not_at_all',
-}
-
-# elderly, less work and no going out, sparsely indulges in leisurely activities 
-personas['senior'] = {
-    'leave_home' : 'not_at_all',
-    'come_home' : 'not_at_all',
-    'playing_music' : 'evening',
-    'getting_dressed' : 'not_at_all',
-    'cleaning' : 'not_at_all',
-    'breakfast' : 'has',
-    'socializing' : 'not_at_all',
-    'lunch' : 'has',
-    'going_to_the_bathroom' : 'uses_bathroom',
-    'listening_to_music' : 'evening',
-    'taking_medication' : 'multiple_times',
-    'take_out_trash' : 'evening',
-    'kitchen_cleaning' : 'not_at_all',
-    'dinner' : 'has',
-    'wash_dishes' : 'not_at_all',
-    'brushing_teeth' : 'multiple_times',
-    'laundry' : 'not_at_all',
-    'reading' : 'evening',
-    'showering' : 'multiple_times',
-    'computer_work' : 'less',
-    'vaccuum_cleaning' : 'morning',
-    'watching_tv' : 'evening',
-}
-
-# basic 
-personas['basic'] = {
-    'leave_home' : 'not_at_all',
-    'come_home' : 'not_at_all',
-    'playing_music' : 'not_at_all',
-    'getting_dressed' : 'not_at_all',
-    'cleaning' : 'not_at_all',
-    'breakfast' : 'skips',
-    'socializing' : 'not_at_all',
-    'lunch' : 'skips',
-    'listening_to_music' : 'not_at_all',
-    'taking_medication' : 'not_at_all',
-    'take_out_trash' : 'not_at_all',
-    'kitchen_cleaning' : 'not_at_all',
-    'dinner' : 'has',
-    'wash_dishes' : 'not_at_all',
-    'brushing_teeth' : 'morning',
-    'laundry' : 'not_at_all',
-    'reading' : 'not_at_all',
-    'showering' : 'morning',
-    'vaccuum_cleaning' : 'not_at_all',
-    'watching_tv' : 'not_at_all',
-}
-
-
+with open('data/personaBasedSchedules/optimized_persona.json') as f:
+    personas = json.load(f)
 persona_options = list(personas.keys())
+
 with open('data/personaBasedSchedules/corrected_histograms.json') as f:
     individual_histograms = json.load(f)
     individual_options = list(individual_histograms.keys())
 
 with open('data/personaBasedSchedules/cluster_histograms.json') as f:
     cluster_histograms = json.load(f)
-    cluster_histograms = {'cluster'+str(i):v for i,v in enumerate(cluster_histograms)}
-    cluster_options = list(cluster_histograms.keys())
 
 seeds = {ind:i for i,ind in enumerate(individual_options)}
-seeds['hard_worker'] = len(individual_options)
-seeds['home_maker'] = len(individual_options) + 1
-seeds['work_from_home'] = len(individual_options) + 2
-seeds['senior'] = len(individual_options) + 3
-so_far = len(individual_options) + 3
-for i,k in enumerate(cluster_options):
+so_far = len(seeds)
+for i,k in enumerate(persona_options):
     seeds[k] = so_far + int(i)
+seeds['custom'] = len(seeds)
 
 activity_map = {
 "brush_teeth" : "brushing_teeth",
@@ -191,11 +59,11 @@ start_times = [6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23]
 compulsary_activities = ["brushing_teeth","showering","breakfast","dinner","lunch"]
  
 def get_opt_activities(seed):
-    opt_activities = list(personas['hard_worker'].keys())
+    opt_activities = list(cluster_histograms.keys())
     opt_activities.remove("come_home")
-    random.seed(seed)
     for act in compulsary_activities:
         opt_activities.remove(act)
+    random.seed(seed)
     random.shuffle(opt_activities)
     return opt_activities
 
@@ -206,11 +74,14 @@ for k,s in seeds.items():
 def KLdivergence(act_hist1, act_hist2):
     eps = 1e-7
     activities = act_hist1.keys()
-    dist_p = np.array([act_hist1[act] for act in activities]) + eps
-    dist_p_norm = dist_p/sum(sum(dist_p))
-    # assert(np.isclose(sum(sum(dist_p)), len(start_times))), str(sum(sum(dist_p))) + ' , ' + str(len(start_times))
-    dist_q = np.array([act_hist2[act] for act in activities]) + eps
-    dist_q_norm = dist_q/sum(sum(dist_q))
+    dist_p = np.array([np.array(act_hist1[act]).reshape(-1) for act in activities]) + eps
+    num_timeslots_p = dist_p.shape[1]
+    max_p = dist_p.sum(axis=0).max()
+    dist_p_norm = dist_p/max_p/num_timeslots_p
+    dist_q = np.array([np.array(act_hist2[act]).reshape(-1) for act in activities]) + eps
+    num_timeslots_q = dist_q.shape[1]
+    max_q = dist_q.sum(axis=0).max()
+    dist_q_norm = dist_q/max_q/num_timeslots_q
     kl_div = sum(sum(dist_p_norm * np.log(dist_p_norm/dist_q_norm)))
     return kl_div
 
@@ -227,20 +98,15 @@ def both_over_either(act_hist1, act_hist2):
     return both/either
 
 class ScheduleDistributionSampler():
-    def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf"), custom_label='custom', num_optional_activities=-1, filter_histograms = True):
+    def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf"), custom_label='custom', num_optional_activities=-1):
         self.activity_histogram = {}
-        with open('data/personaBasedSchedules/trait_histograms.json') as f:
+        with open('data/personaBasedSchedules/cluster_histograms.json') as f:
             trait_histograms = json.load(f)
         with open('data/personaBasedSchedules/corrected_histograms.json') as f:
             individual_histograms = json.load(f)
         if isinstance(type, dict):
             self.activity_histogram = type
             self.label = custom_label
-            # for activity in type:
-            #     try:
-            #         self.activity_histogram[activity] = np.array(trait_histograms[activity][type[activity]])
-            #     except Exception as e:
-            #         print(activity, ' does not exist in the traits')
         elif type in cluster_histograms.keys():
             self.label = 'Cluster'+type
             for activity, freq in cluster_histograms[type].items():
@@ -256,17 +122,20 @@ class ScheduleDistributionSampler():
             persona = personas[persona_name]
             for activity in persona:
                 try:
-                    self.activity_histogram[activity] = np.array(trait_histograms[activity][persona[activity]])
-                    if filter_histograms:
-                        self.activity_histogram[activity] -= 1/6
-                        self.activity_histogram[activity] = max(0, self.activity_histogram[activity])
+                    self.activity_histogram[activity] = np.array(trait_histograms[activity][int(persona[activity])])
                 except Exception as e:
                     print(activity, ' does not exist in the traits for ', persona_name)
                     # raise e
         else:
             raise ArgumentError(f'Unknown value {type} for Schedule Sampler')
         
-        opt_activities = activity_lists[type]
+        if self.label in activity_lists:
+            opt_activities = activity_lists[type]
+        else:
+            opt_activities = list(self.activity_histogram.keys())
+            opt_activities.remove("come_home")
+            for a in compulsary_activities:
+                opt_activities.remove(a)
         if num_optional_activities > 0:
             if num_optional_activities < len(opt_activities):
                 opt_activities = opt_activities[:num_optional_activities]
@@ -296,12 +165,16 @@ class ScheduleDistributionSampler():
                 activity = act
                 break
             sample -= thresh
-        self.update_distributions(st_idx, activity)
         if activity == "leave_home":
             self.left_house = True
         return activity
 
-    def update_distributions(self, st_idx, activity):
+    def update_distributions(self, t_mins, activity):
+        try:
+            st_idx = start_times.index(int(floor(t_mins/60)))
+        except ValueError:
+            print('Time not in range for update distribution. This should only happen once-in-a-while')
+            return
         if activity is None:
             return
         end_idx = min(st_idx+self.resample_after, len(start_times))

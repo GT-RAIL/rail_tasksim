@@ -29,6 +29,7 @@
 [Walk] <drinking_glass>
 [Find] <cupboard>
 [Open] <cupboard>
+[Find] <drinking_glass>
 [Grab] <drinking_glass>
 [Find] <cupboard>
 [Close] <cupboard>

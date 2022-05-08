@@ -270,7 +270,7 @@
             ],
             "id": 39,
             "states": [
-                "ON"
+                "OFF"
             ],
             "category": "Electronics",
             "class_name": "light"

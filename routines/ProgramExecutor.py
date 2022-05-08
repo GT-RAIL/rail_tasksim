@@ -49,13 +49,6 @@ def print_graph_difference(g1,g2):
 
 
 def read_program(file_name, node_map):
-    action_headers = []
-    action_scripts = []
-    action_objects_in_use = []
-
-    def obj_class_id_from_string(string_in):
-        class_id = [a[1:-1] for a in string_in.split(' ')]
-        return (int(class_id[1]), class_id[0])
 
     def get_duration(header):
         durations = (header).split('-')
@@ -67,7 +60,6 @@ def read_program(file_name, node_map):
     with open(file_name) as f:
         lines = []
         durations = []
-        obj_start, obj_end = [], []
         index = 1
         for line in f:
             if line.startswith('##'):
@@ -77,14 +69,6 @@ def read_program(file_name, node_map):
                 header = line[2:].strip()
                 duration_min, duration_max = get_duration(header)
             line = line.strip()
-            if line.startswith('+'):
-                obj = obj_class_id_from_string(node_map[line[1:]])
-                obj_start[-1].append(obj)
-                continue
-            if line.startswith('-'):
-                obj = obj_class_id_from_string(node_map[line[1:]])
-                obj_end[-1].append(obj)
-                continue
             if '[' not in line:
                 continue
             if len(line) > 0 and not line.startswith('#'):
@@ -98,13 +82,15 @@ def read_program(file_name, node_map):
                     print(f'The following line has a mistake! Did you write the correct object and activity names? \n {line}')
                     raise e
                 lines.append(scr_line)
-                obj_start.append([])
-                obj_end.append([])
                 index += 1
         num_lines = len(lines) - len(durations)
         if num_lines > 0:
             durations += [((duration_min/num_lines),(duration_max/num_lines))] * num_lines
-    return durations, lines, obj_start, obj_end
+
+    duration_min = sum([d1 for (d1,d2) in durations])
+    duration_max = sum([d2 for (d1,d2) in durations])
+
+    return {'durations':durations , 'lines':lines, 'total_duration_range':(duration_min, duration_max)}
 
 def execute_program(program_file, graph_file, node_map, verbose=False):
     with open (graph_file,'r') as f:

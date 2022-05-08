@@ -10,8 +10,6 @@
 
 ##4-5
 [Walk] <bedroom>
-[Find] <light_bedroom>
-[Switchon] <light_bedroom>
 [Find] <dresser>
 [Open] <dresser>
 [Walk] <clothes_jacket>

@@ -24,7 +24,7 @@ color_map = {
  "cleaning" : sns.color_palette(palette='dark')[0], 
  "laundry" : sns.color_palette(palette='dark')[1], 
  "leave_home" : sns.color_palette(palette='dark')[2], 
- "come_home" : sns.color_palette(palette='dark')[2], 
+ "come_home" : sns.color_palette(palette='pastel')[2], 
  "socializing" : sns.color_palette(palette='dark')[3], 
  "taking_medication" : sns.color_palette(palette='dark')[4], 
  "watching_tv" : sns.color_palette(palette='dark')[5], 
@@ -42,7 +42,7 @@ color_map = {
  
  "going_to_the_bathroom" : sns.color_palette(palette='pastel')[0],
  "getting_dressed" : sns.color_palette(palette='pastel')[1],
- "kitchen_cleaning" : sns.color_palette(palette='pastel')[2],
+ "kitchen_cleaning" : sns.color_palette(palette='pastel')[7],
  "take_out_trash" : sns.color_palette(palette='pastel')[3],
  "wash_dishes" : sns.color_palette(palette='pastel')[4],
  "playing_music" : sns.color_palette(palette='pastel')[5],
@@ -94,7 +94,7 @@ def dump_visuals(root_dir):
         with open(os.path.join(directory, 'script_usage.txt')) as f:
             data = f.readlines()
             for line in data[1:]:
-                _, activity, start, end = line.split(';')
+                activity, _, start, end = line.split(';')
                 start = float(start.strip())
                 end = float(end.strip())
                 for t in times:
@@ -138,7 +138,7 @@ def dump_visuals(root_dir):
             prev_start = min_time
             data = f.readlines()
             for line in data[1:]:
-                _, activity, start, end = line.split(';')
+                activity, _, start, end = line.split(';')
                 start = float(start.strip())
                 end = float(end.strip())
                 end = min(end, 24*60)

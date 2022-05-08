@@ -11,7 +11,7 @@
 [Switchon] <computer_home_office>
 [Find] <desk_home_office>
 [Find] <keyboard>
-## 45-60
+## 45-180
 [Type] <keyboard>
 ## 15-20
 [Find] <pencil>

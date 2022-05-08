@@ -10,7 +10,7 @@
 [Sit] <sofa_home_office>
 +<book>
 
-## 200-300
+## 30-300
 [Find] <book>
 [Read] <book>
 -<book>

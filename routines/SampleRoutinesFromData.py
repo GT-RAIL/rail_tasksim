@@ -13,6 +13,9 @@ import random
 import multiprocessing
 import sys
 
+from requests import options
+from sklearn import cluster
+
 sys.path.append('..')
 sys.path.append('../simulation')
 
@@ -23,7 +26,7 @@ from evolving_graph.environment import EnvironmentGraph
 
 from GraphReader import GraphReader, init_graph_file, scene_num
 from ProgramExecutor import read_program
-from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options, cluster_options, seeds
+from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options
 # from postprocess_viz import dump_visuals
 
 set_seed = 23424
@@ -53,8 +56,8 @@ print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 
 info = {}
 info['dt'] = 10   # minutes
-info['num_train_routines'] = 35
-info['num_test_routines'] = 8
+info['num_train_routines'] = 3
+info['num_test_routines'] = 1
 info['weekend_days'] = []   #[day_num(day) for day in ['Saturday','Sunday']]
 info['start_time'] = time_mins(mins=0, hrs=6)
 info['end_time'] = time_mins(mins=0, hrs=24)
@@ -65,8 +68,8 @@ info['graphs_dt_apart'] = False
 
 info['min_activities'] = 1
 info['schedule_sampler_filter_num'] = 0 
-info['idle_sampling_factor'] = 1.2
-info['block_activity_for_hrs'] = 5
+info['idle_sampling_factor'] = 1.0
+info['block_activity_for_hrs'] = 3
 
 info['breakfast_only'] = False
 info['single_script_only'] = False
@@ -75,12 +78,11 @@ ignore_classes = ['floor','wall','ceiling','character']
 utilized_object_ids = set()
 edge_classes = ["INSIDE", "ON"]
 
-
 class SamplingFailure(Exception):
     pass
 
-def get_script_files_list(n):
-    files_list = {}
+def get_scripts(n):
+    scripts_list = {}
     directory = os.path.join('data/sourcedScriptsByActivity')
     for activity in os.listdir(directory):
         available_files = os.listdir(os.path.join(directory,activity))
@@ -91,145 +93,89 @@ def get_script_files_list(n):
         while nact >= len(available_files):
             nact -= len(available_files)
         f = available_files[nact]
-        files_list[activity] = f
-    files_list["come_home"] = files_list["leave_home"]
-    files_list["leaving_home_and_coming_back"] = files_list["leave_home"]
-    return files_list
-
-# %% Activity
-
-class Activity():
-    def __init__(self, name, time_start_mins, time_end_mins=None, script_file=None, verbose=False, stack_actions=True):
-        self.name = name
-        directory = os.path.join('data/sourcedScriptsByActivity', name)
-        if script_file is None:
-            try:
-                if info['single_script_only']:
-                    script_files = os.listdir(directory)
-                    script_files.sort()
-                    script_file = script_files[0]
-                else:
-                    script_file = np.random.choice(os.listdir(directory))
-            except:
-                raise SamplingFailure(f'No script found for {name}')
-            if verbose:
-                print(f'Picking script {script_file} for {name}')
-        durations, self.scripts, self.obj_start, self.obj_end = read_program(os.path.join(directory,script_file), init_graph.node_map)
-        self.source = '_'.join([name, script_file[:-4]])
-
-        self.durations = [(random.random() * (duration_max-duration_min) + duration_min) for duration_max,duration_min in durations]
-        def valid_times(times):
-            for time, next_time, duration in zip(times[:-1], times[1:], self.durations[:-1]):
-                if next_time - time <= duration:
-                    return False
-                if info['graphs_dt_apart'] and next_time - time <= info['dt']:
-                    return False
-            return True
-        if stack_actions:
-            times = [time_start_mins]
-            if time_end_mins is not None:
-                if time_start_mins >= time_end_mins - sum(self.durations):
-                    raise SamplingFailure(f'Cannot sample {sum(self.durations)}mins long activity {self.source} within {time_start_mins} and {time_end_mins}')
-                times[0] = random.randrange(time_start_mins, time_end_mins - sum(self.durations))
-            for d in self.durations:
-                times.append(times[-1]+d)
-        else:
-            assert time_end_mins is not None, 'You need to either stack actions or provide an end time.'
-            for _ in range(5):
-                times = (np.random.rand(len(self.lines)) * (time_end_mins-time_start_mins) + time_start_mins).round().astype(int)
-                times.sort()
-                if valid_times(times):
-                    break
-            if not valid_times(times):
-                raise SamplingFailure(f'Invalid times {times} and durations {self.durations} for activity {self.source}')
-        self.times = times
-        self.source += '('+time_human(self.times[0])+' - '+time_human(self.get_end_time())+') '
-    
-    def get_action_info(self):
-        detailed_actions = []
-        for t,d,scr,obj_s,obj_e in zip(self.times, self.durations, self.scripts, self.obj_start, self.obj_end):
-            t2 = t+d
-            detailed_actions.append({'time_from':t, 'time_to':t2, 'name':self.source, 'script':scr, 'time_from_h':time_human(t), 'time_to_h':time_human(t2), 'start_using':obj_s, 'end_using':obj_e, 'source':self.source})
-        return detailed_actions
-    
-    def get_end_time(self):
-        return self.times[-1] + self.durations[-1]
-
-    def get_start_time(self):
-        return self.times[0]
-
+        scripts_list[activity] = {'filename': f}
+    scripts_list["come_home"] = deepcopy(scripts_list["leave_home"])
+    scripts_list["leaving_home_and_coming_back"] = deepcopy(scripts_list["leave_home"])
+    for activity, info in scripts_list.items():
+        info = read_program(os.path.join('data/sourcedScriptsByActivity',activity,info['filename']), init_graph.node_map)
+        scripts_list[activity].update(info)
+    return scripts_list
 
 # %% Schedule
-
-class Schedule():
-    def __init__(self, type=None):
-        pass
-
-    def get_combined_script(self, verbose=False):
-        all_actions = []
-        for act in self.activities:
-            all_actions += act.get_action_info()
-        all_actions.sort(key = lambda x : x['time_from'])
-        if verbose:
-            for a in all_actions:
-                print (a['time_from_h']+' to '+a['time_to_h']+' : '+a['name'])
-                print ('Started using : '+str(a['start_using'])+'; Finished using : '+str(a['end_using']))
-                for l in a['script']:
-                    print(' - ',l)
-        for end_time, next_start in zip([a['time_to'] for a in all_actions[:-1]], [a['time_from'] for a in all_actions[1:]]):
-            if end_time > next_start:
-                raise SamplingFailure(f'Timing conflict : End time {end_time} of an action , exceeds start time {next_start} of next action')
-        return all_actions
-
-class ScheduleFromHistogram(Schedule):
-    def __init__(self, sampler_name, script_files_list, type=None, num_optional_activities=-1):
+class ScheduleFromHistogram():
+    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
+        global info
         sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
         self.activities = []
         t = info['start_time']
-        while t < info['end_time']:
-            activity_name = sampler(t)
-            if activity_name is None:
-                t += info['dt'] * 3
-                continue
-            new_activity = Activity(activity_name, time_start_mins=t, stack_actions=True, script_file=script_files_list[activity_name])
-            self.activities.append(new_activity)
-            t = new_activity.get_end_time() + 1
-        if len(self.activities) < info['min_activities']:
-            need = info['min_activities']
-            raise SamplingFailure(f'Could not sample enough activities. Sampled {len(self.activities)} need at least {need}')
+        activity_name = None
 
+        while t < info['end_time']:
+            new_activity = sampler(t)
+            # print(time_human(t), new_activity)
+            if new_activity is None:
+                if activity_name is not None:
+                    self.activities[-1][2]['end_time'] = deepcopy(t)
+                    activity_name = deepcopy(new_activity)
+                    duration_min, duration_max = float("inf"), float("inf")
+                t += info['dt']
+                continue
+            if activity_name == new_activity:
+                t += info['dt']
+                if len(self.activities) > 0 and t-self.activities[-1][0] >= duration_max:
+                    sampler.update_distributions(t, activity_name)
+                    self.activities[-1][2]['end_time'] = deepcopy(t)
+                    activity_name = None
+                    duration_min, duration_max = float("inf"), float("inf")
+                continue
+            if len(self.activities) > 0 and activity_name is not None:
+                self.activities[-1][2]['end_time'] = deepcopy(t)
+            sampler.update_distributions(t, activity_name)
+            activity_name = new_activity
+            self.activities.append((t, activity_name, scripts_list[activity_name]))
+            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
+            t += duration_min
+        if activity_name is not None:
+            self.activities[-1][2]['end_time'] = deepcopy(t)
+
+        # if len(self.activities) < info['min_activities']:
+        #     need = info['min_activities']
+        #     raise SamplingFailure(f'Could not sample enough activities. Sampled {len(self.activities)} need at least {need}')
+
+
+    def get_combined_script(self, verbose=False):
+        all_actions = []
+        script_header = ''
+        for t, activity, info in self.activities:
+            start_time = t
+            end_time = info['end_time']
+            # print(f'Time range for activity {start_time} to {end_time}')
+            script_header += '{} ({} - {}) \n'.format(activity, time_human(start_time), time_human(end_time))
+            remaining_min, remaining_max = deepcopy(info['total_duration_range'])
+            duration_remaining = deepcopy(end_time - start_time)
+            for act_line, act_duration in zip(info['lines'], info['durations']):
+                remaining_min -= act_duration[0]
+                remaining_max -= act_duration[1]
+                sampling_min = max(act_duration[0], duration_remaining - remaining_max)
+                sampling_max = min(act_duration[1], duration_remaining - remaining_min)
+                d = (random.random() * (sampling_max-sampling_min) + sampling_min)
+                duration_remaining -= d
+                # print(f'Duration Remaining {duration_remaining}; Remaining {remaining_min}-{remaining_max}; Sampling {sampling_min}-{sampling_max}')
+                # print('Sampled : ',t)
+                all_actions.append({'script':act_line, 'time_from':t, 'time_to':t+d, 'time_from_h':time_human(t), 'time_to_h':time_human(t+d), 'name':activity+'-'+info['filename']})
+                t += d
+        if verbose:
+            for a in all_actions:
+                print (a['time_from_h']+' to '+a['time_to_h']+' : '+a['name']+' : '+a['script'])
+
+        return all_actions, script_header
 # %% run and get graphs
 
-def get_graphs(all_actions, verbose=False):
+def get_graphs(all_actions, script_string = '',  verbose=False):
     with open (init_graph_file,'r') as f:
         init_graph_dict = json.load(f)
     name_equivalence = utils.load_name_equivalence()
-    complete_objects_in_use = [[]]
-    current_objects = []
-    complete_script_lines = []
-    complete_script_timestamps = []
-    complete_sources = []
-    important_objects = set()
-    for action in all_actions:
-        if verbose:
-            print('## Executing '+action['name']+' from '+action['time_from_h']+' to '+action['time_to_h'])
-            print ('Started using : '+str(action['start_using'])+'; Finished using : '+str(action['end_using']))
-            print (action['script'])
-        ## add to the script
-        complete_script_lines.append(action['script'])
-        complete_script_timestamps.append(action['time_to'])
-        complete_sources.append(action['source'])
-        ## update the list of objects currently in use
-        for obj in action['start_using']:
-            current_objects.append(obj)
-        try:
-            for obj in action['end_using']:
-                current_objects.remove(obj)
-        except ValueError as e:
-            raise ValueError('Failed to execute '+str(action['name'])+' ill-defined usage tags for '+str(obj))
-        ## save the iteration results
-        complete_objects_in_use.append(current_objects)
-
+    complete_script_lines = [action['script'] for action in all_actions]
     executor = ScriptExecutor(EnvironmentGraph(init_graph_dict), name_equivalence)
     success, _, graph_list = executor.execute(Script(complete_script_lines), w_graph_list=True)
     if not success:
@@ -243,41 +189,29 @@ def get_graphs(all_actions, verbose=False):
     
     graphs = [EnvironmentGraph(init_graph_dict).to_dict()]
     times = []
-    obj_in_use = []
-    script_string = ''
+    important_objects = set()
 
-    combined_obj_in_use = set()
     last_source = None
-    for graph, time, objects, line, src in zip(graph_list[1:], complete_script_timestamps, complete_objects_in_use, complete_script_lines, complete_sources):
-        combined_obj_in_use.update(objects)
-        if src != last_source:
+    for graph, action_info in zip(graph_list[1:], all_actions):
+        src = action_info['name']
+        if action_info['name'] != last_source:
             script_string += f'\n\n### {src}\n'
             last_source = src
-        script_string += f'\n{line}'
+        script_string += '\n' + str(action_info['script'])
+        script_string += '\n## {}\n'.format(action_info['time_to_h'])
         all_rel = [edge['relation_type'] for edge in graph['edges']]
         if 'HOLDS_RH' in all_rel or 'HOLDS_LH' in all_rel:
             continue
-        if len(times) > 0 and time-times[-1] <1:
+        if len(times) > 0: # and action_info['time_to']-times[-1] <1:
             graphs[-1] = graph
-            # updated_obj_in_use = set(obj_in_use[-1])
-            # updated_obj_in_use.update(combined_obj_in_use)
-            # obj_in_use[-1] = list(updated_obj_in_use)
         else:
-            # if len(obj_in_use) > 0:
-            #     script_string += '\n## Was using objects : {}'.format(str(obj_in_use[-1]))
-            script_string += f'\n## {time_human(time)}\n'
+            if len(graphs) > 1:
+                script_string += print_graph_difference(graphs[-2], graphs[-1]) + '\n'
             graphs.append(graph)
-            times.append(time)
-            obj_in_use.append([])
-            # obj_in_use.append(list(combined_obj_in_use))
-            # combined_obj_in_use = set()
+            times.append(action_info['time_to'])
         important_objects.update(get_used_objects(graphs[-2],graphs[-1]))
-        script_string += print_graph_difference(graphs[-2], graphs[-1]) + '\n'
-        if verbose:
-            print('Currently using : ',current_objects)
-            input('Press something...')
 
-    return graphs, times, obj_in_use, script_string, list(important_objects)
+    return graphs, times, script_string, list(important_objects)
 
 
 
@@ -354,12 +288,12 @@ def get_used_objects(g1,g2):
     return utilized_object_ids
 
 # %% Make a routine
-def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, script_files_list, logs_dir, script_use_file=None, num_optional_activities=-1, verbose=False):
+def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_list, logs_dir, script_use_file=None, num_optional_activities=-1, verbose=False):
     while True:
         try:
-            s = ScheduleFromHistogram(sampler_name, script_files_list, num_optional_activities=num_optional_activities)
-            actions = s.get_combined_script()
-            graphs, times, obj_in_use, script_string, imp_obj = get_graphs(actions)
+            s = ScheduleFromHistogram(sampler_name, scripts_list, num_optional_activities=num_optional_activities)
+            actions, script_string = s.get_combined_script()
+            graphs, times, script_string, imp_obj = get_graphs(actions, script_string=script_string)
         except SamplingFailure as sf:
             if verbose:
                 print (sf)
@@ -369,24 +303,24 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, script_fi
         script_file = os.path.join(scripts_dir,'{:03d}'.format(routine_num)+'.txt')
         if script_use_file is not None:
             with open(script_use_file, 'a') as f:
-                for a in s.activities:
-                    f.write('\n' + a.source[:a.source.index('(')] + ';' + a.name + ';' + str(a.get_start_time()) + ';' + str(a.get_end_time()))
+                for t,name,info in s.activities:
+                    f.write('\n' + name + ';' + name+'-'+str(info['filename']) + ';' + str(t) + ';' + str(info['end_time']))
         
         with open(script_file, 'w') as f:
             try:
-                f.write('Scripts used for this routine : \n'+'\n'.join([a.source for a in s.activities])+'\n\n\n')
+                f.write('Scripts used for this routine : \n'+'\n'.join(['{} : {} to {}'.format(name, info['time_from_h'], info['time_to_h']) for t,name,info in s.activities])+'\n\n\n')
             except:
                 pass
             f.write(script_string)
         print(f'Generated script {script_file}')
-        routine_out = ({'times':times,'graphs':graphs, 'objects_in_use':obj_in_use, 'important_objects':imp_obj})
+        routine_out = ({'times':times,'graphs':graphs, 'important_objects':imp_obj})
         routine_file = os.path.join(routines_dir,'{:03d}'.format(routine_num)+'.json')
         with open(routine_file, 'w') as f:
             json.dump(routine_out, f)
         return routine_out
 
 
-def main(sampler_name, output_directory, verbose, script_files_list, num_opt_act):
+def main(sampler_name, output_directory, verbose, scripts_list, num_opt_act):
     scripts_train_dir = os.path.join(output_directory,'scripts_train')
     scripts_test_dir = os.path.join(output_directory,'scripts_test')
     routines_raw_train_dir = os.path.join(output_directory,'raw_routines_train')
@@ -405,56 +339,56 @@ def main(sampler_name, output_directory, verbose, script_files_list, num_opt_act
     os.makedirs(logs_dir_test)
     
     with open(os.path.join(output_directory,'scripts_available_to_use.txt'), 'w') as f:
-        script_usage = json.dump(script_files_list, f, indent=4)
+        script_usage = json.dump([inf['filename'] for inf in scripts_list.values()], f, indent=4)
 
     sampler = ScheduleDistributionSampler(type=sampler_name, num_optional_activities=num_opt_act)
     sampler.plot(output_directory)
 
     # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
-        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
+        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
         # pool.apply_async(make_routine, args = (routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     for routine_num in range(info['num_test_routines']):
-        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
+        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
         # pool.apply_async(make_routine, args=(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     # pool.close()
     # pool.join()
 
-    use_per_script = {('_'.join(path.split('/')[-2:]))[:-4]:0 for path in glob.glob('data/sourcedScriptsByActivity/*/*.txt')}
-    activity_over_time = {act:{t:0 for t in np.arange(info['start_time'], info['end_time'], 5)} for act in activity_map.values()}
-    with open(os.path.join(output_directory,'script_usage.txt')) as f:
-        script_usage = f.read().split('\n')
-    for script_usage_info in script_usage:
-        if script_usage_info == '': continue
-        script, activity, start_time, end_time = script_usage_info.split(';')
-        use_per_script[script] += 1
-        for t in activity_over_time[activity]:
-            if t > float(start_time) and t < float(end_time):
-                activity_over_time[activity][t] += 1
+    # use_per_script = {('_'.join(path.split('/')[-2:]))[:-4]:0 for path in glob.glob('data/sourcedScriptsByActivity/*/*.txt')}
+    # activity_over_time = {act:{t:0 for t in np.arange(info['start_time'], info['end_time'], 5)} for act in activity_map.values()}
+    # with open(os.path.join(output_directory,'script_usage.txt')) as f:
+    #     script_usage = f.read().split('\n')
+    # for script_usage_info in script_usage:
+    #     if script_usage_info == '': continue
+    #     script, activity, start_time, end_time = script_usage_info.split(';')
+    #     use_per_script[script] += 1
+    #     for t in activity_over_time[activity]:
+    #         if t > float(start_time) and t < float(end_time):
+    #             activity_over_time[activity][t] += 1
     
-    fig, ax = plt.subplots()
-    fig.set_size_inches(18.5, 10.5)
-    ax.bar(use_per_script.keys(), use_per_script.values())
-    _ = plt.xticks(rotation=90)
-    _ = ax.set_title('Number of times each script is used in the dataset')
-    ax.legend()
-    fig.tight_layout()
-    plt.savefig(os.path.join(output_directory, 'script_usage_histogram.jpg'))
+    # fig, ax = plt.subplots()
+    # fig.set_size_inches(18.5, 10.5)
+    # ax.bar(use_per_script.keys(), use_per_script.values())
+    # _ = plt.xticks(rotation=90)
+    # _ = ax.set_title('Number of times each script is used in the dataset')
+    # ax.legend()
+    # fig.tight_layout()
+    # plt.savefig(os.path.join(output_directory, 'script_usage_histogram.jpg'))
 
 
-    num_act = len(activity_over_time)
-    fig, axs = plt.subplots(4, ceil(num_act/4))
-    fig.set_size_inches(18.5, 10.5)
-    axs = axs.reshape(-1)
-    for i,(activity, time_func) in enumerate(activity_over_time.items()):
-        if activity is None: continue
-        axs[i].bar(time_func.keys(), time_func.values())
-        axs[i].set_xticks([t for t in time_func.keys() if t%180==0])
-        axs[i].set_xticklabels([time_human(t) for t in time_func.keys() if t%180==0], rotation=90)
-        _ = axs[i].set_title(activity)
-    fig.suptitle(sampler_name)
-    fig.tight_layout()
-    plt.savefig(os.path.join(output_directory, 'activity_time.jpg'))
+    # num_act = len(activity_over_time)
+    # fig, axs = plt.subplots(4, ceil(num_act/4))
+    # fig.set_size_inches(18.5, 10.5)
+    # axs = axs.reshape(-1)
+    # for i,(activity, time_func) in enumerate(activity_over_time.items()):
+    #     if activity is None: continue
+    #     axs[i].bar(time_func.keys(), time_func.values())
+    #     axs[i].set_xticks([t for t in time_func.keys() if t%180==0])
+    #     axs[i].set_xticklabels([time_human(t) for t in time_func.keys() if t%180==0], rotation=90)
+    #     _ = axs[i].set_title(activity)
+    # fig.suptitle(sampler_name)
+    # fig.tight_layout()
+    # plt.savefig(os.path.join(output_directory, 'activity_time.jpg'))
 
 
     with open(os.path.join(routines_raw_test_dir,'{:03d}'.format(0)+'.json')) as f:
@@ -517,8 +451,8 @@ def main(sampler_name, output_directory, verbose, script_files_list, num_opt_act
     search_objects = [n for n in nodes if n['id'] in utilized_object_ids and n['category']=='placable_objects']
     info['search_object_ids'] = [n['id'] for n in search_objects]
     info['search_object_names'] = [n['class_name'] for n in search_objects]
-    for k,v in info.items():
-        print(k,' : ',v)
+    # for k,v in info.items():
+    #     print(k,' : ',v)
     with open(os.path.join(output_directory,'info.json'), 'w') as f:
         json.dump(info, f, indent=4)
 
@@ -527,7 +461,7 @@ def main(sampler_name, output_directory, verbose, script_files_list, num_opt_act
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run model on routines.')
     parser.add_argument('--path', type=str, default='data/generated_routine', help='Directory to output data in')
-    parser.add_argument('--sampler', type=str, help='Name of schedule sampler to use. This can be \'persona\', \'individual\', \'cluster\' or an individual ID or persona name')
+    parser.add_argument('--sampler', type=str, default='persona0', help='Name of schedule sampler to use. This can be \'persona\', \'individual\', \'cluster\' or an individual ID or persona name')
     parser.add_argument('--loop_through_all', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--verbose', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--num_optional_activities', default=-1, type=int, help='Number of activities to do in addition to the five')
@@ -541,36 +475,25 @@ if __name__ == "__main__":
         else:
             raise InterruptedError()
 
-    n = 0
+    options_list = {
+        'persona': persona_options,
+        'individual': individual_options
+    }
+
     if args.loop_through_all:
         os.makedirs(args.path)
         pool = multiprocessing.Pool()
-        if args.sampler.lower() == 'persona':
-            for n,p in enumerate(persona_options):
-                # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
-                pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), args.num_optional_activities))
-        if args.sampler.lower() == 'individual':
-            for n,i in enumerate(individual_options):
-                # main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
-                pool.apply_async(main, args=(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), args.num_optional_activities))
-        if args.sampler.lower() == 'cluster':
-            for n,i in enumerate(cluster_options):
-                # main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
-                pool.apply_async(main, args=(i, os.path.join(args.path,i), args.verbose, get_script_files_list(n), args.num_optional_activities))
+        for n,p in enumerate(options_list[args.sampler.lower()]):
+            # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
+            pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.num_optional_activities))
         pool.close()
         pool.join()
     else:
-        if args.sampler.lower() == 'persona':
-            p = random.choice(persona_options)
-            main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(0))
-        elif args.sampler.lower() == 'individual':
-            i = random.choice(individual_options)
-            main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(0))
-        elif args.sampler.lower() == 'cluster':
-            i = random.choice(cluster_options)
-            main(i, os.path.join(args.path,i), args.verbose, get_script_files_list(0))
+        if args.sampler in persona_options + individual_options:
+            p = args.sampler
+            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.num_optional_activities)
         else:
-            ip = random.choice(persona_options + individual_options)
-            main(ip, os.path.join(args.path,ip), args.verbose, get_script_files_list(0))
-    
+            p = random.choice(options_list[args.sampler.lower()])
+            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.num_optional_activities)
+        
     # dump_visuals(args.path)

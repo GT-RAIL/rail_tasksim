@@ -40,7 +40,7 @@
 +<headset>
 [find] <computer_home_office>
 [type] <computer_home_office>
-## 11-15
+## 15-180
 [find] <chair_home_office>
 [sit] <chair_home_office>
 [Standup]

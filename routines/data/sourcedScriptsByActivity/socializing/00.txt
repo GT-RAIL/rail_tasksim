@@ -46,7 +46,7 @@
 [Walk] <kitchen_counter>
 [Putback] <food_donut> <kitchen_counter>
 
-## 30-75
+## 30-120
 [Walk] <dining_room>
 [Walk] <bench>
 [Sit] <bench>
@@ -93,12 +93,10 @@
 [Walk] <cutting_board>
 [Find] <food_cheese>
 [Grab] <food_cheese>
-[Walk] <trashcan>
-[Open] <trashcan>
-[Putin] <food_cheese> <trashcan>
 [Walk] <kitchen_counter>
 [Find] <food_cheese>
 [Grab] <food_cheese>
-[Walk] <trashcan>
-[Putin] <food_cheese> <trashcan>
-[Close] <trashcan>
+[Walk] <fridge>
+[Open] <fridge>
+[Putin] <food_cheese> <fridge>
+[Close] <fridge>
