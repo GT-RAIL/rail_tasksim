@@ -13,9 +13,6 @@ import random
 import multiprocessing
 import sys
 
-from requests import options
-from sklearn import cluster
-
 sys.path.append('..')
 sys.path.append('../simulation')
 
@@ -56,8 +53,8 @@ print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 
 info = {}
 info['dt'] = 10   # minutes
-info['num_train_routines'] = 3
-info['num_test_routines'] = 1
+info['num_train_routines'] = 50
+info['num_test_routines'] = 10
 info['weekend_days'] = []   #[day_num(day) for day in ['Saturday','Sunday']]
 info['start_time'] = time_mins(mins=0, hrs=6)
 info['end_time'] = time_mins(mins=0, hrs=24)
@@ -74,9 +71,15 @@ info['block_activity_for_hrs'] = 3
 info['breakfast_only'] = False
 info['single_script_only'] = False
 
+info['min_ideal_transition_prec'] = 0.7
+
 ignore_classes = ['floor','wall','ceiling','character']
 utilized_object_ids = set()
 edge_classes = ["INSIDE", "ON"]
+
+with open ('data/personaBasedSchedules/transitions_best.json') as f:
+    ideal_transitions = json.load(f)
+
 
 class SamplingFailure(Exception):
     pass
@@ -102,51 +105,20 @@ def get_scripts(n):
     return scripts_list
 
 # %% Schedule
-class ScheduleFromHistogram():
-    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
-        global info
-        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
-        self.activities = []
-        t = info['start_time']
-        activity_name = None
 
-        while t < info['end_time']:
-            new_activity = sampler(t)
-            # print(time_human(t), new_activity)
-            if new_activity is None:
-                if activity_name is not None:
-                    self.activities[-1][2]['end_time'] = deepcopy(t)
-                    activity_name = deepcopy(new_activity)
-                    duration_min, duration_max = float("inf"), float("inf")
-                t += info['dt']
-                continue
-            if activity_name == new_activity:
-                t += info['dt']
-                if len(self.activities) > 0 and t-self.activities[-1][0] >= duration_max:
-                    sampler.update_distributions(t, activity_name)
-                    self.activities[-1][2]['end_time'] = deepcopy(t)
-                    activity_name = None
-                    duration_min, duration_max = float("inf"), float("inf")
-                continue
-            if len(self.activities) > 0 and activity_name is not None:
-                self.activities[-1][2]['end_time'] = deepcopy(t)
-            sampler.update_distributions(t, activity_name)
-            activity_name = new_activity
-            self.activities.append((t, activity_name, scripts_list[activity_name]))
-            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
-            t += duration_min
-        if activity_name is not None:
-            self.activities[-1][2]['end_time'] = deepcopy(t)
-
-        # if len(self.activities) < info['min_activities']:
-        #     need = info['min_activities']
-        #     raise SamplingFailure(f'Could not sample enough activities. Sampled {len(self.activities)} need at least {need}')
-
+class Schedule():
+    def __init__(self):
+        pass
 
     def get_combined_script(self, verbose=False):
         all_actions = []
         script_header = ''
+        num_ideal_transitions = 0
+        prev_activity = None
         for t, activity, info in self.activities:
+            if prev_activity is not None:
+                if self.ideal_transitions[prev_activity] == activity:
+                    num_ideal_transitions += 1
             start_time = t
             end_time = info['end_time']
             # print(f'Time range for activity {start_time} to {end_time}')
@@ -164,11 +136,115 @@ class ScheduleFromHistogram():
                 # print('Sampled : ',t)
                 all_actions.append({'script':act_line, 'time_from':t, 'time_to':t+d, 'time_from_h':time_human(t), 'time_to_h':time_human(t+d), 'name':activity+'-'+info['filename']})
                 t += d
+            prev_activity = activity
         if verbose:
             for a in all_actions:
                 print (a['time_from_h']+' to '+a['time_to_h']+' : '+a['name']+' : '+a['script'])
+        self.prec_ideal_transitions = num_ideal_transitions/(len(self.activities)-1)
 
         return all_actions, script_header
+
+class ScheduleFromHybridDuration(Schedule):
+    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
+        global info
+        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        if sampler_name in ideal_transitions.keys():
+            self.ideal_transitions = ideal_transitions[sampler_name]
+        else:
+            self.ideal_transitions = {a:None for a in sampler.activities+['come_home']}
+        self.activities = []
+        t = info['start_time']
+        activity_name = None
+
+        while t < info['end_time']:
+            new_activity = sampler(t)
+            # print(time_human(t), new_activity)
+            if new_activity is None:
+                if activity_name is not None:
+                    self.activities[-1][2]['end_time'] = deepcopy(t)
+                    sampler.update_distributions(t, deepcopy(activity_name))
+                    activity_name = deepcopy(new_activity)
+                    duration_min, duration_max = float("inf"), float("inf")
+                t += info['dt']
+                continue
+            if activity_name == new_activity:
+                duration_so_far = t - self.activities[-1][0]
+                t += deepcopy(int(random.random() * (duration_max - duration_so_far)))
+                continue
+            if len(self.activities) > 0 and activity_name is not None:
+                self.activities[-1][2]['end_time'] = deepcopy(t)
+            sampler.update_distributions(t, deepcopy(activity_name))
+            activity_name = deepcopy(new_activity)
+            self.activities.append((deepcopy(t), deepcopy(activity_name), deepcopy(scripts_list[activity_name])))
+            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
+            sample_duration = random.random() * (duration_max - duration_min) + duration_min
+            t += deepcopy(sample_duration)
+        if sampler.left_house:
+            raise SamplingFailure("Cannot be out of the house at the end of the day")
+        if activity_name is not None:
+            self.activities[-1][2]['end_time'] = deepcopy(t)
+
+
+class ScheduleFromScriptDuration(Schedule):
+    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
+        global info
+        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        if sampler_name in ideal_transitions.keys():
+            self.ideal_transitions = ideal_transitions(sampler_name)
+        else:
+            self.ideal_transitions = {a:None for a in sampler.activities+['come_home']}
+        self.activities = []
+        t = info['start_time']
+        activity_name = None
+
+        while t < info['end_time']:
+            activity_name = sampler(t)
+            if activity_name == None:
+                t += info['dt']
+                continue
+            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
+            info_act = deepcopy(scripts_list[activity_name])
+            duration_sampled = random.random() * (duration_max - duration_min) + duration_min
+            info_act['end_time'] = t + duration_sampled
+            sampler.update_distributions(info_act['end_time'], activity_name)
+            self.activities.append((deepcopy(t), deepcopy(activity_name), info_act))
+            t += duration_sampled
+        if sampler.left_house:
+            raise SamplingFailure("Cannot be out of the house at the end of the day")
+        if activity_name is not None:
+            self.activities[-1][2]['end_time'] = deepcopy(t)
+
+
+class ScheduleFromEndTime(Schedule):
+    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
+        global info
+        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        if sampler_name in ideal_transitions.keys():
+            self.ideal_transitions = ideal_transitions(sampler_name)
+        else:
+            self.ideal_transitions = {a:None for a in sampler.activities+['come_home']}
+        self.activities = []
+        t = info['start_time']
+        activity_name = None
+
+        while t < info['end_time']:
+            activity_name = sampler(t)
+            if activity_name == None:
+                t += info['dt']
+                continue
+            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
+            info_act = deepcopy(scripts_list[activity_name])
+            end_time_sampled = sampler.sample_end_time(activity_name, end_time_min=t+duration_min, end_time_max=t+duration_max, dt=info['dt'])
+            info_act['end_time'] = end_time_sampled
+            sampler.update_distributions(info_act['end_time'], activity_name)
+            self.activities.append((deepcopy(t), deepcopy(activity_name), info_act))
+            t = end_time_sampled
+        if sampler.left_house:
+            raise SamplingFailure("Cannot be out of the house at the end of the day")
+        if activity_name is not None:
+            self.activities[-1][2]['end_time'] = deepcopy(t)
+
+
 # %% run and get graphs
 
 def get_graphs(all_actions, script_string = '',  verbose=False):
@@ -202,7 +278,7 @@ def get_graphs(all_actions, script_string = '',  verbose=False):
         all_rel = [edge['relation_type'] for edge in graph['edges']]
         if 'HOLDS_RH' in all_rel or 'HOLDS_LH' in all_rel:
             continue
-        if len(times) > 0: # and action_info['time_to']-times[-1] <1:
+        if len(times) > 0 and action_info['time_to']-times[-1] < 1:
             graphs[-1] = graph
         else:
             if len(graphs) > 1:
@@ -288,11 +364,14 @@ def get_used_objects(g1,g2):
     return utilized_object_ids
 
 # %% Make a routine
-def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_list, logs_dir, script_use_file=None, num_optional_activities=-1, verbose=False):
+def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_list, logs_dir, script_use_file=None, clean_data=False, verbose=False):
+    global info
     while True:
         try:
-            s = ScheduleFromHistogram(sampler_name, scripts_list, num_optional_activities=num_optional_activities)
+            s = ScheduleFromHybridDuration(sampler_name, scripts_list)
             actions, script_string = s.get_combined_script()
+            if clean_data and s.prec_ideal_transitions < info['min_ideal_transition_prec']:
+                continue
             graphs, times, script_string, imp_obj = get_graphs(actions, script_string=script_string)
         except SamplingFailure as sf:
             if verbose:
@@ -303,12 +382,12 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_l
         script_file = os.path.join(scripts_dir,'{:03d}'.format(routine_num)+'.txt')
         if script_use_file is not None:
             with open(script_use_file, 'a') as f:
-                for t,name,info in s.activities:
-                    f.write('\n' + name + ';' + name+'-'+str(info['filename']) + ';' + str(t) + ';' + str(info['end_time']))
+                for t,name,act_info in s.activities:
+                    f.write('\n' + name + ';' + name+'-'+str(act_info['filename']) + ';' + str(t) + ';' + str(act_info['end_time']))
         
         with open(script_file, 'w') as f:
             try:
-                f.write('Scripts used for this routine : \n'+'\n'.join(['{} : {} to {}'.format(name, info['time_from_h'], info['time_to_h']) for t,name,info in s.activities])+'\n\n\n')
+                f.write('Scripts used for this routine : \n'+'\n'.join(['{} : {} to {}'.format(name, act_info['time_from_h'], act_info['time_to_h']) for t,name,act_info in s.activities])+'\n\n\n')
             except:
                 pass
             f.write(script_string)
@@ -320,7 +399,7 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_l
         return routine_out
 
 
-def main(sampler_name, output_directory, verbose, scripts_list, num_opt_act):
+def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
     scripts_train_dir = os.path.join(output_directory,'scripts_train')
     scripts_test_dir = os.path.join(output_directory,'scripts_test')
     routines_raw_train_dir = os.path.join(output_directory,'raw_routines_train')
@@ -341,54 +420,19 @@ def main(sampler_name, output_directory, verbose, scripts_list, num_opt_act):
     with open(os.path.join(output_directory,'scripts_available_to_use.txt'), 'w') as f:
         script_usage = json.dump([inf['filename'] for inf in scripts_list.values()], f, indent=4)
 
-    sampler = ScheduleDistributionSampler(type=sampler_name, num_optional_activities=num_opt_act)
+    sampler = ScheduleDistributionSampler(type=sampler_name)
     sampler.plot(output_directory)
 
     # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
-        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
+        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
         # pool.apply_async(make_routine, args = (routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     for routine_num in range(info['num_test_routines']):
-        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), num_opt_act, verbose)
+        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
         # pool.apply_async(make_routine, args=(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     # pool.close()
     # pool.join()
 
-    # use_per_script = {('_'.join(path.split('/')[-2:]))[:-4]:0 for path in glob.glob('data/sourcedScriptsByActivity/*/*.txt')}
-    # activity_over_time = {act:{t:0 for t in np.arange(info['start_time'], info['end_time'], 5)} for act in activity_map.values()}
-    # with open(os.path.join(output_directory,'script_usage.txt')) as f:
-    #     script_usage = f.read().split('\n')
-    # for script_usage_info in script_usage:
-    #     if script_usage_info == '': continue
-    #     script, activity, start_time, end_time = script_usage_info.split(';')
-    #     use_per_script[script] += 1
-    #     for t in activity_over_time[activity]:
-    #         if t > float(start_time) and t < float(end_time):
-    #             activity_over_time[activity][t] += 1
-    
-    # fig, ax = plt.subplots()
-    # fig.set_size_inches(18.5, 10.5)
-    # ax.bar(use_per_script.keys(), use_per_script.values())
-    # _ = plt.xticks(rotation=90)
-    # _ = ax.set_title('Number of times each script is used in the dataset')
-    # ax.legend()
-    # fig.tight_layout()
-    # plt.savefig(os.path.join(output_directory, 'script_usage_histogram.jpg'))
-
-
-    # num_act = len(activity_over_time)
-    # fig, axs = plt.subplots(4, ceil(num_act/4))
-    # fig.set_size_inches(18.5, 10.5)
-    # axs = axs.reshape(-1)
-    # for i,(activity, time_func) in enumerate(activity_over_time.items()):
-    #     if activity is None: continue
-    #     axs[i].bar(time_func.keys(), time_func.values())
-    #     axs[i].set_xticks([t for t in time_func.keys() if t%180==0])
-    #     axs[i].set_xticklabels([time_human(t) for t in time_func.keys() if t%180==0], rotation=90)
-    #     _ = axs[i].set_title(activity)
-    # fig.suptitle(sampler_name)
-    # fig.tight_layout()
-    # plt.savefig(os.path.join(output_directory, 'activity_time.jpg'))
 
 
     with open(os.path.join(routines_raw_test_dir,'{:03d}'.format(0)+'.json')) as f:
@@ -464,9 +508,11 @@ if __name__ == "__main__":
     parser.add_argument('--sampler', type=str, default='persona0', help='Name of schedule sampler to use. This can be \'persona\', \'individual\', \'cluster\' or an individual ID or persona name')
     parser.add_argument('--loop_through_all', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--verbose', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
-    parser.add_argument('--num_optional_activities', default=-1, type=int, help='Number of activities to do in addition to the five')
+    parser.add_argument('--clean_data', action='store_true', default=False)
+
 
     args = parser.parse_args()
+    args.clean_data = True
 
     if os.path.exists(args.path):
         overwrite = input(args.path+' already exists. Do you want to overwrite it? (y/n)')
@@ -484,16 +530,15 @@ if __name__ == "__main__":
         os.makedirs(args.path)
         pool = multiprocessing.Pool()
         for n,p in enumerate(options_list[args.sampler.lower()]):
-            # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), num_opt_act=args.num_optional_activities)
-            pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.num_optional_activities))
+            # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), args.clean_data)
+            pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.clean_data))
         pool.close()
         pool.join()
     else:
         if args.sampler in persona_options + individual_options:
             p = args.sampler
-            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.num_optional_activities)
+            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data)
         else:
             p = random.choice(options_list[args.sampler.lower()])
-            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.num_optional_activities)
+            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data)
         
-    # dump_visuals(args.path)

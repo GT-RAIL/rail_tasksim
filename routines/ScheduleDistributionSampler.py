@@ -73,29 +73,27 @@ for k,s in seeds.items():
 
 def KLdivergence(act_hist1, act_hist2):
     eps = 1e-7
-    activities = act_hist1.keys()
-    dist_p = np.array([np.array(act_hist1[act]).reshape(-1) for act in activities]) + eps
-    num_timeslots_p = dist_p.shape[1]
-    max_p = dist_p.sum(axis=0).max()
-    dist_p_norm = dist_p/max_p/num_timeslots_p
-    dist_q = np.array([np.array(act_hist2[act]).reshape(-1) for act in activities]) + eps
-    num_timeslots_q = dist_q.shape[1]
-    max_q = dist_q.sum(axis=0).max()
-    dist_q_norm = dist_q/max_q/num_timeslots_q
+    def get_dist(act_hist):
+        activities = act_hist.keys()
+        dist = np.array([np.array(act_hist[act]).reshape(-1) for act in activities])
+        num_timeslots = dist.shape[1]
+        assert dist.shape[0] == len(activities)
+        assert dist.shape[1] == 18
+        max = dist.sum(axis=0).max()
+        dist = dist/max
+        idle = np.array(1-dist.sum(axis=0)).reshape(1,-1)
+        dist = np.concatenate([dist, idle], axis=0)
+        dist += eps
+        dist /= num_timeslots
+        ind_cost = idle.sum()/num_timeslots + np.array(1-dist.sum(axis=0)).sum()/num_timeslots
+        return dist, ind_cost
+        
+    dist_p_norm, idle_p = get_dist(act_hist1)
+    dist_q_norm, idle_q = get_dist(act_hist2)
+    idle_cost = (idle_p + idle_q) * 0.1
     kl_div = sum(sum(dist_p_norm * np.log(dist_p_norm/dist_q_norm)))
-    return kl_div
+    return kl_div - idle_cost
 
-def both_over_either(act_hist1, act_hist2):
-    eps = 1e-7
-    activities = act_hist1.keys()
-    dist_p = np.array([act_hist1[act] for act in activities]) + eps
-    dist_p_norm = dist_p/sum(sum(dist_p))
-    # assert(np.isclose(sum(sum(dist_p)), len(start_times))), str(sum(sum(dist_p))) + ' , ' + str(len(start_times))
-    dist_q = np.array([act_hist2[act] for act in activities]) + eps
-    dist_q_norm = dist_q/sum(sum(dist_q))
-    both = dist_p_norm*dist_q_norm + eps
-    either = dist_p_norm+dist_q_norm - dist_p_norm*dist_q_norm + eps
-    return both/either
 
 class ScheduleDistributionSampler():
     def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf"), custom_label='custom', num_optional_activities=-1):
@@ -124,7 +122,7 @@ class ScheduleDistributionSampler():
                 try:
                     self.activity_histogram[activity] = np.array(trait_histograms[activity][int(persona[activity])])
                 except Exception as e:
-                    print(activity, ' does not exist in the traits for ', persona_name)
+                    print(activity, 'does not exist in the traits for ', persona_name, 'given trait index ',int(persona[activity]), ' available ', len(trait_histograms[activity]))
                     # raise e
         else:
             raise ArgumentError(f'Unknown value {type} for Schedule Sampler')
@@ -178,7 +176,24 @@ class ScheduleDistributionSampler():
         if activity is None:
             return
         end_idx = min(st_idx+self.resample_after, len(start_times))
+        # print(f'Blocking {activity} from {st_idx} to {end_idx}')
         self.activity_histogram[activity][st_idx:end_idx] *= 0
+
+    def sample_end_time(self, activity, end_time_min, end_time_max, dt):
+        times = np.arange(end_time_min, end_time_max, dt)
+        act_probs = [self.activity_histogram[activity][start_times.index(int(floor(t_mins/60)))] for t_mins in times]
+        aggregated_probs = []
+        for ap in act_probs:
+            new_agg = aggregated_probs[-1] * ap if len(aggregated_probs) > 0 else ap
+            aggregated_probs.append(new_agg)
+        sample = random.random() * sum(aggregated_probs)
+        cap = 0
+        for i,ap in enumerate(aggregated_probs):
+            cap += ap
+            if cap > sample:
+                return times[i]
+        print("sampling returned ~1. This shouldn't happen very often")
+        return times[-1]
 
     def remove(self, activity):
         self.removed_activities.append(activity)
