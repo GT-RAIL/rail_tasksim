@@ -1,9 +1,0 @@
-Eat milk and cereal for breakfast
-Eat cereal and milk
-
-
-[Walk] <kitchen> (1)
-[Find] <chair> (1)
-[Sit] <chair> (1)
-[Eat] <food_cereal> (1)
-[Standup]

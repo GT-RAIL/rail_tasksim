@@ -4,9 +4,8 @@ import os
 import json
 from math import floor
 import numpy as np
-# import seaborn as sns
+import seaborn as sns
 import matplotlib.pyplot as plt
-from postprocess_viz import color_map
 
 with open('data/personaBasedSchedules/optimized_persona.json') as f:
     personas = json.load(f)
@@ -24,6 +23,34 @@ so_far = len(seeds)
 for i,k in enumerate(persona_options):
     seeds[k] = so_far + int(i)
 seeds['custom'] = len(seeds)
+
+# %%
+color_map = {
+ "brushing_teeth" : sns.color_palette()[0], 
+ "showering" : sns.color_palette()[1], 
+ "breakfast" : sns.color_palette()[2], 
+ "dinner" : sns.color_palette()[3], 
+ "computer_work" : sns.color_palette()[4], 
+ "lunch" : sns.color_palette()[5], 
+
+ "cleaning" : sns.color_palette(palette='dark')[0], 
+ "laundry" : sns.color_palette(palette='dark')[1], 
+ "leave_home" : sns.color_palette(palette='dark')[2], 
+ "come_home" : sns.color_palette(palette='pastel')[2], 
+ "socializing" : sns.color_palette(palette='dark')[3], 
+ "taking_medication" : sns.color_palette(palette='dark')[4], 
+ "watching_tv" : sns.color_palette(palette='dark')[5], 
+ "vaccuum_cleaning" : sns.color_palette(palette='dark')[6], 
+ "reading" : sns.color_palette(palette='dark')[7],
+
+ "going_to_the_bathroom" : sns.color_palette(palette='pastel')[0],
+ "getting_dressed" : sns.color_palette(palette='pastel')[1],
+ "kitchen_cleaning" : sns.color_palette(palette='pastel')[7],
+ "take_out_trash" : sns.color_palette(palette='pastel')[3],
+ "wash_dishes" : sns.color_palette(palette='pastel')[4],
+ "playing_music" : sns.color_palette(palette='pastel')[5],
+ "listening_to_music" : sns.color_palette(palette='pastel')[6]
+}
 
 activity_map = {
 "brush_teeth" : "brushing_teeth",

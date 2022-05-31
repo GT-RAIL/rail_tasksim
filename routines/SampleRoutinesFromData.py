@@ -23,8 +23,7 @@ from evolving_graph.environment import EnvironmentGraph
 
 from GraphReader import GraphReader, init_graph_file, scene_num
 from ProgramExecutor import read_program
-from ScheduleDistributionSampler import ScheduleDistributionSampler, activity_map, persona_options, individual_options
-# from postprocess_viz import dump_visuals
+from ScheduleDistributionSampler import ScheduleDistributionSampler, persona_options, individual_options
 
 set_seed = 23424
 random.seed(set_seed)
@@ -55,7 +54,7 @@ info = {}
 info['dt'] = 10   # minutes
 info['num_train_routines'] = 50
 info['num_test_routines'] = 10
-info['weekend_days'] = []   #[day_num(day) for day in ['Saturday','Sunday']]
+info['weekend_days'] = []
 info['start_time'] = time_mins(mins=0, hrs=6)
 info['end_time'] = time_mins(mins=0, hrs=24)
 info['interleaving'] = False
@@ -121,7 +120,6 @@ class Schedule():
                     num_ideal_transitions += 1
             start_time = t
             end_time = info['end_time']
-            # print(f'Time range for activity {start_time} to {end_time}')
             script_header += '{} ({} - {}) \n'.format(activity, time_human(start_time), time_human(end_time))
             remaining_min, remaining_max = deepcopy(info['total_duration_range'])
             duration_remaining = deepcopy(end_time - start_time)
@@ -132,8 +130,6 @@ class Schedule():
                 sampling_max = min(act_duration[1], duration_remaining - remaining_min)
                 d = (random.random() * (sampling_max-sampling_min) + sampling_min)
                 duration_remaining -= d
-                # print(f'Duration Remaining {duration_remaining}; Remaining {remaining_min}-{remaining_max}; Sampling {sampling_min}-{sampling_max}')
-                # print('Sampled : ',t)
                 all_actions.append({'script':act_line, 'time_from':t, 'time_to':t+d, 'time_from_h':time_human(t), 'time_to_h':time_human(t+d), 'name':activity+'-'+info['filename']})
                 t += d
             prev_activity = activity
@@ -158,7 +154,6 @@ class ScheduleFromHybridDuration(Schedule):
 
         while t < info['end_time']:
             new_activity = sampler(t)
-            # print(time_human(t), new_activity)
             if new_activity is None:
                 if activity_name is not None:
                     self.activities[-1][2]['end_time'] = deepcopy(t)
@@ -179,66 +174,6 @@ class ScheduleFromHybridDuration(Schedule):
             duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
             sample_duration = random.random() * (duration_max - duration_min) + duration_min
             t += deepcopy(sample_duration)
-        if sampler.left_house:
-            raise SamplingFailure("Cannot be out of the house at the end of the day")
-        if activity_name is not None:
-            self.activities[-1][2]['end_time'] = deepcopy(t)
-
-
-class ScheduleFromScriptDuration(Schedule):
-    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
-        global info
-        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
-        if sampler_name in ideal_transitions.keys():
-            self.ideal_transitions = ideal_transitions(sampler_name)
-        else:
-            self.ideal_transitions = {a:None for a in sampler.activities+['come_home']}
-        self.activities = []
-        t = info['start_time']
-        activity_name = None
-
-        while t < info['end_time']:
-            activity_name = sampler(t)
-            if activity_name == None:
-                t += info['dt']
-                continue
-            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
-            info_act = deepcopy(scripts_list[activity_name])
-            duration_sampled = random.random() * (duration_max - duration_min) + duration_min
-            info_act['end_time'] = t + duration_sampled
-            sampler.update_distributions(info_act['end_time'], activity_name)
-            self.activities.append((deepcopy(t), deepcopy(activity_name), info_act))
-            t += duration_sampled
-        if sampler.left_house:
-            raise SamplingFailure("Cannot be out of the house at the end of the day")
-        if activity_name is not None:
-            self.activities[-1][2]['end_time'] = deepcopy(t)
-
-
-class ScheduleFromEndTime(Schedule):
-    def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
-        global info
-        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
-        if sampler_name in ideal_transitions.keys():
-            self.ideal_transitions = ideal_transitions(sampler_name)
-        else:
-            self.ideal_transitions = {a:None for a in sampler.activities+['come_home']}
-        self.activities = []
-        t = info['start_time']
-        activity_name = None
-
-        while t < info['end_time']:
-            activity_name = sampler(t)
-            if activity_name == None:
-                t += info['dt']
-                continue
-            duration_min, duration_max = scripts_list[activity_name]['total_duration_range']
-            info_act = deepcopy(scripts_list[activity_name])
-            end_time_sampled = sampler.sample_end_time(activity_name, end_time_min=t+duration_min, end_time_max=t+duration_max, dt=info['dt'])
-            info_act['end_time'] = end_time_sampled
-            sampler.update_distributions(info_act['end_time'], activity_name)
-            self.activities.append((deepcopy(t), deepcopy(activity_name), info_act))
-            t = end_time_sampled
         if sampler.left_house:
             raise SamplingFailure("Cannot be out of the house at the end of the day")
         if activity_name is not None:
@@ -288,7 +223,6 @@ def get_graphs(all_actions, script_string = '',  verbose=False):
         important_objects.update(get_used_objects(graphs[-2],graphs[-1]))
 
     return graphs, times, script_string, list(important_objects)
-
 
 
 # %% Post processing
@@ -418,22 +352,15 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
     os.makedirs(logs_dir_test)
     
     with open(os.path.join(output_directory,'scripts_available_to_use.txt'), 'w') as f:
-        script_usage = json.dump([inf['filename'] for inf in scripts_list.values()], f, indent=4)
+        json.dump([inf['filename'] for inf in scripts_list.values()], f, indent=4)
 
     sampler = ScheduleDistributionSampler(type=sampler_name)
     sampler.plot(output_directory)
 
-    # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
         make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
-        # pool.apply_async(make_routine, args = (routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
     for routine_num in range(info['num_test_routines']):
         make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
-        # pool.apply_async(make_routine, args=(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, script_files_list, os.path.join(output_directory,'script_usage.txt'), verbose))
-    # pool.close()
-    # pool.join()
-
-
 
     with open(os.path.join(routines_raw_test_dir,'{:03d}'.format(0)+'.json')) as f:
         reference_full_graph = json.load(f)['graphs'][0]
@@ -472,17 +399,10 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
         with open(dest_file, 'w') as f:
             json.dump(datapoint, f)
 
-
-    # pool = multiprocessing.Pool()
     for routine_num in range(info['num_train_routines']):
         postprocess(os.path.join(routines_raw_train_dir,'{:03d}'.format(routine_num)+'.json'), os.path.join(routines_train_dir,'{:03d}'.format(routine_num)+'.json'))
-    #     pool.apply_async(postprocess, args = (os.path.join(routines_raw_train_dir,'{:03d}'.format(routine_num)+'.json'), os.path.join(routines_train_dir,'{:03d}'.format(routine_num)+'.json')))
     for routine_num in range(info['num_test_routines']):
         postprocess(os.path.join(routines_raw_test_dir,'{:03d}'.format(routine_num)+'.json'), os.path.join(routines_test_dir,'{:03d}'.format(routine_num)+'.json'))
-    #     pool.apply_async(postprocess, args = (os.path.join(routines_raw_test_dir,'{:03d}'.format(routine_num)+'.json'), os.path.join(routines_test_dir,'{:03d}'.format(routine_num)+'.json')))
-    # pool.close()
-    # pool.join()
-
 
     with open(os.path.join(routines_test_dir,'{:03d}'.format(0)+'.json')) as f:
         refercnce_graph = json.load(f)['graphs'][0]
@@ -495,8 +415,6 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
     search_objects = [n for n in nodes if n['id'] in utilized_object_ids and n['category']=='placable_objects']
     info['search_object_ids'] = [n['id'] for n in search_objects]
     info['search_object_names'] = [n['class_name'] for n in search_objects]
-    # for k,v in info.items():
-    #     print(k,' : ',v)
     with open(os.path.join(output_directory,'info.json'), 'w') as f:
         json.dump(info, f, indent=4)
 
