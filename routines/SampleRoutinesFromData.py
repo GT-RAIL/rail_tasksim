@@ -44,42 +44,27 @@ def time_human(time_mins):
         h = str(days)+'day - '+h
     return h
 
-def day_num(day_of_week):
-    return {'Monday':0,'Tuesday':1,'Wednesday':2,'Thursday':3,'Friday':4,'Saturday':5,'Sunday':6}[day_of_week]
-
-init_graph = GraphReader(graph_file=init_graph_file)
-print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 
 info = {}
 info['dt'] = 10   # minutes
 info['num_train_routines'] = 50
 info['num_test_routines'] = 10
-info['weekend_days'] = []
 info['start_time'] = time_mins(mins=0, hrs=6)
 info['end_time'] = time_mins(mins=0, hrs=24)
-info['interleaving'] = False
 info['only_used_objects'] = True
-info['graphs_dt_apart'] = False
-
-
-info['min_activities'] = 1
-info['schedule_sampler_filter_num'] = 0 
 info['idle_sampling_factor'] = 1.0
 info['block_activity_for_hrs'] = 3
+info['min_ideal_transition_prec'] = 0.5 #this parameter is not currently used
 
-info['breakfast_only'] = False
-info['single_script_only'] = False
-
-info['min_ideal_transition_prec'] = 0.7
-
+init_graph = GraphReader(graph_file=init_graph_file)
+print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 ignore_classes = ['floor','wall','ceiling','character']
 utilized_object_ids = set()
 edge_classes = ["INSIDE", "ON"]
 
 with open ('data/personaBasedSchedules/transitions_best.json') as f:
     ideal_transitions = json.load(f)
-
-
+    
 class SamplingFailure(Exception):
     pass
 
@@ -424,13 +409,14 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run model on routines.')
     parser.add_argument('--path', type=str, default='data/generated_routine', help='Directory to output data in')
     parser.add_argument('--sampler', type=str, default='persona0', help='Name of schedule sampler to use. This can be \'persona\', \'individual\', \'cluster\' or an individual ID or persona name')
-    parser.add_argument('--loop_through_all', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--verbose', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--clean_data', action='store_true', default=False)
 
 
     args = parser.parse_args()
-    args.clean_data = True
+    
+    if args.clean_data:
+        raise NotImplementedError('Clean data argument is not supported')
 
     if os.path.exists(args.path):
         overwrite = input(args.path+' already exists. Do you want to overwrite it? (y/n)')
@@ -444,7 +430,7 @@ if __name__ == "__main__":
         'individual': individual_options
     }
 
-    if args.loop_through_all:
+    if args.sampler in options_list.keys():
         os.makedirs(args.path)
         pool = multiprocessing.Pool()
         for n,p in enumerate(options_list[args.sampler.lower()]):
@@ -452,11 +438,9 @@ if __name__ == "__main__":
             pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.clean_data))
         pool.close()
         pool.join()
-    else:
-        if args.sampler in persona_options + individual_options:
+    elif args.sampler in persona_options + individual_options:
             p = args.sampler
             main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data)
-        else:
-            p = random.choice(options_list[args.sampler.lower()])
-            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data)
+    else:
+        raise argparse.ArgumentError(f'{args.sampler} is not a valid sampler.')
         
