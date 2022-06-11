@@ -60,9 +60,16 @@ The original samples are noisy and include idiosyncratic preferences of the indi
 
 Using these features to represent every sample, we divide the samples for each activity into 4 clusters using k-means clustering. We remove the clusters containing fewer than 3 samples. This results in upto 4 aggregate distributions representing different habits pertaining to that activity. The following plots represent the  aggregate distributions for each cluster, the number of samples belonging to that cluster out of the 21 initial responses, and the original responses.
 
+
 <img src="data/personaBasedSchedules/visuals/histograms/brushing_teeth.jpg" width="700" align="top">
-<img src="data/personaBasedSchedules/visuals/histograms/showering.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/breakfast.jpg" width="700" align="top">
+
+<details>
+  <summary>Click to see the habits for all other activities</summary>
+
+<br>
+
+<img src="data/personaBasedSchedules/visuals/histograms/showering.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/lunch.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/dinner.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/vaccuum_cleaning.jpg" width="700" align="top">
@@ -82,6 +89,7 @@ Using these features to represent every sample, we divide the samples for each a
 <img src="data/personaBasedSchedules/visuals/histograms/taking_medication.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/computer_work.jpg" width="700" align="top">
 <img src="data/personaBasedSchedules/visuals/histograms/socializing.jpg" width="700" align="top">
+</details>
 
 As seen in these figures, the clusters do represent semantically meaningful habits, like *brushing teeth in the morning* v.s. *brushing teeth twice a day*, and having an *early breafast* v.s. a *late breakfast* v.s. *skipping breakfast*.
 
@@ -89,26 +97,12 @@ As seen in these figures, the clusters do represent semantically meaningful habi
 
 To compose complete temporal activity distributions representing fictitious persona, we combine a habit for each activity. We implicitly assume the different habits for the activities to be independent and ensure that our personas are distinct by using genetic optimization to maximize their average pairwise KL-divergence using genetic optimisation. The resulting five personas have the following activity distributions.
 
-**Persona 0**
 
-<img src="data/dataVisuals/persons0509/persona0_sampling_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/persons0509/persona0_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="170" align="top">
 
-**Persona 1**
+<img src="data/dataVisuals/persons0509/persona1_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/persona2_sampling_distribution.jpg" width="500" align="top">
 
-<img src="data/dataVisuals/persons0509/persona1_sampling_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
-
-**Persona 2**
-
-<img src="data/dataVisuals/persons0509/persona2_sampling_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
-
-**Persona 3**
-
-<img src="data/dataVisuals/persons0509/persona3_sampling_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
-
-**Persona 4**
-
-<img src="data/dataVisuals/persons0509/persona4_sampling_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
-
+<img src="data/dataVisuals/persons0509/persona3_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/persona4_sampling_distribution.jpg" width="500" align="top">
 ## Activity Scripts
 
 We ask participants to emulate each activity from the above list on a simulator. We used the [VirtualHome simulator](http://virtual-home.org), as it supports human agents, object interaction, and high-level semantic commands without requiring low-level motion control. We recruited 23 participants to compose step-by-step action sequences for each activity, defining the avatar's movement, interactions with various objects, and the time duration required for it. In this manner, we obtained 61 scripts in total, covering all of our 22 activities. Each script consists of action sequences as well as the estimated minimum and maximum time duration needed to do these actions ('## \<min_time\>-\<max_time\> in the following script snippet'), as shown in the following snippet of an action script representing *brushing teeth*.
@@ -134,9 +128,9 @@ We ask participants to emulate each activity from the above list on a simulator.
 
 ## Sampling routines
 
-We use a temporal activity distribution and an action script per activity to completely define each of our five fictitious persona, and use Monte Carlo sampling, detailed in the supplementary text, to generate samples of their daily routines.
+We use a temporal activity distribution and an action script per activity to completely define each of our five fictitious persona. For combining habits into personas, we assume the habit for each activity to be independent of another activity, except the *leave_home* and *come_home* activities, where the mean time of *leave_home* must be before that of *come_home* for the persona to be valid. Out of the several possible combinations of habits, we prefer personas that have distinct characteristics. We measure the distinctness of personas by a KL-divergence matric on the temporal activity distributions. To maximize this metric, we use genetic optimization to obtain a set of five valid personas, with the fittness function as the average pairwise KL-divergence. The mating function selects a new group of 5 personas from any two existing groups, and the random mutation changes a persona in a group to a random sample. A pool consists of 20 candidate persona sets, and the optimization is run 5 times for 1000 iterations each, after which the best solution is picked. Refer to `process_schedules.ipynb` for exact implementation.
 
-Starting at 6am, we sample an activity from the schedule distribution, and obtain an end time for that activity by uniformly sampling in the duration range from the script. We sample another activity from the schedule distribution at that end time. If the same activity is sampled again, the activity is continued, and another end time is sampled between that time and the maximum end time, otherwise the new activity is started. By iteratively sampling activities in this manner until the end time of midnight, we obtain samples of timestamped action sequences representing daily schedules. This process is outlined below.
+We use Monte Carlo sampling to generate samples of their daily routines. Starting at 6am, we sample an activity from the schedule distribution, and obtain an end time for that activity by uniformly sampling in the duration range from the script. We sample another activity from the schedule distribution at that end time. If the same activity is sampled again, the activity is continued, and another end time is sampled between that time and the maximum end time, otherwise the new activity is started. By iteratively sampling activities in this manner until the end time of midnight, we obtain samples of timestamped action sequences representing daily schedules. This process is outlined below.
 
 <img src="data/personaBasedSchedules/visuals/HOMERgen.png" width="700" align="top">
 
