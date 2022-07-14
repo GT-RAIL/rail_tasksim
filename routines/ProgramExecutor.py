@@ -14,7 +14,7 @@ def class_from_id(graph, id):
     else:
         return 'None'
 
-def print_graph_difference(g1,g2):
+def print_graph_difference(g1,g2,with_states=True):
     edges_removed = [e for e in g1['edges'] if e not in g2['edges']]
     edges_added = [e for e in g2['edges'] if e not in g1['edges']]
     nodes_removed = [n for n in g1['nodes'] if n['id'] not in [n2['id'] for n2 in g2['nodes']]]
@@ -25,18 +25,28 @@ def print_graph_difference(g1,g2):
         print ('Removed node : ',n)
     for n in nodes_added:
         print ('Added node   : ',n)
+    for n1 in g1['nodes']:
+        n2 = [n2 for n2 in g2['nodes'] if n2['id']==n1['id']]
+        if len(n2) > 0:
+            assert len(n2) == 1
+            n2 = n2[0]
+            n1states = set(n1['states'])
+            n2states = set(n2['states'])
+            if n1states != n2states:
+                print ('     State {}({}) : {} -> {}'.format( n1['class_name'], n1['id'], n1states.difference(n2states), n2states.difference(n1states)))
+
     remaining_objects = []
     for e in edges_removed:
         c1 = class_from_id(g1,e['from_id'])
         c2 = class_from_id(g1,e['to_id'])
         if c1 not in ignore_for_edges and c2 not in ignore_for_edges and e['relation_type'] in ['INSIDE','ON','HOLDS_RH','HOLDS_LH']:
-            print (' - ',c1,e['relation_type'],c2)
+            print ('     - ',c1,e['relation_type'],c2)
             remaining_objects.append(e['from_id'])
     for e in edges_added:
         c1 = class_from_id(g2,e['from_id'])
         c2 = class_from_id(g2,e['to_id'])
         if c1 not in ignore_for_edges and c2 not in ignore_for_edges and e['relation_type'] in ['INSIDE','ON','HOLDS_RH','HOLDS_LH']:
-            print (' + ',c1,e['relation_type'],c2)
+            print ('     + ',c1,e['relation_type'],c2)
             if e['from_id'] in remaining_objects:
                 remaining_objects.remove(e['from_id'])
     # for id in remaining_objects:
@@ -96,7 +106,7 @@ def execute_program(program_file, graph_file, node_map, verbose=False):
     with open (graph_file,'r') as f:
         init_graph_dict = json.load(f)
     init_graph = EnvironmentGraph(init_graph_dict)
-    durations, lines, obj_start, obj_end = read_program(program_file, node_map)
+    lines = read_program(program_file, node_map)['lines']
     name_equivalence = utils.load_name_equivalence()
     graphs = [init_graph.to_dict()]
 
@@ -108,7 +118,7 @@ def execute_program(program_file, graph_file, node_map, verbose=False):
     if verbose:
         print('This is how the scene changes after every set of actions...')
         for script, graph, prev_graph in zip(lines,graph_list[1:],graph_list[:-1]):
-            print('Changes from ',script)
+            print(script)
             if verbose:
                 print_graph_difference(prev_graph,graph)
     if not success:

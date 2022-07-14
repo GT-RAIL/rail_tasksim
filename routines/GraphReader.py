@@ -1,3 +1,4 @@
+from argparse import ArgumentError
 import json
 import os
 import sys
@@ -74,17 +75,19 @@ def remove_nodes_from_graph(graph_file, nodes_to_remove, target_graph_file):
         json.dump(trimmed_graph, f)
 
 class GraphReader():
-    def __init__(self, graph_dict={}, graph_file=''):
-        if graph_file != '':
-            with open(graph_file) as f:
+    def __init__(self, graph=''):
+        if type(graph) == str:
+            with open(graph) as f:
                 self.graph_dict = json.load(f)
-        if len(graph_dict) > 0:
-            self.graph_dict = graph_dict
+        elif type(graph) == dict:
+            self.graph_dict = graph
+        else:
+            raise ArgumentError(f'GraphReader must be initialized with a string filepath or dict, not {type(graph)}')
         nodes = {n['id']:n['class_name'] for n in self.graph_dict['nodes']}
         nodes_by_room = {n['class_name']:{n['id']:n['class_name']} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_rooms = {n['id']:n['class_name'] for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_map = {'<'+n['class_name']+'>': '<'+n['class_name']+'> ('+str(n['id'])+')' for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
-        self.usable_nodes = {}
+        self.usable_nodes = {n['class_name']:(n['id'],n['class_name'],n['class_name']) for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_ids = {}
 
         remove_keys = []
@@ -140,8 +143,10 @@ class GraphReader():
                             #             break
 
         self.usable_nodes_by_room = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        self.ref_nodes = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         for full_name,(id, nodeclass, room) in self.usable_nodes.items():
             self.usable_nodes_by_room[room][full_name] = (nodeclass,id)
+            self.ref_nodes[room][nodeclass] = id
             self.node_map[f'<{full_name}>'] = f'<{nodeclass}> ({id})'
             self.node_rooms[id] = room
             self.node_ids[full_name] = id
@@ -173,7 +178,8 @@ class GraphReader():
                     self.graph_dict['edges'].append(ne)
                     if verbose:
                         print('  Adding : ',self.graph_dict['edges'][-1])
-        self.usable_nodes_by_room[self.node_rooms[parent_id]][obj] = self.new_obj_id
+        self.usable_nodes_by_room[self.node_rooms[parent_id]][obj] = (obj, self.new_obj_id)
+        self.ref_nodes[self.node_rooms[parent_id]][obj] = self.new_obj_id
         self.node_rooms[self.new_obj_id] = self.node_rooms[parent_id]
         self.new_obj_id += 1
     
