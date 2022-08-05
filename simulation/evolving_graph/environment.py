@@ -29,6 +29,13 @@ class State(Enum):
     LYING = 8
     PLUGGED_IN = 9
     PLUGGED_OUT = 10
+    FULL = 11
+    EMPTY = 12
+    WET = 13
+    DRY = 14
+    COOKED = 15
+    UNCOOKED = 16
+    
 
 
 class Relation(Enum):

@@ -1,6 +1,8 @@
 import json
 import sys
+import random
 sys.path.append('..')
+sys.path.append('../simulation')
 from evolving_graph.scripts import Script, parse_script_line
 from evolving_graph.environment import EnvironmentGraph
 from evolving_graph.execution import ScriptExecutor
@@ -13,6 +15,18 @@ def class_from_id(graph, id):
         return lis[0]
     else:
         return 'None'
+
+def time_human(time_mins):
+    time_mins = int(round(time_mins))
+    mins = time_mins%60
+    time_mins = time_mins//60
+    hrs = time_mins%24
+    time_mins = time_mins//24
+    days = time_mins
+    h = '{:02d}:{:02d}'.format(hrs,mins)
+    if days != 0:
+        h = str(days)+'day - '+h
+    return h
 
 def print_graph_difference(g1,g2,with_states=True):
     edges_removed = [e for e in g1['edges'] if e not in g2['edges']]
@@ -33,8 +47,8 @@ def print_graph_difference(g1,g2,with_states=True):
             n1states = set(n1['states'])
             n2states = set(n2['states'])
             if n1states != n2states:
+                # print ('     State {}({}) : {} -> {} : unchanged states {}'.format( n1['class_name'], n1['id'], n1states.difference(n2states), n2states.difference(n1states), n1states.intersection(n2states)))
                 print ('     State {}({}) : {} -> {}'.format( n1['class_name'], n1['id'], n1states.difference(n2states), n2states.difference(n1states)))
-
     remaining_objects = []
     for e in edges_removed:
         c1 = class_from_id(g1,e['from_id'])
@@ -102,11 +116,12 @@ def read_program(file_name, node_map):
 
     return {'durations':durations , 'lines':lines, 'total_duration_range':(duration_min, duration_max)}
 
-def execute_program(program_file, graph_file, node_map, verbose=False):
+def execute_program(program_file, graph_file, node_map, verbose=False, start_time = 360.0):
     with open (graph_file,'r') as f:
         init_graph_dict = json.load(f)
     init_graph = EnvironmentGraph(init_graph_dict)
-    lines = read_program(program_file, node_map)['lines']
+    parsed_program = read_program(program_file, node_map)
+    lines, durations = parsed_program['lines'], parsed_program['durations']
     name_equivalence = utils.load_name_equivalence()
     graphs = [init_graph.to_dict()]
 
@@ -117,15 +132,17 @@ def execute_program(program_file, graph_file, node_map, verbose=False):
     print(executor.info.get_error_string())
     if verbose:
         print('This is how the scene changes after every set of actions...')
-        for script, graph, prev_graph in zip(lines,graph_list[1:],graph_list[:-1]):
-            print(script)
-            if verbose:
-                print_graph_difference(prev_graph,graph)
+        t = start_time
+        for script, graph, prev_graph, duration in zip(lines,graph_list[1:],graph_list[:-1], durations):
+            print(time_human(t), script)
+            print_graph_difference(prev_graph,graph)
+            sample_duration = random.random()*(duration[1]-duration[0])+duration[0]
+            t += sample_duration
     if not success:
         error_str = executor.info.get_error_string()
-        if 'inside other closed thing' in error_str:
-            object = error_str[error_str.index('<')+1:error_str.index('>')]
-            print(f'{object} is inside {object_locations[object]}')
+        # if 'inside other closed thing' in error_str:
+        #     object = error_str[error_str.index('<')+1:error_str.index('>')]
+        #     print(f'{object} is inside {object_locations[object]}')
         raise RuntimeError(f'Execution failed because {error_str}')
     print('Execution successful!!')
 

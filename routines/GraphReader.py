@@ -46,6 +46,24 @@ def get_object_states(available_states, custom_options):
         else:
             object_states.append("PLUGGED_IN")
 
+    if "full" in available_states or "empty" in available_states:
+        if "EMPTY" in custom_options:
+            object_states.append("EMPTY")
+        else:
+            object_states.append("FULL")
+
+    if "wet" in available_states or "dry" in available_states:
+        if "WET" in custom_options:
+            object_states.append("WET")
+        else:
+            object_states.append("DRY")
+
+    if "cooked" in available_states or "uncooked" in available_states:
+        if "COOKED" in custom_options:
+            object_states.append("COOKED")
+        else:
+            object_states.append("UNCOOKED")
+
     return object_states
 
 # def setup():
@@ -87,6 +105,7 @@ class GraphReader():
         nodes_by_room = {n['class_name']:{n['id']:n['class_name']} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_rooms = {n['id']:n['class_name'] for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_map = {'<'+n['class_name']+'>': '<'+n['class_name']+'> ('+str(n['id'])+')' for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
+        self.node_map["<character>"] = ['<'+n['class_name']+'> ('+str(n['id'])+')' for n in self.graph_dict['nodes'] if n['class_name']=='character'][0]
         self.usable_nodes = {n['class_name']:(n['id'],n['class_name'],n['class_name']) for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.node_ids = {}
 
@@ -112,10 +131,10 @@ class GraphReader():
                             if nodes[n1]+'_'+nodes[n2] not in self.usable_nodes.keys():
                                 self.usable_nodes[nodes[n1]+'_'+nodes[n2]] = (n1, nodes[n1], nodes[n2])
                             else:
-                                print(self.usable_nodes[nodes[n1]+'_'+nodes[n2]], 'exists!', end = ' ')
+                                # print(self.usable_nodes[nodes[n1]+'_'+nodes[n2]], 'exists!', end = ' ')
                                 add_alias = True
                         else:
-                            print(self.usable_nodes[nodes[n1]], 'exists!', end = ' ')
+                            # print(self.usable_nodes[nodes[n1]], 'exists!', end = ' ')
                             add_alias = True
 
                         if add_alias:
@@ -151,7 +170,7 @@ class GraphReader():
             self.node_rooms[id] = room
             self.node_ids[full_name] = id
         
-        with open (base_dir+'/resources/object_states.json','r') as f:
+        with open (base_dir+'/resources/object_states_custom.json','r') as f:
             self.object_states = json.load(f)
         with open (base_dir+'/resources/properties_data.json','r') as f:
             self.object_properties = json.load(f)

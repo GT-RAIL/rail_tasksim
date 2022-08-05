@@ -15,6 +15,7 @@ class Action(Enum):
     FIND = ("Find", 1)
     WALK = ("Walk", 1)
     GRAB = ("Grab", 1)
+    IDLE = ("Idle", 0)
     LOOKAT = ("Look at", 1)
     LOOKAT_SHORT = ("Look at short", 1)
     LOOKAT_MEDIUM = LOOKAT
@@ -35,6 +36,8 @@ class Action(Enum):
     TURNTO = ("Turn to", 1)
     WATCH = ("Watch", 1)
     WIPE = ("Wipe", 1)
+    WIPESELF = ("WipeSelf", 1)
+    WIPEUSING = ("WipeUsing", 2)
     PUTON = ("PutOn", 1)
     PUTOFF = ("PutOff", 1)
     GREET = ("Greet", 1)
@@ -42,6 +45,8 @@ class Action(Enum):
     READ = ("Read", 1)
     LIE = ("Lie", 1)
     POUR = ("Pour", 2)
+    POURALL = ("PouAll", 2)
+    POURSOME = ("PourSome", 2)
     TYPE = ("Type", 1)
     PUSH = ("Push", 1)
     PULL = ("Pull", 1)
@@ -57,6 +62,9 @@ class Action(Enum):
     SLEEP = ("Sleep", 0) 
     WAKEUP = ("WakeUp", 0)
     RELEASE = ("Release", 1)
+    COOK = ("Cook", 1)
+    EATALLFROM = ("EatAllFrom", 1)
+    EATSOMEFROM = ("EatSomeFrom", 1)
     
 
 class ScriptObject(object):

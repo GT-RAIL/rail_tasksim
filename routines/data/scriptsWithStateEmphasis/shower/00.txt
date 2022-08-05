@@ -1,0 +1,78 @@
+## 1-2
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <towel>
+[Grab] <towel>
+[Close] <dresser>
+[Walk] <towel_rack>
+[PutBack] <towel> <towel_rack>
+
+##3-5
+[Walk] <dresser>
+[Open] <dresser>
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[Walk] <bathroom_counter>
+[PutBack] <clothes_pants> <bathroom_counter>
+[PutBack] <clothes_shirt> <bathroom_counter>
+[Walk] <dresser>
+[Close] <dresser>
+
+## 2-4
+[Walk] <bathroom_counter>
+[Find] <pajamas>
+[PutOff] <pajamas>
+[PutBack] <pajamas> <bathroom_counter>
+
+## 5-25
+[Walk] <shower>
+[Switchon] <shower>
+[Switchoff] <shower>
+
+## 3-7
+[Find] <towel>
+[Grab] <towel>
+[WipeSelf] <towel>
+[PutBack] <towel> <towel_rack>
+
+## 3-6
+[Find] <clothes_pants>
+[Grab] <clothes_pants>
+[PutOn] <clothes_pants>
+[Find] <clothes_shirt>
+[Grab] <clothes_shirt>
+[PutOn] <clothes_shirt>
+
+## 3-6
+[Find] <towel>
+[Grab] <towel>
+[Walk] <drying_machine>
+[Open] <drying_machine>
+[Putin] <towel> <drying_machine>
+[Close] <drying_machine>
+[Switchon] <drying_machine>
+
+## 3-6
+[Find] <pajamas>
+[Grab] <pajamas>
+[Walk] <washing_machine>
+[Open] <washing_machine>
+[Putin] <pajamas> <washing_machine>
+[Close] <washing_machine>
+
+## 20-30
+[Idle]
+
+## 2-3
+[Walk] <drying_machine>
+[Switchoff] <drying_machine>
+[Open] <drying_machine>
+[Find] <towel>
+[Grab] <towel>
+[Close] <drying_machine>
+[Walk] <dresser>
+[Open] <dresser>
+[PutIn] <towel> <dresser>
+[Close] <dresser>

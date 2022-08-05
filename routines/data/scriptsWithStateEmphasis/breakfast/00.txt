@@ -1,0 +1,125 @@
+## 1-3
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <bowl>
+[Grab] <bowl>
+[Find] <cupboard>
+[Close] <cupboard>
+[Walk] <table_dining_room>
+[PutBack] <bowl> <table_dining_room>
+## 1-3
+[Find] <cupboard>
+[Open] <cupboard>
+[Find] <food_cereal>
+[Grab] <food_cereal>
+[Find] <cupboard>
+[Close] <cupboard>
+[Walk] <table_dining_room>
+[Find] <bowl>
+[PourSome] <food_cereal> <bowl>
+[PutBack] <food_cereal> <table_dining_room>
+## 1-3
+[Walk] <fridge>
+[Open] <fridge>
+[Find] <milk>
+[Grab] <milk>
+[Close] <fridge>
+[Walk] <table_dining_room>
+[Find] <bowl>
+[PourSome] <milk> <bowl>
+[PutBack] <milk> <table_dining_room>
+## 1-3
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <spoon>
+[Grab] <spoon>
+[Find] <cupboard>
+[Close] <cupboard>
+[Walk] <table_dining_room>
+[Find] <bowl>
+[PutBack] <spoon> <bowl>
+## 0-15
+[Idle]
+## 5-20
+[WALK] <table_dining_room>
+[Find] <bowl>
+[Eat] <bowl>
+## 0-15
+[Idle]
+## 1-3
+[Find] <food_cereal>
+[Grab] <food_cereal>
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutBack] <food_cereal> <cupboard>
+[Find] <cupboard>
+[Close] <cupboard>
+## 1-3
+[Find] <milk>
+[Grab] <milk>
+[Walk] <fridge>
+[Open] <fridge>
+[PutIn] <milk> <fridge>
+[Close] <fridge>
+## 2-4
+[Walk] <table_dining_room>
+[Find] <bowl>
+[Grab] <bowl>
+[Find] <spoon>
+[Grab] <spoon>
+[Walk] <sink_dining_room>
+[PutBack] <bowl> <sink_dining_room>
+[Find] <spoon>
+[Grab] <spoon>
+[PutBack] <spoon> <sink_dining_room>
+## 0-15
+[Idle]
+## 3-5
+[Walk] <sink_dining_room>
+[Find] <bowl>
+[Grab] <bowl>
+[Wash] <bowl>
+[PutBack] <bowl> <sink_dining_room>
+[Find] <spoon>
+[Grab] <spoon>
+[Wash] <spoon>
+[PutBack] <spoon> <sink_dining_room>
+## 0-5
+[Idle]
+## 1-3
+[Walk] <sink_dining_room>
+[Find] <bowl>
+[Grab] <bowl>
+[Find] <drying_rack>
+[PutBack] <bowl> <drying_rack>
+[Walk] <sink_dining_room>
+[Find] <spoon>
+[Grab] <spoon>
+[Find] <drying_rack>
+[PutBack] <spoon> <drying_rack>
+## 0-15
+[Idle]
+## 1-3
+[Walk] <drying_rack>
+[Find] <bowl>
+[Wipe] <bowl>
+[Walk] <drying_rack>
+[Find] <spoon>
+[Wipe] <spoon>
+## 0-15
+[Idle]
+## 2-4
+[Walk] <drying_rack>
+[Find] <bowl>
+[Grab] <bowl>
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutIn] <bowl> <cupboard>
+[Close] <cupboard>
+[Walk] <drying_rack>
+[Find] <spoon>
+[Grab] <spoon>
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutIn] <spoon> <cupboard>
+[Close] <cupboard>

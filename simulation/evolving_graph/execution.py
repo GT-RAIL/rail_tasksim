@@ -1,4 +1,5 @@
 import time
+import random
 import queue
 from typing import Optional
 import evolving_graph.common as common
@@ -35,6 +36,15 @@ class ExecutionInfo(object):
         return ','.join(self.messages)
     
 
+def change_node_states_if_exists(node, state_changes, changes_list=[]):
+    new_node = node.copy()
+    for state_original, state_new in state_changes:
+        if state_original in node.states:
+            new_node.states.discard(state_original)
+            new_node.states.add(state_new)
+    changes_list.append(ChangeNode(new_node))
+    return changes_list
+
 # ActionExecutor-s
 ###############################################################################
 
@@ -68,6 +78,24 @@ class JoinedExecutor(ActionExecutor):
             for s in e.execute(script, state, info):
                 yield s
 
+### Maithili : Separately call 'cook' action on things being cooked
+class CookExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        node = state.get_state_node(current_line.object())
+        if node is None:
+            info.object_found_error()
+        contained_objects = _find_nodes_to(state, node, relations=[Relation.INSIDE, Relation.ON])
+        changes = []
+        for n in contained_objects+[node]:
+            change_node_states_if_exists(n, [(State.UNCOOKED, State.COOKED)], changes_list=changes)
+        yield state.change_state(changes)
+
+class IdleExecutor(ActionExecutor):
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        yield state.change_state([])
 
 class WalkExecutor(ActionExecutor):
 
@@ -334,9 +362,12 @@ class GrabExecutor(ActionExecutor):
             char_node = _get_character_node(state)
             info.error('{} is not close to {}', char_node, node)
             return None
+
+        ### Maithili: UNDO THIS!!!!!
         if _is_inside(state, node):
             info.error('{} is inside other closed thing', node)
             return None
+            
         new_relation = _find_free_hand(state)
         if new_relation is None:
             char_node = _get_character_node(state)
@@ -387,9 +418,9 @@ class OpenExecutor(ActionExecutor):
             info.error('{} is not {}', node, s.name.lower())
             return False
 
-        if not self.close and State.ON in node.states:
-            info.error('{} is still on'.format(node))
-            return False
+        # if not self.close and State.ON in node.states:
+        #     info.error('{} is still on'.format(node))
+        #     return False
         return True
 
 
@@ -410,12 +441,21 @@ class PutExecutor(ActionExecutor):
         if src_node is None or dest_node is None:
             info.script_object_found_error(current_line.object() if src_node is None else current_line.subject())
         elif _check_puttable(state, src_node, dest_node, self.relation, info):
+            ### Maithili: Putting IN makes the recipient full
+            changes = []
+            if self.relation == Relation.INSIDE:
+                change_node_states_if_exists(dest_node, [(State.EMPTY, State.FULL)], changes_list=changes)
+            ### Maithili: Putting in/on a dirty object makes the object dirty
+            if State.DIRTY in dest_node.states:
+                change_node_states_if_exists(src_node, [(State.CLEAN, State.DIRTY)], changes_list=changes)
+
+
             ### Maithili: Putting checks to put everything on/inside the src object + if dest_obj is being held, src objects are held too
             nodes_to_put = _find_nodes_to(state, src_node, [Relation.INSIDE, Relation.ON]) + [src_node]
             ## if destination node is being held, these will be held in that hand
             holding_hand = _find_holding_hand(state, dest_node)
             for node in nodes_to_put:
-                changes = [ClearExecDataKey((Action.GRAB, src_node.id))]
+                changes += [ClearExecDataKey((Action.GRAB, src_node.id))]
                 changes += [DeleteEdges(CharacterNode(), [_find_holding_hand(state, src_node)], AnyNode()),
                     DeleteEdges(CharacterNode(), [Relation.HOLDS_LH, Relation.HOLDS_RH], NodeInstance(node)),
                     DeleteEdges(NodeInstance(node), [Relation.INSIDE, Relation.ON, Relation.CLOSE], AnyNode()),
@@ -463,12 +503,13 @@ def _check_puttable(state: EnvironmentState, src_node: GraphNode, dest_node: Gra
         char_node = _get_character_node(state)
         info.error('{} is not close to {}', char_node, dest_node)
         return False
-    if relation == Relation.INSIDE:
-        if Property.CAN_OPEN not in dest_node.properties or State.OPEN in dest_node.states:
-            return True
-        else:
-            info.error('{} is not open or is not openable', dest_node)
-            return False
+    ### Maithili: Container need not be openable to put something in it
+    # if relation == Relation.INSIDE:
+    #     if Property.CAN_OPEN not in dest_node.properties or State.OPEN in dest_node.states:
+    #         return True
+    #     else:
+    #         info.error('{} is not open or is not openable', dest_node)
+    #         return False
     return True
 
 
@@ -533,7 +574,9 @@ class DrinkExecutor(ActionExecutor):
         if hand_rel is None:
             info.error('{} is not holding {}', _get_character_node(state), node)
             return False
-        return True
+        ### Maithili : Drinking leaves the container empty
+        assert State.FULL in node.states, "Drinking out of an empty container is not allowed"
+        yield state.change_state([change_node_states_if_exists(node, [(State.FULL, State.EMPTY)])])
 
 
 class TurnToExecutor(ActionExecutor):
@@ -573,6 +616,66 @@ class LookAtExecutor(ActionExecutor):
 
         return True
 
+class WipeSelfExecutor(ActionExecutor):
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        tool_node = state.get_state_node(current_line.object())
+        if tool_node is None:
+            info.object_found_error()
+
+        changes = []
+        if self.check_wiper(state, tool_node, info):
+            changes += change_node_states_if_exists(tool_node, [(State.DRY, State.WET)])
+        yield state.change_state(changes)
+
+    def check_wiper(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
+        hand_rel = _find_holding_hand(state, node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, node)
+            return False
+        if node.class_name not in ["towel", "napkin", "paper_towel"]:
+            info.error('{} is cannot be used to wipe', node)
+
+        return True
+
+
+class WipeUsingExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        object_node = state.get_state_node(current_line.object())
+        if object_node is None:
+            info.object_found_error()
+        tool_node = state.get_state_node(current_line.subject())
+        changes = []
+        if tool_node is None:
+            info.object_found_error()
+
+        elif self.check_wipee(state, object_node, info) and self.check_wiper(state, tool_node, info):
+            changes += change_node_states_if_exists(object_node, [(State.DIRTY, State.CLEAN), (State.WET, State.DRY)])
+            changes += change_node_states_if_exists(tool_node, [(State.DRY, State.WET)])
+        yield state.change_state(changes)
+
+    def check_wipee(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
+        char_node = _get_character_node(state)
+        if not _is_character_close_to(state, node):
+            info.error('{} is not close to {}', char_node, node)
+            return False
+
+    def check_wiper(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
+        hand_rel = _find_holding_hand(state, node)
+        if hand_rel is None:
+            char_node = _get_character_node(state)
+            info.error('{} is not holding {}', char_node, node)
+            return False
+        if node.class_name not in ["towel", "napkin", "paper_towel"]:
+            info.error('{} is cannot be used to wipe', node)
+
+        return True
+
 
 class WipeExecutor(ActionExecutor):
 
@@ -583,10 +686,8 @@ class WipeExecutor(ActionExecutor):
         if node is None:
             info.object_found_error()
         elif self.check_wipe(state, node, info):
-            new_node = node.copy()
-            new_node.states.discard(State.DIRTY)
-            new_node.states.add(State.CLEAN)
-            yield state.change_state([ChangeNode(new_node)])
+            changes = change_node_states_if_exists(node, [(State.DIRTY, State.CLEAN), (State.WET, State.DRY)])
+            yield state.change_state(changes)
 
     def check_wipe(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
         char_node = _get_character_node(state)
@@ -599,10 +700,10 @@ class WipeExecutor(ActionExecutor):
         #    info.error('{} is not a surface', node)
         #    return False
 
-        nodes_in_hands = _find_nodes_from(state, char_node, [Relation.HOLDS_RH, Relation.HOLDS_LH])
-        if len(nodes_in_hands) == 0:
-            info.error('{} does not hold anything in hands', char_node)
-            return 
+        # nodes_in_hands = _find_nodes_from(state, char_node, [Relation.HOLDS_RH, Relation.HOLDS_LH])
+        # if len(nodes_in_hands) == 0:
+        #     info.error('{} does not hold anything in hands', char_node)
+        #     return 
 
         return True
 
@@ -644,9 +745,16 @@ class PutOffExecutor(ActionExecutor):
         if node is None:
             info.object_found_error()
         elif self.check_putoff(state, node, info):
-            yield state.change_state([
-                DeleteEdges(NodeInstance(node), [Relation.ON], CharacterNode())
-            ])
+            changes = [DeleteEdges(NodeInstance(node), [Relation.ON], CharacterNode())]
+            new_relation = _find_free_hand(state)
+            if new_relation is None:
+                char_node = _get_character_node(state)
+                info.error('{} does not have a free hand', char_node)
+            ### Maithili : Clothes taken off are held and dirty
+            if new_relation is not None:
+                changes += AddEdges(CharacterNode(), new_relation, NodeInstance(node)),
+            changes += change_node_states_if_exists(node, [(State.CLEAN, State.DIRTY)])
+            yield state.change_state(changes)
 
     def check_putoff(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
         char_node = _get_character_node(state)
@@ -657,7 +765,6 @@ class PutOffExecutor(ActionExecutor):
             info.error('{} is not clothes', node)
             return False
         return True
-
 
 class DropExecutor(ActionExecutor):
 
@@ -780,6 +887,9 @@ class LieExecutor(ActionExecutor):
 
 class PourExecutor(ActionExecutor):
 
+    def __init__(self, all):
+        self.all = all
+
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
         info.set_current_line(current_line)
@@ -789,9 +899,13 @@ class PourExecutor(ActionExecutor):
         if src_node is None or dest_node is None:
             info.script_object_found_error(current_line.object() if src_node is None else current_line.subject())
         elif self._check_pourable(state, src_node, dest_node, info):
-            ### Maithili : Suppressed pour action (no change happens on pour)            
             changes = []
             # changes = [AddEdges(NodeInstance(src_node), Relation.INSIDE, NodeInstance(dest_node))]
+            change_node_states_if_exists(dest_node, [(State.EMPTY, State.FULL),(State.CLEAN, State.DIRTY)], changes_list=changes)
+            for content_node in _find_nodes_to(state, dest_node, [Relation.INSIDE, Relation.ON]):
+                change_node_states_if_exists(content_node, [(State.CLEAN, State.DIRTY)], changes_list=changes)
+            if self.all:
+                change_node_states_if_exists(src_node, [(State.FULL, State.EMPTY)], changes_list=changes)
             if src_node.class_name == 'water':
                 changes += [DeleteEdges(CharacterNode(), [Relation.HOLDS_LH, Relation.HOLDS_RH], NodeInstance(src_node))]
             yield state.change_state(changes)
@@ -817,6 +931,25 @@ class PourExecutor(ActionExecutor):
             return False
         
         return True
+
+class EatFromExecutor(ActionExecutor):
+
+    def __init__(self, all):
+        self.all = all
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        node = state.get_state_node(current_line.object())
+
+        if node is None:
+            info.script_object_found_error(current_line.object())
+        changes = []
+        if self.all:
+            change_node_states_if_exists(node, [(State.FULL, State.EMPTY)], changes_list=changes)
+        else:
+            raise RuntimeWarning(f'{node.class_name} does not have max usage defined')
+        yield state.change_state(changes)
 
 
 class TypeExecutor(ActionExecutor):
@@ -923,10 +1056,10 @@ class WashExecutor(ActionExecutor):
         if node is None:
             info.object_found_error()
         elif self.check_washable(state, node, info):
-            new_node = node.copy()
-            new_node.states.discard(State.DIRTY)
-            new_node.states.add(State.CLEAN)
-            yield state.change_state([ChangeNode(new_node)])
+            if State.FULL in node.states:
+                raise RuntimeWarning("Washing/Rinsing/Scrubbing {} without emptying first".format(node.class_name))
+            changes = change_node_states_if_exists(node, [(State.DIRTY, State.CLEAN), (State.DRY, State.WET)])
+            yield state.change_state(changes)
 
     def check_washable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
         
@@ -1051,7 +1184,10 @@ class EatExecutor(ActionExecutor):
         if node is None:
             info.object_found_error()
         elif self.check_eatable(state, node, info):
-            yield state.change_state([])
+            ### Maithili : Eating leaves the container empty
+            assert State.FULL in node.states, "Eating out of an empty container is not allowed"
+            yield state.change_state(change_node_states_if_exists(node, [(State.FULL, State.EMPTY)]))
+            # yield state.change_state([])
 
     def check_eatable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
 
@@ -1260,6 +1396,7 @@ def BFS(adj_lists: dict, s):
 class ScriptExecutor(object):
 
     _action_executors = {
+        Action.IDLE: IdleExecutor(),
         Action.WALK: WalkExecutor(),
         Action.FIND: FindExecutor(),
         Action.SIT: SitExecutor(),
@@ -1275,6 +1412,8 @@ class ScriptExecutor(object):
         Action.LOOKAT: LookAtExecutor(), 
         Action.TURNTO: TurnToExecutor(), 
         Action.WIPE: WipeExecutor(), 
+        Action.WIPEUSING: WipeUsingExecutor(), 
+        Action.WIPESELF: WipeSelfExecutor(), 
         Action.RUN: WalkExecutor(),
         Action.PUTON: PutOnExecutor(), 
         Action.PUTOFF: PutOffExecutor(), 
@@ -1285,7 +1424,9 @@ class ScriptExecutor(object):
         Action.TOUCH: TouchExecutor(), 
         Action.LIE: LieExecutor(),
         Action.PUTOBJBACK: PutBackExecutor(), 
-        Action.POUR: PourExecutor(), 
+        Action.POURSOME: PourExecutor(all=False), 
+        Action.POUR: PourExecutor(all=False), 
+        Action.POURALL: PourExecutor(all=True), 
         Action.TYPE: TypeExecutor(), 
         Action.WATCH: WatchExecutor(), 
         Action.PUSH: MoveExecutor(), 
@@ -1301,7 +1442,10 @@ class ScriptExecutor(object):
         Action.EAT: EatExecutor(), 
         Action.SLEEP: SleepExecutor(), 
         Action.WAKEUP: WakeUpExecutor(), 
-        Action.RELEASE: DropExecutor()
+        Action.RELEASE: DropExecutor(),
+        Action.COOK: CookExecutor(),
+        Action.EATSOMEFROM: EatFromExecutor(all=False),
+        Action.EATALLFROM: EatFromExecutor(all=True),
     }
 
     def __init__(self, graph: EnvironmentGraph, name_equivalence):
