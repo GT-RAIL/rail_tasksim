@@ -56,7 +56,7 @@ info['idle_sampling_factor'] = 1.0
 info['block_activity_for_hrs'] = 3
 info['min_ideal_transition_prec'] = 0.5 #this parameter is not currently used
 
-init_graph = GraphReader(graph_file=init_graph_file)
+init_graph = GraphReader(init_graph_file)
 print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 ignore_classes = ['floor','wall','ceiling','character']
 utilized_object_ids = set()

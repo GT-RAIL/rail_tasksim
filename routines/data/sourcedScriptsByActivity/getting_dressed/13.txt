@@ -1,18 +1,3 @@
-## 4-6
-[Walk] <bedroom>
-[Walk] <dresser>
-[Open] <dresser>
-[Walk] <clothes_underwear>
-[Find] <clothes_underwear>
-[Grab] <clothes_underwear>
-[Puton] <clothes_underwear>
-[Find] <clothes_pants>
-[Grab] <clothes_pants>
-[Puton] <clothes_pants>
-[Find] <dresser>
-[Walk] <dresser>
-[Close] <dresser>
-
 ## 10-12
 [Walk] <bathroom>
 [Walk] <bathroom_cabinet>
@@ -41,21 +26,6 @@
 
 ## 5-10
 [Walk] <bedroom>
-[Find] <dresser>
-[Walk] <dresser>
-[Open] <dresser>
-[Walk] <clothes_shirt>
-[Find] <clothes_shirt>
-[Grab] <clothes_shirt>
-[Puton] <clothes_shirt>
-[Walk] <clothes_jacket>
-[Find] <clothes_jacket>
-[Grab] <clothes_jacket>
-[Puton] <clothes_jacket>
-[Walk] <clothes_socks>
-[Find] <clothes_socks>
-[Grab] <clothes_socks>
-[Puton] <clothes_socks>
 [Walk] <slippers>
 [Find] <slippers>
 [Grab] <slippers>

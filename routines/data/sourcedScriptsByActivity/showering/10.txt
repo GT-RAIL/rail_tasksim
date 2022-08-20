@@ -57,24 +57,6 @@
 ## 0-1
 [Walk] <bedroom>
 
-## 3-4
-[Find] <dresser>
-[Walk] <dresser>
-[Open] <dresser>
-[Find] <clothes_underwear>
-[Grab] <clothes_underwear>
-[Puton] <clothes_underwear>
-[Find] <clothes_pants>
-[Grab] <clothes_pants>
-[Puton] <clothes_pants>
-[Find] <clothes_shirt>
-[Grab] <clothes_shirt>
-[Puton] <clothes_shirt>
-[Find] <clothes_socks>
-[Grab] <clothes_socks>
-[Puton] <clothes_socks>
-[Close] <dresser>
-
 ## 0-1
 [Walk] <bathroom>
 [Find] <bathroom_counter>
