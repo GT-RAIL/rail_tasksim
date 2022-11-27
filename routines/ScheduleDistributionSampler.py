@@ -121,6 +121,20 @@ def KLdivergence(act_hist1, act_hist2):
     kl_div = sum(sum(dist_p_norm * np.log(dist_p_norm/dist_q_norm)))
     return kl_div - idle_cost
 
+class ScheduleSampler_FixedSequence():
+    def __init__(self) -> None:
+        self.activity_idx = -1
+        self.activity_seq = ["brushing_teeth", "breakfast", None, "reading", None, "lunch", "computer_work", None, "dinner", None]
+        self.left_house = False
+        self.update_distributions = lambda x, y: None
+
+    def reset(self):
+        self.activity_idx = -1
+
+    def __call__(self, t) -> str:
+        if self.activity_idx < len(self.activity_seq) - 1:
+            self.activity_idx += 1
+        return self.activity_seq[self.activity_idx]
 
 class ScheduleDistributionSampler():
     def __init__(self, type, idle_sampling_factor=1.0, resample_after=float("inf"), custom_label='custom', num_optional_activities=-1):

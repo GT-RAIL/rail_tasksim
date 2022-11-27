@@ -23,7 +23,7 @@ from evolving_graph.environment import EnvironmentGraph
 
 from GraphReader import GraphReader, init_graph_file, scene_num
 from ProgramExecutor import read_program
-from ScheduleDistributionSampler import ScheduleDistributionSampler, persona_options, individual_options
+from ScheduleDistributionSampler import ScheduleDistributionSampler, persona_options, individual_options, ScheduleSampler_FixedSequence
 
 set_seed = 23424
 random.seed(set_seed)
@@ -128,7 +128,8 @@ class Schedule():
 class ScheduleFromHybridDuration(Schedule):
     def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
         global info
-        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        sampler = ScheduleSampler_FixedSequence()
+        # sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
         if sampler_name in ideal_transitions.keys():
             self.ideal_transitions = ideal_transitions[sampler_name]
         else:

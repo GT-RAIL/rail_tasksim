@@ -49,6 +49,11 @@ color_map = {
  "listening_to_music" : sns.color_palette(palette='pastel')[6]
 }
 
+def alpha_act(activity):
+    # if activity == "dinner":
+    return 1
+    # return 0.3
+
 color_map_trunc = deepcopy(color_map)
 # color_map_trunc["vaccuum_cleaning"] = None 
 # color_map_trunc["reading"] = None 
@@ -106,7 +111,7 @@ def dump_visuals(root_dir):
                 if color_map_trunc[act] is not None:
                     ax.plot(times, freqs, label=act, color=color_map[act], linewidth=5)
                 bottoms += np.array(freqs)
-            misclassification_prob = [min(sum(activity_freq[t].values())/num_routines, 1-max(activity_freq[t].values())/num_routines) for t in times]
+            # misclassification_prob = [min(sum(activity_freq[t].values())/num_routines, 1-max(activity_freq[t].values())/num_routines) for t in times]
             ax.set_xlim([6*60,24*60])
             _ = ax.set_ylabel('Probability of Activity', fontsize=40)
             _ = ax.set_xlabel('Time', fontsize=40)
@@ -114,21 +119,21 @@ def dump_visuals(root_dir):
             _ = ax.set_xticklabels([time_human(t) for t in np.arange(6*60,24*60, 3*60)]+['24:00'], fontsize=35)
 
         ## metrics calculation
-        all_activities = ['idle']+list(color_map.keys())
+        # all_activities = ['idle']+list(color_map.keys())
         for t in activity_freq:
             activity_freq[t]['idle'] = num_routines - sum(activity_freq[t].values())
-        act_fracs = [sum([act_fr[act] for act_fr in activity_freq.values()]) for act in all_activities]
-        sum_sq_act_fracs = sum(act_fracs)*sum(act_fracs)
-        P_e_bar = sum([a*a/sum_sq_act_fracs for a in act_fracs])
-        P_bar = (sum([sum([activity_freq[t][act]*activity_freq[t][act] for act in all_activities]) for t in times]) - (len(times)*num_routines)) / (len(times)*num_routines*(num_routines+1))
-        kappa = (P_bar - P_e_bar)/(1 - P_e_bar)
-        other_kappa = (P_bar - (1/len(all_activities))) /(1 - (1/len(all_activities)))
-        avg_miscl_prob = sum(misclassification_prob)/len(misclassification_prob)
-        info = ind+'-- avg. misclassification probability = '+'{:1.3f}'.format(avg_miscl_prob)+' -- Fleiss\' Kappa = '+'{:1.5f}'.format(kappa)+' -- Holly & Guilford\'s G = '+'{:1.5f}'.format(other_kappa)
+        # act_fracs = [sum([act_fr[act] for act_fr in activity_freq.values()]) for act in all_activities]
+        # sum_sq_act_fracs = sum(act_fracs)*sum(act_fracs)
+        # P_e_bar = sum([a*a/sum_sq_act_fracs for a in act_fracs])
+        # P_bar = (sum([sum([activity_freq[t][act]*activity_freq[t][act] for act in all_activities]) for t in times]) - (len(times)*num_routines)) / (len(times)*num_routines*(num_routines+1))
+        # kappa = (P_bar - P_e_bar)/(1 - P_e_bar)
+        # other_kappa = (P_bar - (1/len(all_activities))) /(1 - (1/len(all_activities)))
+        # avg_miscl_prob = sum(misclassification_prob)/len(misclassification_prob)
+        info = ind #+'-- avg. misclassification probability = '+'{:1.3f}'.format(avg_miscl_prob)+' -- Fleiss\' Kappa = '+'{:1.5f}'.format(kappa)+' -- Holly & Guilford\'s G = '+'{:1.5f}'.format(other_kappa)
 
         fig.tight_layout()
         fig.suptitle(info)
-        plt.savefig(os.path.join(directory,'schedule_distribution_separate.jpg'))
+        # plt.savefig(os.path.join(directory,'schedule_distribution_separate.jpg'))
         fig,ax = plt.subplots()
         fig.set_size_inches(30,20)
 
@@ -146,9 +151,10 @@ def dump_visuals(root_dir):
                     prev_start = min_time
                     sch_cnt += 1
                 if activity not in activities_labeled:
-                    ax.barh(sch_cnt, end-start, align='center', left=start, label=activity, color=color_map[activity])
+                    ax.barh(sch_cnt, end-start, align='center', left=start, label=activity, color=color_map[activity], alpha=alpha_act(activity))
                     activities_labeled.append(activity)
-                ax.barh(sch_cnt, end-start, align='center', left=start, color=color_map[activity])
+                else:
+                    ax.barh(sch_cnt, end-start, align='center', left=start, color=color_map[activity], alpha=alpha_act(activity))
                 prev_start = start
 
             _ = ax.set_xlabel('Time', fontsize=40)
@@ -160,12 +166,12 @@ def dump_visuals(root_dir):
         fig.suptitle(info)
         plt.savefig(os.path.join(directory,'schedules.jpg'))
 
-        fig, ax = plt.subplots()
-        for act, col in color_map.items():
-            ax.plot(0,0,color=col, label=act, linewidth=20)
-            ax.legend(fontsize=45)
-            fig.set_size_inches(15,35)
-            fig.savefig(os.path.join(directory,'legend.jpg'))
+        # fig, ax = plt.subplots()
+        # for act, col in color_map.items():
+        #     ax.plot(0,0,color=col, label=act, linewidth=20)
+        #     ax.legend(fontsize=45)
+        #     fig.set_size_inches(15,35)
+        #     fig.savefig(os.path.join(directory,'legend.jpg'))
 
 
 if __name__ == "__main__":
