@@ -1,9 +1,12 @@
+# Get vacuum cleaner
 ## 1-2
 [Walk] <dining_room>
 [Walk] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
 [Find] <vacuum_cleaner>
 [Grab] <vacuum_cleaner>
+
+# Vacuum Clean
 ## 5-8
 [Walk] <dining_room>
 [Plugin] <vacuum_cleaner>
@@ -16,6 +19,8 @@
 [Switchon] <vacuum_cleaner>
 [Switchoff] <vacuum_cleaner>
 [Plugout] <vacuum_cleaner>
+
+# Putaway Vacuum Cleaner
 ## 5-8
 [Walk] <dining_room>
 [Walk] <kitchen_cabinet>

@@ -1,3 +1,4 @@
+# Prepare work desk
 ## 1-2
 [walk] <dining_room>
 [walk] <cupboard>
@@ -24,35 +25,29 @@
 [find] <desk_home_office>
 [PutBack] <pen> <desk_home_office>
 [PutBack] <notebook> <desk_home_office>
-+<notebook>
-+<pen>
-+<highlighter>
 [find] <printer>
 [push] <printer>
+
+# Desk work
 ## 7-11
 [walk] <bedroom>
 [find] <bag>
 [grab] <bag>
-+<bag>
 [walk] <home_office>
 [find] <headset>
 [grab] <headset>
-+<headset>
 [find] <computer_home_office>
 [type] <computer_home_office>
 ## 15-180
 [find] <chair_home_office>
 [sit] <chair_home_office>
 [Standup]
--<headset>
--<notebook>
--<pen>
--<highlighter>
 ## 1-3
 [find] <desk_home_office>
 [PutBack] <headset> <desk_home_office>
 [PutBack] <bag> <desk_home_office>
--<bag>
+
+# Cleanup desk
 ## 3-5
 [find] <drinking_glass>
 [grab] <drinking_glass>

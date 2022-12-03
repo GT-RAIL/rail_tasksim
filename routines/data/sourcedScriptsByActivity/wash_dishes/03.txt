@@ -1,3 +1,4 @@
+# Load Dishwasher
 ## 5 - 10
 [Walk] <dining_room>
 [Find] <cupboard>
@@ -16,6 +17,8 @@
 [Putin] <mug><dishwasher>
 [Close] <dishwasher>
 [Switchon] <dishwasher>
+
+# Empty Dishwasher
 ## 5 -10
 [Switchoff] <dishwasher>
 [Open] <dishwasher>

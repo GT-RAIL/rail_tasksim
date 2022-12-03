@@ -1,3 +1,4 @@
+# Prepare Lunch
 ## 4-6
 [Walk] <dining_room>
 [Walk] <cupboard>
@@ -13,7 +14,6 @@
 [PutBack] <plate> <table_dining_room>
 [Pour] <food_bread> <plate>
 [PutBack] <food_bread> <table_dining_room>
-+<plate>
 ## 3-5
 [Walk] <fridge>
 [Open] <fridge>
@@ -23,9 +23,13 @@
 [Walk] <table_dining_room>
 [Pour] <food_cheese> <plate>
 [PutBack] <food_cheese> <table_dining_room>
+
+# Eat Lunch
 ## 8-10
 [Eat] <food_bread>
 [Eat] <food_cheese>
+
+# Cleanup Table
 ## 2-3
 [Walk] <table_dining_room>
 [Find] <food_cheese>
@@ -34,12 +38,15 @@
 [Open] <fridge>
 [PutIn] <food_cheese> <fridge>
 [Close] <fridge>
-## 4-6
+## 2-3
 [Walk] <table_dining_room>
 [Find] <plate>
 [Grab] <plate>
 [Walk] <sink_dining_room>
 [PutIn] <plate> <sink_dining_room>
+
+# Wash Dishes
+## 3-4
 [Walk] <sink_dining_room>
 [Grab] <plate>
 [Wash] <plate>

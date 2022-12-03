@@ -1,10 +1,10 @@
-##1-2
+# Disinfect Surfaces
+## 1-2
 [Walk] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
 [Find] <disinfectant_wipes>
 [Grab] <disinfectant_wipes>
-
-##7-10
+## 7-10
 [Walk] <kitchen_counter>
 [wipe] <kitchen_counter>
 [Walk] <table_dining_room>
@@ -13,12 +13,13 @@
 [Wipe] <bathroom_counter>
 [Walk] <table_bedroom>
 [Wipe] <table_bedroom>
-
-##1-2
+## 1-2
 [Walk] <kitchen_cabinet>
 [Putin] <disinfectant_wipes> <kitchen_cabinet>
 
-##10-12
+
+# Vaccuum Clean
+## 10-12
 [Find] <vacuum_cleaner>
 [Walk] <vacuum_cleaner>
 [Grab] <vacuum_cleaner>
@@ -26,8 +27,7 @@
 [Putin] <vacuum_cleaner> <bedroom>
 [Plugin] <vacuum_cleaner>
 [Switchon] <vacuum_cleaner>
-
-##10-12
+## 10-12
 [Switchoff] <vacuum_cleaner>
 [Plugout] <vacuum_cleaner>
 [Grab] <vacuum_cleaner>
@@ -35,8 +35,7 @@
 [Putin] <vacuum_cleaner> <home_office>
 [Plugin] <vacuum_cleaner>
 [Switchon] <vacuum_cleaner>
-
-##10-12
+## 10-12
 [Switchoff] <vacuum_cleaner>
 [Plugout] <vacuum_cleaner>
 [Grab] <vacuum_cleaner>
@@ -44,8 +43,7 @@
 [Putin] <vacuum_cleaner> <dining_room>
 [Plugin] <vacuum_cleaner>
 [Switchon] <vacuum_cleaner>
-
-##2-3
+## 2-3
 [Switchoff] <vacuum_cleaner>
 [Plugout] <vacuum_cleaner>
 [Grab] <vacuum_cleaner>

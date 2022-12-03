@@ -1,12 +1,12 @@
-##1-2
+# Prepare Medicines
+## 1-2
 [Walk] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
 [Find] <painkillers>
 [Grab] <painkillers>
 [Walk] <kitchen_counter>
 [Putback] <painkillers> <kitchen_counter>
-
-##2-3
+## 2-3
 [Walk] <cupboard>
 [Open] <cupboard>
 [Find] <drinking_glass>
@@ -20,20 +20,21 @@
 [Walk] <kitchen_counter>
 [Putback] <drinking_glass> <kitchen_counter>
 
-##2-3
+# Take Medicines
+## 2-3
 [Eat] <painkillers>
 [Grab] <drinking_glass>
 [Drink] <drinking_glass>
 
-##3-4
+# Putaway Medicines
+## 3-4
 [Walk] <faucet_dining_room>
 [Rinse] <drinking_glass>
 [Walk] <cupboard>
 [Open] <cupboard>
 [Putin] <drinking_glass> <cupboard>
 [Close] <cupboard>
-
-##1-2
+## 1-2
 [Walk] <kitchen_counter>
 [Grab] <painkillers>
 [Walk] <bathroom_cabinet>

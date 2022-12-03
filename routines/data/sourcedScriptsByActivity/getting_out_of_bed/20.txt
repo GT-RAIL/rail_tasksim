@@ -1,3 +1,4 @@
+# Sleep
 ## 0-0
 [Walk] <nightstand>
 [Find] <nightstand>
@@ -13,6 +14,8 @@
 [Walk] <bed>
 [Find] <bed>
 [Lie] <bed>
+
+# Wakeup
 ## 1-2
 [Find] <nightstand>
 [Find] <alarm_clock>

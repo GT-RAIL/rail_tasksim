@@ -1,3 +1,4 @@
+# Prepare Cereal
 ## 2-3
 [Walk] <dining_room>
 [Walk] <cupboard>
@@ -8,7 +9,6 @@
 [Close] <cupboard>
 [Walk] <table_dining_room>
 [PutBack] <bowl> <table_dining_room>
-+<bowl>
 ## 3-5
 [Find] <food_cereal>
 [Find] <cupboard>
@@ -38,13 +38,14 @@
 [Walk] <table_dining_room>
 [Find] <bowl>
 [PutBack] <spoon> <bowl>
-+<spoon>
+
+# Eat Cereal
 ## 8-10
 [WALK] <table_dining_room>
 [Find] <food_cereal>
 [Eat] <food_cereal>
--<spoon>
--<bowl>
+
+# Putaway Cereal
 ## 2-3
 [Find] <food_cereal>
 [Grab] <food_cereal>
@@ -70,6 +71,8 @@
 [Find] <spoon>
 [Grab] <spoon>
 [PutBack] <spoon> <sink_dining_room>
+
+# Wash Dishes
 ## 10-12
 [Walk] <sink_dining_room>
 [Find] <bowl>

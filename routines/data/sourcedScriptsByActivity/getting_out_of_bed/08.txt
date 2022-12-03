@@ -1,3 +1,4 @@
+# Set Alarm
 ## 1-2
 [Walk] <curtain_bedroom>
 [Walk] <light_bedroom>
@@ -11,6 +12,7 @@
 [Find] <alarm_clock>
 [Switchoff] <alarm_clock>
 
+# Wakeup
 ## 1-2
 [Walk] <curtain_bedroom>
 [Open] <curtain_bedroom>

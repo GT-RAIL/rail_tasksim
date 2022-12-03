@@ -1,3 +1,4 @@
+# Collect clothes
 ## 10-15
 [Walk] <basket_for_clothes>
 [Find] <basket_for_clothes>
@@ -17,6 +18,8 @@
 [Walk] <washing_machine>
 [Find] <washing_machine>
 [PutBack] <basket_for_clothes> <washing_machine>
+
+# Load washing machine
 ## 2-3
 [Find] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
@@ -40,13 +43,17 @@
 [Grab] <clothes_jacket>
 [PutBack] <clothes_jacket> <washing_machine>
 [Close] <washing_machine>
+
+# Run washing machine
 ## 2-3
 [Find] <washing_machine>
 [SwitchOn] <washing_machine>
-## 2-3
 [Walk] <washing_machine>
 [Find] <washing_machine>
+## 2-3
 [SwitchOff] <washing_machine>
+
+# Putaway Clothes
 ## 3-5
 [Find] <washing_machine>
 [Find] <laundry_detergent>

@@ -1,18 +1,20 @@
-##0-1
+# Return Home
+## 0-1
 [Walk] <outside>
 [Find] <mail>
 [Grab] <mail>
 [Walk] <dining_room>
 
-##1-2
+# Putaway Mail
+## 1-2
 [Walk] <dining_room>
 [Find] <bench>
 [Putback] <mail> <bench>
 [Find] <shoes>
 [Putoff] <shoes>
 
-
-##1-2
+# Takeoff Jacket
+## 1-2
 [Walk] <bedroom>
 [Find] <light_bedroom>
 [Switchon] <light_bedroom>

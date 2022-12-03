@@ -1,3 +1,4 @@
+# Cook Dinner
 ## 1-2
 [walk] <dining_room>
 [find] <cupboard>
@@ -51,14 +52,13 @@
 [grab] <spoon>
 [find] <cookingpot>
 [putback] <spoon> <cookingpot>
+
+# Set Dinner Table
 ## 3-6
 [find] <cookingpot>
 [grab] <cookingpot>
 [find] <table_dining_room>
 [putback] <cookingpot> <table_dining_room>
-+<food_rice>
-+<food_vegetable>
-+<cookingpot>
 [find] <plate>
 [grab] <plate>
 [find] <table_dining_room>
@@ -67,19 +67,16 @@
 [grab] <spoon>
 [find] <plate>
 [putback] <spoon> <plate>
-+<spoon>
-+<plate>
+
+# Eat dinner
 ## 6-9
 [find] <food_rice>
 [eat] <food_rice>
 [find] <food_vegetable>
 [eat] <food_vegetable>
--<food_rice>
--<food_vegetable>
--<cookingpot>
--<spoon>
--<plate>
-## 12-16
+
+# Cleanup table
+## 6-8
 [find] <plate>
 [grab] <plate>
 [find] <sink_dining_room>
@@ -88,6 +85,9 @@
 [grab] <cookingpot>
 [find] <sink_dining_room>
 [putback] <cookingpot> <sink_dining_room>
+
+# Wash Dishes
+## 6-8
 [find] <spoon>
 [grab] <spoon>
 [find] <sink_dining_room>
@@ -95,9 +95,6 @@
 [Rinse] <spoon>
 [Rinse] <cookingpot>
 [putback] <spoon> <sink_dining_room>
-+<plate>
-+<spoon>
-+<cookingpot>
 ## 16-17
 [walk] <dining_room>
 [find] <kitchen_cabinet>
@@ -108,12 +105,9 @@
 [wipe] <plate>
 [find] <spoon>
 [wipe] <spoon>
--<plate>
--<spoon>
 ## 17-18
 [find] <cookingpot>
 [wipe] <cookingpot>
--<cookingpot>
 [find] <kitchen_cabinet>
 [putin] <cloth_napkin><kitchen_cabinet>
 [close] <kitchen_cabinet>

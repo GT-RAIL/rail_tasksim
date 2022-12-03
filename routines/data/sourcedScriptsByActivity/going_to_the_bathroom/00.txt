@@ -1,3 +1,4 @@
+# Use bathroom
 ## 0-1
 [Walk] <bathroom>
 [Find] <light_bathroom>

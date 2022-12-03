@@ -108,14 +108,14 @@ class Schedule():
             script_header += '{} ({} - {}) \n'.format(activity, time_human(start_time), time_human(end_time))
             remaining_min, remaining_max = deepcopy(info['total_duration_range'])
             duration_remaining = deepcopy(end_time - start_time)
-            for act_line, act_duration in zip(info['lines'], info['durations']):
+            for act_line, act_duration, act_label in zip(info['lines'], info['durations'], info['activity_labels']):
                 remaining_min -= act_duration[0]
                 remaining_max -= act_duration[1]
                 sampling_min = max(act_duration[0], duration_remaining - remaining_max)
                 sampling_max = min(act_duration[1], duration_remaining - remaining_min)
                 d = (random.random() * (sampling_max-sampling_min) + sampling_min)
                 duration_remaining -= d
-                all_actions.append({'script':act_line, 'time_from':t, 'time_to':t+d, 'time_from_h':time_human(t), 'time_to_h':time_human(t+d), 'name':activity+'-'+info['filename']})
+                all_actions.append({'script':act_line, 'time_from':t, 'time_to':t+d, 'time_from_h':time_human(t), 'time_to_h':time_human(t+d), 'name':activity+'-'+info['filename'], 'activity_label':act_label})
                 t += d
             prev_activity = activity
         if verbose:
@@ -128,8 +128,8 @@ class Schedule():
 class ScheduleFromHybridDuration(Schedule):
     def __init__(self, sampler_name, scripts_list, num_optional_activities=-1):
         global info
-        sampler = ScheduleSampler_FixedSequence()
-        # sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
+        # sampler = ScheduleSampler_FixedSequence()
+        sampler = ScheduleDistributionSampler(type=sampler_name, idle_sampling_factor=info['idle_sampling_factor'], resample_after=info['block_activity_for_hrs'], num_optional_activities=num_optional_activities)
         if sampler_name in ideal_transitions.keys():
             self.ideal_transitions = ideal_transitions[sampler_name]
         else:
@@ -186,6 +186,7 @@ def get_graphs(all_actions, script_string = '',  verbose=False):
     
     graphs = [EnvironmentGraph(init_graph_dict).to_dict()]
     times = []
+    activities = []
     important_objects = set()
 
     last_source = None
@@ -205,10 +206,11 @@ def get_graphs(all_actions, script_string = '',  verbose=False):
             if len(graphs) > 1:
                 script_string += print_graph_difference(graphs[-2], graphs[-1]) + '\n'
             graphs.append(graph)
+            activities.append(action_info['activity_label'])
             times.append(action_info['time_to'])
         important_objects.update(get_used_objects(graphs[-2],graphs[-1]))
 
-    return graphs, times, script_string, list(important_objects)
+    return graphs, times, activities, script_string, list(important_objects)
 
 
 # %% Post processing
@@ -292,7 +294,7 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_l
             actions, script_string = s.get_combined_script()
             if clean_data and s.prec_ideal_transitions < info['min_ideal_transition_prec']:
                 continue
-            graphs, times, script_string, imp_obj = get_graphs(actions, script_string=script_string)
+            graphs, times, activities, script_string, imp_obj = get_graphs(actions, script_string=script_string)
         except SamplingFailure as sf:
             if verbose:
                 print (sf)
@@ -312,10 +314,10 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_l
                 pass
             f.write(script_string)
         print(f'Generated script {script_file}')
-        routine_out = ({'times':times,'graphs':graphs, 'important_objects':imp_obj})
+        routine_out = ({'times':times, 'activities':activities, 'graphs':graphs, 'important_objects':imp_obj})
         routine_file = os.path.join(routines_dir,'{:03d}'.format(routine_num)+'.json')
         with open(routine_file, 'w') as f:
-            json.dump(routine_out, f)
+            json.dump(routine_out, f, indent=4)
         return routine_out
 
 
@@ -383,7 +385,7 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
         del datapoint['important_objects']
         datapoint['graphs'] = remove_ignored_classes(datapoint['graphs'], utilized_object_ids)
         with open(dest_file, 'w') as f:
-            json.dump(datapoint, f)
+            json.dump(datapoint, f, indent=4)
 
     for routine_num in range(info['num_train_routines']):
         postprocess(os.path.join(routines_raw_train_dir,'{:03d}'.format(routine_num)+'.json'), os.path.join(routines_train_dir,'{:03d}'.format(routine_num)+'.json'))
@@ -395,7 +397,7 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
 
     nodes = refercnce_graph['nodes']
     with open(os.path.join(output_directory,'classes.json'), 'w') as f:
-        json.dump({"nodes":nodes, "edges":edge_classes}, f)
+        json.dump({"nodes":nodes, "edges":edge_classes}, f, indent=4)
 
     info['num_nodes'] = len(nodes)
     search_objects = [n for n in nodes if n['id'] in utilized_object_ids and n['category']=='placable_objects']

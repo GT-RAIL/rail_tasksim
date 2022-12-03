@@ -1,3 +1,4 @@
+# Prepare work desk
 ## 1-2
 [Walk] <home_office>
 [Walk] <chair_home_office>
@@ -11,6 +12,8 @@
 [Switchon] <computer_home_office>
 [Find] <desk_home_office>
 [Find] <keyboard>
+
+# Desk work
 ## 45-180
 [Type] <keyboard>
 ## 15-20

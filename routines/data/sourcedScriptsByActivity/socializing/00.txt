@@ -1,3 +1,4 @@
+# Prepare wine
 ## 5-10
 [Walk] <dining_room>
 [Walk] <cupboard>
@@ -16,7 +17,6 @@
 [Close] <cupboard>
 [Walk] <fridge>
 [Close] <fridge>
-
 ## 3-5
 [Find] <wine>
 [Grab] <wine>
@@ -30,6 +30,7 @@
 [Walk] <table_dining_room>
 [Putback] <wine_glass> <table_dining_room>
 
+# Prepare games
 ## 3-5
 [Find] <chessboard>
 [Grab] <chessboard>
@@ -40,31 +41,32 @@
 [Walk] <table_dining_room>
 [Putback] <deck_of_cards> <table_dining_room>
 
+# Prepare dessert
 ## 3-5
 [Find] <food_donut>
 [Grab] <food_donut>
 [Walk] <kitchen_counter>
 [Putback] <food_donut> <kitchen_counter>
 
+# Socialize
 ## 30-120
 [Walk] <dining_room>
 [Walk] <bench>
 [Sit] <bench>
 [Standup]
 
+# Cleanup
 ## 10-12
 [Walk] <wine_glass>
 [Grab] <wine_glass>
 [Walk] <sink_dining_room>
 [Rinse] <wine_glass>
 [Putback] <wine_glass> <sink_dining_room>
-
 ## 3-5
 [Find] <food_donut>
 [Grab] <food_donut>
 [Walk] <trashbag>
 [Putback] <food_donut> <trashbag>
-
 ## 3-5
 [Walk] <table_dining_room>
 [Find] <chessboard>
@@ -74,13 +76,11 @@
 [Walk] <bookshelf>
 [Putback] <chessboard> <bookshelf>
 [Putback] <deck_of_cards> <bookshelf>
-
 ## 2-3
 [Walk] <wine>
 [Grab] <wine>
 [Walk] <kitchen_counter>
 [Putback] <wine> <kitchen_counter>
-
 ## 4-7
 [Walk] <sink_dining_room>
 [Grab] <wine_glass>
@@ -88,7 +88,6 @@
 [Open] <cupboard>
 [Putin] <wine_glass> <cupboard>
 [Close] <cupboard>
-
 ## 5-7
 [Walk] <cutting_board>
 [Find] <food_cheese>

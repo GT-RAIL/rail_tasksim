@@ -1,3 +1,4 @@
+# Wash face
 ## 1-2
 [Find] <spectacles>
 [Walk] <bathroom>
@@ -10,6 +11,7 @@
 [Putin] <face_soap> <bathroom_cabinet>
 [Close] <bathroom_cabinet>
 
+# Puton Jacket
 ## 3-4
 [Walk] <bedroom>
 [Walk] <dresser>
@@ -23,14 +25,13 @@
 [Open] <bathroom_cabinet>
 [Find] <comb>
 [Grab] <comb>
-
 ## 0-1
 [Putin] <comb> <bathroom_cabinet>
 [Close] <bathroom_cabinet>
 
+# Leave
 ## 1-2
 [Walk] <dining_room>
 [Walk] <door_dining_room>
-
 ## 0-1
 [Walk] <outside>

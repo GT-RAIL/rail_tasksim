@@ -1,3 +1,4 @@
+# Read in Bed
 ## 1-2
 [walk] <bedroom>
 [find] <light_bedroom>

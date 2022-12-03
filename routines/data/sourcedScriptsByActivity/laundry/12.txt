@@ -1,3 +1,4 @@
+# Collect clothes
 ## 1-2
 [Walk] <dining_room>
 [Find] <basket_for_clothes>
@@ -60,6 +61,8 @@
 [Open] <washing_machine>
 [Pour] <laundry_detergent> <washing_machine>
 [Putback] <laundry_detergent> <washing_machine>
+
+# Load washing machine
 ## 2-3
 [Grab] <basket_for_clothes>
 [Open] <basket_for_clothes>
@@ -109,10 +112,14 @@
 [Putin] <pajamas> <washing_machine>
 [Close] <basket_for_clothes>
 [Putback] <basket_for_clothes> <washing_machine>
+
+# Run washing machine
 ## 0-1
 [Switchon] <washing_machine>
 ## 0-1
 [Switchoff] <washing_machine>
+
+# Dry Clothes
 ## 7-8
 [Find] <clothes_dress>
 [Grab] <clothes_dress>
@@ -160,6 +167,8 @@
 [Putback] <pajamas> <drying_rack>
 [Find] <washing_machine>
 [Close] <washing_machine>
+
+# Putaway Clothes
 ## 1-2
 [Find] <washing_machine>
 [Find] <basket_for_clothes>

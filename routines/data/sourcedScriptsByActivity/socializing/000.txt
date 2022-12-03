@@ -1,3 +1,4 @@
+# Prepare tea and coffee
 ## 5-10
 [Walk] <dining_room>
 [Walk] <cupboard>
@@ -11,7 +12,6 @@
 [Putback] <coffee> <table_dining_room>
 [Walk] <cupboard>
 [Close] <cupboard>
-
 ## 5-10
 [Walk] <dining_room>
 [Walk] <cupboard>
@@ -26,12 +26,14 @@
 [Walk] <cupboard>
 [Close] <cupboard>
 
+# Socialize
 ## 20-75
 [Walk] <dining_room>
 [Walk] <bench>
 [Sit] <bench>
 [Standup]
 
+# Cleanup
 ## 10-12
 [Walk] <table_dining_room>
 [Walk] <mug>
@@ -43,7 +45,6 @@
 [Rinse] <coffee_cup>
 [Putback] <mug> <sink_dining_room>
 [Putback] <coffee_cup> <sink_dining_room>
-
 ## 3-5
 [Walk] <cupboard>
 [Open] <cupboard>
@@ -56,7 +57,6 @@
 [Putback] <tea> <cupboard>
 [Putback] <coffee> <cupboard>
 [Close] <cupboard>
-
 ## 4-7
 [Walk] <cupboard>
 [Open] <cupboard>

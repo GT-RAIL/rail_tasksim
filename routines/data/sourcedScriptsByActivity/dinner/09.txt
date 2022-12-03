@@ -1,3 +1,4 @@
+# Cook Dinner
 ## 1-2
 [Walk] <dining_room>
 [Find] <cupboard>
@@ -44,6 +45,8 @@
 [Find] <cloth_napkin>
 [Grab] <cloth_napkin>
 [Close] <kitchen_cabinet>
+
+# Eat Dinner
 ## 8-10
 [Walk] <table_dining_room>
 [Putback] <cloth_napkin> <table_dining_room>
@@ -56,6 +59,9 @@
 [Open] <trashcan>
 [Putin] <food_bread> <trashcan>
 [Close] <trashcan>
+
+# Cleanup Table
+## 2-3
 [Walk] <table_dining_room>
 [Grab] <drinking_glass>
 [Walk] <sink_dining_room>

@@ -70,6 +70,8 @@ def read_program(file_name, node_map):
     with open(file_name) as f:
         lines = []
         durations = []
+        activity_labels = []
+        current_activity = None
         index = 1
         for line in f:
             if line.startswith('##'):
@@ -78,6 +80,8 @@ def read_program(file_name, node_map):
                     durations += [((duration_min/num_lines),(duration_max/num_lines))] * num_lines
                 header = line[2:].strip()
                 duration_min, duration_max = get_duration(header)
+            elif line.startswith('#'):
+                current_activity = line[1:].strip()
             line = line.strip()
             if '[' not in line:
                 continue
@@ -92,6 +96,7 @@ def read_program(file_name, node_map):
                     print(f'The following line has a mistake! Did you write the correct object and activity names? \n {line}')
                     raise e
                 lines.append(scr_line)
+                activity_labels.append(current_activity)
                 index += 1
         num_lines = len(lines) - len(durations)
         if num_lines > 0:
@@ -100,7 +105,7 @@ def read_program(file_name, node_map):
     duration_min = sum([d1 for (d1,d2) in durations])
     duration_max = sum([d2 for (d1,d2) in durations])
 
-    return {'durations':durations , 'lines':lines, 'total_duration_range':(duration_min, duration_max)}
+    return {'durations':durations , 'lines':lines, 'total_duration_range':(duration_min, duration_max), 'activity_labels':activity_labels}
 
 def execute_program(program_file, graph_file, node_map, verbose=False):
     with open (graph_file,'r') as f:

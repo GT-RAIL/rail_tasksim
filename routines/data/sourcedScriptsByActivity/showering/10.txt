@@ -1,6 +1,6 @@
+# Prepare for shower
 ## 0-1
 [Walk] <bathroom>
-
 ## 1-2
 [Find] <bathroom_cabinet>
 [Walk] <bathroom_cabinet>
@@ -12,7 +12,6 @@
 [Find] <shower>
 [Walk] <shower>
 [Putin] <shampoo> <shower>
-
 [Find] <bathroom_cabinet>
 [Walk] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
@@ -23,7 +22,6 @@
 [Find] <shower>
 [Walk] <shower>
 [Putin] <conditioner> <shower>
-
 [Find] <bathroom_cabinet>
 [Walk] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
@@ -35,6 +33,7 @@
 [Walk] <shower>
 [Putin] <facial_cleanser> <shower>
 
+# Take Shower
 ## 10-15
 [Find] <shampoo>
 [Grab] <shampoo>
@@ -45,7 +44,6 @@
 [Find] <facial_cleanser>
 [Grab] <facial_cleanser>
 [Putin] <facial_cleanser> <shower>
-
 ## 1-2
 [Find] <towel_rack>
 [Walk] <towel_rack>
@@ -54,14 +52,13 @@
 [Find] <towel_rack>
 [Putback] <towel> <towel_rack>
 
+# Dry hair
 ## 0-1
 [Walk] <bedroom>
-
 ## 0-1
 [Walk] <bathroom>
 [Find] <bathroom_counter>
 [Walk] <bathroom_counter>
-
 ## 5-7
 [Find] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
@@ -75,7 +72,6 @@
 [Putback] <hairbrush> <bathroom_counter>
 [Find] <bathroom_cabinet>
 [Close] <bathroom_cabinet>
-
 ## 2-3
 [Find] <bathroom_cabinet>
 [Open] <bathroom_cabinet>

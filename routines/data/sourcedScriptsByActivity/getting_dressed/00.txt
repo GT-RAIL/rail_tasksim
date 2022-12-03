@@ -1,4 +1,5 @@
-##1-2
+# Put deodorant
+## 1-2
 [Walk] <bathroom>
 [Find] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
@@ -7,7 +8,8 @@
 [PutObjBack] <deodorant>
 [Close] <bathroom_cabinet>
 
-##5-6
+# Puton shoes
+## 5-6
 [Find] <perfume>
 [Grab] <perfume>
 [PutObjBack] <perfume>

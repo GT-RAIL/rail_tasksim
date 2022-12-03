@@ -1,3 +1,4 @@
+# Setup CD Player
 ## 1-2
 [Walk] <home_office>
 [Walk] <table_home_office>
@@ -9,16 +10,18 @@
 [Putin] <cd> <cd_player>
 [Close] <cd_player>
 [Switchon] <cd_player>
-+<cd>
 ## 1-2
 [Walk] <chair_home_office>
 [Sit] <chair_home_office>
+
+# Listen to music
 ## 15-60
 [Standup]
 [Walk] <cd_player>
 [Switchoff] <cd_player>
+
+# Putaway CD Player
 ## 1-3
--<cd>
 [Open] <cd_player>
 [Find] <cd>
 [Grab] <cd>

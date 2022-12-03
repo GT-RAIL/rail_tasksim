@@ -1,30 +1,29 @@
+# Clean kitchen cabinets
 ## 1-2
 [Walk] <dining_room>
 [Walk] <kitchentowel>
 [Grab] <kitchentowel>
 [Walk] <faucet_dining_room>
 [Rinse] <kitchentowel>
-
 ## 2-3
 [Walk] <cupboard>
 [Open] <cupboard>
 [Wash] <cupboard>
 [Scrub] <cupboard>
 [Close] <cupboard>
-
 ## 2-5
 [Walk] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
 [Wash] <kitchen_cabinet>
 [Scrub] <kitchen_cabinet>
 [Close] <kitchen_cabinet>
-
 ## 2-5
 [Walk] <kitchen_counter>
 [Wash] <kitchen_counter>
 [Scrub] <kitchen_counter>
 [Putback] <kitchentowel> <kitchen_counter>
 
+# Wash Glass
 ## 2-3
 [Walk] <drinking_glass>
 [Find] <cupboard>

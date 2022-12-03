@@ -1,3 +1,4 @@
+# Wash Dishes
 ## 2 - 3
 [Walk] <dining_room>
 [Walk] <sink_dining_room>
@@ -10,7 +11,6 @@
 [Open] <cupboard>
 [Find] <cookingpot>
 [Grab] <cookingpot>
-+<cookingpot>
 [Find] <cupboard>
 [Walk] <cupboard>
 [Close] <cupboard>
@@ -23,7 +23,6 @@
 [Find] <dishtowel>
 [Grab] <dishtowel>
 [Wipe] <cookingpot>
--<cookingpot>
 [Putback] <dishtowel> <sink_dining_room>
 ## 1 - 2
 [Find] <cookingpot>

@@ -1,3 +1,4 @@
+# Prepare bread
 ## 0-1
 [Walk] <dining_room>
 [Walk] <food_bread>
@@ -17,6 +18,8 @@
 [Find] <food_bread>
 [PutBack] <food_bread> <kitchen_counter>
 [Eat] <food_bread>
+
+# Cleanup after meal
 ## 0-1
 [Find] <food_bread>
 [Grab] <food_bread>

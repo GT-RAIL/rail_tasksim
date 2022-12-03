@@ -1,20 +1,21 @@
+# Get Book
 ## 1-2
 [Walk] <bedroom>
 [Walk] <bookshelf_bedroom>
 [Find] <book>
 [Grab] <book>
-
 ## 1-2
 [Walk] <home_office>
 [Walk] <sofa_home_office>
-[Sit] <sofa_home_office>
-+<book>
+[Putback] <book> <sofa_home_office>
 
+# Read
 ## 30-300
+[Sit] <sofa_home_office>
 [Find] <book>
 [Read] <book>
--<book>
 
+# Putaway Book
 ## 1-2
 [Standup]
 [Walk] <bedroom>

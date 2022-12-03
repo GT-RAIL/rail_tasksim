@@ -1,3 +1,4 @@
+# Get Book
 ## 0-1
 [Walk] <bedroom>
 [Walk] <bookshelf_bedroom>
@@ -6,6 +7,8 @@
 [Find] <book>
 [Grab] <book>
 [Walk] <chair_bedroom>
+
+# Read
 ## 0-1
 [Find] <chair_bedroom>
 [Sit] <chair_bedroom>
@@ -14,6 +17,8 @@
 ## 30-60
 [Find] <book>
 [Read] <book>
+
+# Putaway Book
 ## 0-1
 [Standup] 
 [Find] <bookmark>

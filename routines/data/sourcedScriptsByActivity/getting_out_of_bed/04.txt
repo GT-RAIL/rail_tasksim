@@ -1,3 +1,4 @@
+# Read in Bed
 ## 0-0
 [walk] <bedroom>
 [find] <light_bedroom>
@@ -14,18 +15,18 @@
 [sleep]
 [wakeup]
 [Standup]
+
+
 ## 7-8
 [walk] <bathroom>
-[find] <toothbrush>
-[find] <mouthwash>
-[find] <soap>
 [find] <towel>
 [grab] <towel>
 ## 9-10
 [walk] <bedroom>
 [find] <chair_bedroom>
 [putback] <towel> <chair_bedroom>
-[find] <clothes_pants>
+
+# Prepare work desk
 ## 11-14
 [walk] <home_office>
 [find] <pencil>
@@ -35,6 +36,8 @@
 [find] <desk_home_office>
 [putback] <pencil> <desk_home_office>
 [putback] <note_pad> <desk_home_office>
+
+# Get Mail
 ## 15-16
 [walk] <outside>
 [find] <mail>
@@ -44,6 +47,8 @@
 [walk] <dining_room>
 [find] <table_dining_room>
 [putback] <mail> <table_dining_room>
+
+# Drink Milk
 ## 19-20
 [walk] <dining_room>
 [find] <fridge>

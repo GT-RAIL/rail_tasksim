@@ -1,3 +1,4 @@
+# Return Home
 ## 0-1
 [Walk] <outside>
 [Find] <groceries>
@@ -5,6 +6,7 @@
 [Find] <mail>
 [Grab] <mail>
 
+# Putaway Mail and Groceries
 ## 3-5
 [Walk] <dining_room>
 [Find] <cupboard>
@@ -23,6 +25,7 @@
 [Putin] <mail> <cupboard>
 [Close] <cupboard>
 
+# Takeoff Jacket
 ## 1-2
 [Walk] <bedroom>
 [Putoff] <clothes_jacket>

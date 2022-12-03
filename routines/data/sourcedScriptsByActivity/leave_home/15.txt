@@ -1,4 +1,5 @@
-##0-1
+# Turnoff lights
+## 0-1
 [Walk] <bathroom>
 [Find] <light_bathroom>
 [Switchon] <light_bathroom>
@@ -8,7 +9,8 @@
 [Find] <light_bathroom>
 [Switchoff] <light_bathroom>
 
-##4-5
+# Puton Jacket
+## 4-5
 [Walk] <bedroom>
 [Find] <dresser>
 [Open] <dresser>
@@ -24,7 +26,8 @@
 [Find] <light_bedroom>
 [Switchoff] <light_bedroom>
 
-##4-5
+# Prepare to leave
+## 4-5
 [Walk] <dining_room>
 [Find] <keys>
 [Grab] <keys>
@@ -35,5 +38,6 @@
 [Grab] <shoes>
 [Puton] <shoes>
 
-##1-2
+# Leave
+## 1-2
 [Walk] <outside>
