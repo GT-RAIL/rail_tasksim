@@ -1,7 +1,0 @@
-## 1 - 2
-[Walk] <home_office>
-[Find] <radio>
-[Grab] <radio>
-[Switchon] <radio>
-[Walk] <dining_room>
-[Putback] <radio><dining_room>

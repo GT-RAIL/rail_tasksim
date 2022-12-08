@@ -1,6 +1,6 @@
 # Household Object Movements from Everyday Routines (HOMER)
 
-This is the home of the HOMER dataset generator. This codebase allows creation of new datasets in addition to the five persona datasets which can be found [here](). To generate the complete object arrangements, we use the [VirtualHome](http://virtual-home.org) simulator.
+This is the home of the HOMER dataset generator. This codebase allows creation of new datasets in addition to the five persona datasets which can be found [here](https://www.dropbox.com/s/8qs1znw3fmqho44/HOMER.zip?dl=0). To generate the complete object arrangements, we use the [VirtualHome](http://virtual-home.org) simulator.
 
 To generate a dataset use `SampleRoutinesFromData.py` with the appropriate arguments. To replicate the existing dataset, use  `python3 SampleRoutinesFromData.py --sampler=persona`. If you provide a specific persona ID ('persona0', 'persona1', ... 'persona4') or an individual ID from data/AMT_Schedules', the Sampler will generate a dataset pertaining to that distribution. If you only mention 'persona' or 'individual', the sampler loops through all the 'persona's or 'individual's.
 
