@@ -12,6 +12,7 @@ import matplotlib.pyplot as plt
 import random
 import multiprocessing
 import sys
+import typing
 
 sys.path.append('..')
 sys.path.append('../simulation')
@@ -283,7 +284,7 @@ def get_used_objects(g1,g2):
     return utilized_object_ids
 
 # %% Make a routine
-def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_list, logs_dir, script_use_file=None, clean_data=False, verbose=False):
+def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_list, logs_dir, script_use_file=None, clean_data=False, verbose=False, scripts_only=False):
     global info
     while True:
         try:
@@ -311,14 +312,16 @@ def make_routine(routine_num, scripts_dir, routines_dir, sampler_name, scripts_l
                 pass
             f.write(script_string)
         print(f'Generated script {script_file}')
-        routine_out = ({'times':times,'graphs':graphs, 'important_objects':imp_obj})
-        routine_file = os.path.join(routines_dir,'{:03d}'.format(routine_num)+'.json')
-        with open(routine_file, 'w') as f:
-            json.dump(routine_out, f)
-        return routine_out
+
+        if scripts_only:
+            routine_out = ({'times':times,'graphs':graphs, 'important_objects':imp_obj})
+            routine_file = os.path.join(routines_dir,'{:03d}'.format(routine_num)+'.json')
+            with open(routine_file, 'w') as f:
+                json.dump(routine_out, f)
+            return routine_out
 
 
-def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
+def main(sampler_name, output_directory, verbose, scripts_list, clean_data, scripts_only, cpu_thread_num):
     scripts_train_dir = os.path.join(output_directory,'scripts_train')
     scripts_test_dir = os.path.join(output_directory,'scripts_test')
     routines_raw_train_dir = os.path.join(output_directory,'raw_routines_train')
@@ -342,10 +345,28 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
     sampler = ScheduleDistributionSampler(type=sampler_name)
     sampler.plot(output_directory)
 
-    for routine_num in range(info['num_train_routines']):
-        make_routine(routine_num, scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
-    for routine_num in range(info['num_test_routines']):
-        make_routine(routine_num, scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose)
+    def generate_routine_args(type:str, scripts_dir, routines_dir, sampler_name, script_list, log_dir, script_use_file=None, clean_data=False, verbose=False, scripts_only:bool=False):
+        args = []
+        for n in range(info[f'num_{type}_routines']):
+            args.append((n, scripts_dir, routines_dir, sampler_name, script_list,log_dir, script_use_file, clean_data, verbose, scripts_only))
+        return args
+
+    # make train routines
+    print("Generating train routines ...")
+    pool = multiprocessing.Pool(processes=cpu_thread_num)
+    pool.starmap(make_routine, generate_routine_args("train", scripts_train_dir, routines_raw_train_dir, sampler_name, scripts_list, logs_dir_train, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose, scripts_only))
+    pool.close()
+    pool.join()  
+
+    # make test routines
+    print("Generating test routines ...")
+    pool = multiprocessing.Pool(processes=cpu_thread_num)
+    pool.starmap(make_routine, generate_routine_args("test", scripts_test_dir, routines_raw_test_dir, sampler_name, scripts_list, logs_dir_test, os.path.join(output_directory,'script_usage.txt'), clean_data, verbose, scripts_only))
+    pool.close()
+    pool.join()
+
+    if scripts_only:
+        return
 
     with open(os.path.join(routines_raw_test_dir,'{:03d}'.format(0)+'.json')) as f:
         reference_full_graph = json.load(f)['graphs'][0]
@@ -412,9 +433,16 @@ if __name__ == "__main__":
     parser.add_argument('--verbose', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
     parser.add_argument('--clean_data', action='store_true', default=False)
 
+    parser.add_argument('--scripts_only', action='store_true', default=False, help='Set this to true if you only want the activity scripts.')
+    parser.add_argument('--num_train_routines', type=int, default=50, help='Number of train routine to generate.')
+    parser.add_argument('--num_test_routines', type=int, default=10, help='Number of test routine to generate.')
+    parser.add_argument('--cpu_thread_num', type=int, default=16, help='Number of threads to run on.')
 
     args = parser.parse_args()
-    
+
+    info['num_train_routines'] = args.num_train_routines
+    info['num_test_routines'] = args.num_test_routines
+
     if args.clean_data:
         raise NotImplementedError('Clean data argument is not supported')
 
@@ -432,15 +460,15 @@ if __name__ == "__main__":
 
     if args.sampler in options_list.keys():
         os.makedirs(args.path)
-        pool = multiprocessing.Pool()
+        pool = multiprocessing.Pool(processes=args.cpu_thread_num)
         for n,p in enumerate(options_list[args.sampler.lower()]):
             # main(p, os.path.join(args.path,p), args.verbose, get_script_files_list(n), args.clean_data)
-            pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.clean_data))
+            pool.apply_async(main, args=(p, os.path.join(args.path,p), args.verbose, get_scripts(n), args.clean_data, args.scripts_only, args.cpu_thread_num))
         pool.close()
         pool.join()
     elif args.sampler in persona_options + individual_options:
             p = args.sampler
-            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data)
+            main(p, os.path.join(args.path,p), args.verbose, get_scripts(0), args.clean_data, args.scripts_only, args.cpu_thread_num)
     else:
         raise argparse.ArgumentError(f'{args.sampler} is not a valid sampler.')
         
