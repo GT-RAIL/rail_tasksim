@@ -1,15 +1,15 @@
 # Household Object Movements from Everyday Routines (HOMER)
 
-This is the home of the HOMER dataset generator. This codebase allows creation of new datasets in addition to the five persona datasets which can be found [here](https://www.dropbox.com/s/8qs1znw3fmqho44/HOMER.zip?dl=0). To generate the complete object arrangements, we use the [VirtualHome](http://virtual-home.org) simulator.
+This is the home of the HOMER dataset generator. This codebase allows creation of new datasets in addition to the five household datasets which can be found [here](https://www.dropbox.com/s/8qs1znw3fmqho44/HOMER.zip?dl=0). To generate the complete object arrangements, we use the [VirtualHome](http://virtual-home.org) simulator.
 
-To generate a dataset use `SampleRoutinesFromData.py` with the appropriate arguments. To replicate the existing dataset, use  `python3 SampleRoutinesFromData.py --sampler=persona`. If you provide a specific persona ID ('persona0', 'persona1', ... 'persona4') or an individual ID from data/AMT_Schedules', the Sampler will generate a dataset pertaining to that distribution. If you only mention 'persona' or 'individual', the sampler loops through all the 'persona's or 'individual's.
+To generate a dataset use `SampleRoutinesFromData.py` with the appropriate arguments. To replicate the existing dataset, use  `python3 SampleRoutinesFromData.py --sampler=persona`. If you provide a specific household ID ('persona0', 'persona1', ... 'persona4') or an individual ID from data/AMT_Schedules', the Sampler will generate a dataset pertaining to that distribution. If you only mention 'persona' or 'individual', the sampler loops through all the 'persona's or 'individual's.
 
 
 # Data generation process
 
 <img src="data/personaBasedSchedules/visuals/HOMERtitle.jpg">
 
-This page is a walk-through of the complete process used to generate the HOMER dataset. The HOMER dataset is built on the [VirtualHome](http://virtual-home.org) simulator. The published dataset is composed of routine behaviors spanning several weeks for five personas in an apartment setting with four rooms containing 66-77 objects and 33 atomic actions such as *find*, *walk*, *grab*, etc. 
+This page is a walk-through of the complete process used to generate the HOMER dataset. The HOMER dataset is built on the [VirtualHome](http://virtual-home.org) simulator. The published dataset is composed of routine behaviors spanning several weeks for five households in an apartment setting with four rooms containing 66-77 objects and 33 atomic actions such as *find*, *walk*, *grab*, etc. 
 
 We first make a list of Activities of Daily Living related to in-home routines, and then source our dataset using a two-tier strategy, separately sourcing high level activity schedules comprising of the above activities, and the low level action sequences to perform each activity. The 22 high-level activities of daily living we use are as follows:
 
@@ -93,16 +93,16 @@ Using these features to represent every sample, we divide the samples for each a
 
 As seen in these figures, the clusters do represent semantically meaningful habits, like *brushing teeth in the morning* v.s. *brushing teeth twice a day*, and having an *early breafast* v.s. a *late breakfast* v.s. *skipping breakfast*.
 
-### Composing personas using habits
+### Composing households using habits
 
-To compose complete temporal activity distributions representing fictitious persona, we combine a habit for each activity. We implicitly assume the different habits for the activities to be independent and ensure that our personas are distinct by using genetic optimization to maximize their average pairwise KL-divergence using genetic optimisation. The resulting five personas have the following activity distributions.
+To compose complete temporal activity distributions representing fictitious households, we combine a habit for each activity. We implicitly assume the different habits for the activities to be independent and ensure that our households are distinct by using genetic optimization to maximize their average pairwise KL-divergence using genetic optimisation. The resulting five households have the following activity distributions.
 
 
-<img src="data/dataVisuals/persons0509/persona0_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="170" align="top">
+<img src="data/dataVisuals/households/household0/sampling_distribution_separated.jpg" width="500" align="top"><img src="data/dataVisuals/households/legend.png" width="170" align="top">
 
-<img src="data/dataVisuals/persons0509/persona1_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/persona2_sampling_distribution.jpg" width="500" align="top">
+<img src="data/dataVisuals/households/household1/sampling_distribution_separated.jpg" width="500" align="top"><img src="data/dataVisuals/households/household2/sampling_distribution_separated.jpg" width="500" align="top">
 
-<img src="data/dataVisuals/persons0509/persona3_sampling_distribution.jpg" width="500" align="top"><img src="data/dataVisuals/persons0509/persona4_sampling_distribution.jpg" width="500" align="top">
+<img src="data/dataVisuals/households/household3/sampling_distribution_separated.jpg" width="500" align="top"><img src="data/dataVisuals/households/household4/sampling_distribution_separated.jpg" width="500" align="top">
 ## Activity Scripts
 
 We ask participants to emulate each activity from the above list on a simulator. We used the [VirtualHome simulator](http://virtual-home.org), as it supports human agents, object interaction, and high-level semantic commands without requiring low-level motion control. We recruited 23 participants to compose step-by-step action sequences for each activity, defining the avatar's movement, interactions with various objects, and the time duration required for it. In this manner, we obtained 61 scripts in total, covering all of our 22 activities. Each script consists of action sequences as well as the estimated minimum and maximum time duration needed to do these actions ('## \<min_time\>-\<max_time\> in the following script snippet'), as shown in the following snippet of an action script representing *brushing teeth*.
@@ -128,7 +128,7 @@ We ask participants to emulate each activity from the above list on a simulator.
 
 ## Sampling routines
 
-We use a temporal activity distribution and an action script per activity to completely define each of our five fictitious persona. For combining habits into personas, we assume the habit for each activity to be independent of another activity, except the *leave_home* and *come_home* activities, where the mean time of *leave_home* must be before that of *come_home* for the persona to be valid. Out of the several possible combinations of habits, we prefer personas that have distinct characteristics. We measure the distinctness of personas by a KL-divergence matric on the temporal activity distributions. To maximize this metric, we use genetic optimization to obtain a set of five valid personas, with the fittness function as the average pairwise KL-divergence. The mating function selects a new group of 5 personas from any two existing groups, and the random mutation changes a persona in a group to a random sample. A pool consists of 20 candidate persona sets, and the optimization is run 5 times for 1000 iterations each, after which the best solution is picked. Refer to `process_schedules.ipynb` for exact implementation.
+We use a temporal activity distribution and an action script per activity to completely define each of our five fictitious households. For combining habits into households, we assume the habit for each activity to be independent of another activity, except the *leave_home* and *come_home* activities, where the mean time of *leave_home* must be before that of *come_home* for the household to be valid. Out of the several possible combinations of habits, we prefer households that have distinct characteristics. We measure the distinctness of households by a KL-divergence matric on the temporal activity distributions. To maximize this metric, we use genetic optimization to obtain a set of five valid households, with the fittness function as the average pairwise KL-divergence. The mating function selects a new group of 5 households from any two existing groups, and the random mutation changes a household in a group to a random sample. A pool consists of 20 candidate household sets, and the optimization is run 5 times for 1000 iterations each, after which the best solution is picked. Refer to `process_schedules.ipynb` for exact implementation.
 
 We use Monte Carlo sampling to generate samples of their daily routines. Starting at 6am, we sample an activity from the schedule distribution, and obtain an end time for that activity by uniformly sampling in the duration range from the script. We sample another activity from the schedule distribution at that end time. If the same activity is sampled again, the activity is continued, and another end time is sampled between that time and the maximum end time, otherwise the new activity is started. By iteratively sampling activities in this manner until the end time of midnight, we obtain samples of timestamped action sequences representing daily schedules. This process is outlined below.
 
@@ -138,27 +138,27 @@ We use Monte Carlo sampling to generate samples of their daily routines. Startin
 
 ## Final Result
 
-The process outlined on this page finally yields routine samples for all five personas. We generate 60 routines per persona, which are visualized below alongwith the resulting distribution of activities throughout the day.
+The process outlined on this page finally yields routine samples for all five households. We generate 60 routines per household, which are visualized below alongwith the resulting distribution of activities throughout the day.
 
-**Persona 0**
+**Household 0**
 
-<img src="data/dataVisuals/persons0509/persona0_schedule_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/persona0_schedules.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/households/household0/schedule_distribution_separate.jpg" width="650" align="top"><img src="data/dataVisuals/households/household0/schedules.jpg" width="650" align="top"><img src="data/dataVisuals/households/legend.png" width="100" align="top">
 
-**Persona 1**
+**Household 1**
 
-<img src="data/dataVisuals/persons0509/persona1_schedule_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/persona1_schedules.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/households/household1/schedule_distribution_separate.jpg" width="650" align="top"><img src="data/dataVisuals/households/household1/schedules.jpg" width="650" align="top"><img src="data/dataVisuals/households/legend.png" width="100" align="top">
 
-**Persona 2**
+**Household 2**
 
-<img src="data/dataVisuals/persons0509/persona2_schedule_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/persona2_schedules.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/households/household2/schedule_distribution_separate.jpg" width="650" align="top"><img src="data/dataVisuals/households/household2/schedules.jpg" width="650" align="top"><img src="data/dataVisuals/households/legend.png" width="100" align="top">
 
-**Persona 3**
+**Household 3**
 
-<img src="data/dataVisuals/persons0509/persona3_schedule_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/persona3_schedules.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/households/household3/schedule_distribution_separate.jpg" width="650" align="top"><img src="data/dataVisuals/households/household3/schedules.jpg" width="650" align="top"><img src="data/dataVisuals/households/legend.png" width="100" align="top">
 
-**Persona 4**
+**Household 4**
 
-<img src="data/dataVisuals/persons0509/persona4_schedule_distribution.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/persona4_schedules.jpg" width="650" align="top"><img src="data/dataVisuals/persons0509/legend.jpeg" width="100" align="top">
+<img src="data/dataVisuals/households/household4/schedule_distribution_separate.jpg" width="650" align="top"><img src="data/dataVisuals/households/household4/schedules.jpg" width="650" align="top"><img src="data/dataVisuals/households/legend.png" width="100" align="top">
 
 
 
