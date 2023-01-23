@@ -61,6 +61,7 @@ print(f'Using scene {int(scene_num)-1}, i.e. \'TestScene{scene_num}\'')
 ignore_classes = ['floor','wall','ceiling','character']
 utilized_object_ids = set()
 edge_classes = ["INSIDE", "ON"]
+all_activities = set()
 
 with open ('data/personaBasedSchedules/transitions_best.json') as f:
     ideal_transitions = json.load(f)
@@ -185,30 +186,38 @@ def get_graphs(all_actions, script_string = '',  verbose=False):
         raise SamplingFailure('Execution of following failed because {}... {}'.format(executor.info.get_error_string(), script_info))
     
     graphs = [EnvironmentGraph(init_graph_dict).to_dict()]
-    times = []
+    times = [info['start_time']]
     activities = []
     important_objects = set()
 
     last_source = None
+    last_activity = None
     for graph, action_info in zip(graph_list[1:], all_actions):
         src = action_info['name']
         if action_info['name'] != last_source:
             script_string += f'\n\n### {src}\n'
             last_source = src
-        script_string += '\n' + str(action_info['script'])
-        script_string += '\n## {}\n'.format(action_info['time_to_h'])
         all_rel = [edge['relation_type'] for edge in graph['edges']]
         if 'HOLDS_RH' in all_rel or 'HOLDS_LH' in all_rel:
             continue
-        if len(times) > 0 and action_info['time_to']-times[-1] < 1:
+        if action_info['activity_label'] != last_activity:
+            graphs.append(graphs[-1])
+            activities.append(None)
+            times.append(action_info['time_from'])
+            script_string += '\n## Idle until {}\n'.format(action_info['time_from_h'])
+        elif len(times) > 0 and action_info['time_to']-times[-1] < 1:
             graphs[-1] = graph
         else:
-            if len(graphs) > 1:
-                script_string += print_graph_difference(graphs[-2], graphs[-1]) + '\n'
+            # if len(graphs) > 1:
+            #     script_string += print_graph_difference(graphs[-2], graphs[-1]) + '\n'
             graphs.append(graph)
             activities.append(action_info['activity_label'])
             times.append(action_info['time_to'])
+        script_string += '\n' + str(action_info['script'])
+        script_string += '\n## {} until {}\n'.format(action_info['activity_label'], action_info['time_to_h'])
         important_objects.update(get_used_objects(graphs[-2],graphs[-1]))
+        all_activities.add(action_info['activity_label'])
+        last_activity = action_info['activity_label']
 
     return graphs, times, activities, script_string, list(important_objects)
 
@@ -397,7 +406,7 @@ def main(sampler_name, output_directory, verbose, scripts_list, clean_data):
 
     nodes = refercnce_graph['nodes']
     with open(os.path.join(output_directory,'classes.json'), 'w') as f:
-        json.dump({"nodes":nodes, "edges":edge_classes}, f, indent=4)
+        json.dump({"nodes":nodes, "edges":edge_classes, "activities":list(all_activities)}, f, indent=4)
 
     info['num_nodes'] = len(nodes)
     search_objects = [n for n in nodes if n['id'] in utilized_object_ids and n['category']=='placable_objects']
