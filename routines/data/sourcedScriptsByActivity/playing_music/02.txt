@@ -8,5 +8,5 @@
 [Sit] <chair_home_office>
 [Standup]
 ## 2-3
-[Walk] <table_home_office>
-[Putback] <instrument_guitar> <table_home_office>
+[Walk] <home_office>
+[Putback] <instrument_guitar> <home_office>

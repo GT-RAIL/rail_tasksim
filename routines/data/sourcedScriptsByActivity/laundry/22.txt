@@ -15,7 +15,7 @@
 [Find] <laundry_detergent>
 [Grab] <laundry_detergent>
 [Walk] <washing_machine>
-[Putback] <laundry_detergent> <washing_machine>
+[Drop] <laundry_detergent>
 
 # Load washing machine
 ## 3 - 7
@@ -35,7 +35,7 @@
 ## 1-2
 [Switchon] <washing_machine>
 [Walk] <kitchen_cabinet> 
-[Putback] <laundry_detergent> <kitchen_cabinet>
+[Putin] <laundry_detergent> <kitchen_cabinet>
 [Close] <kitchen_cabinet>
 
 ## 30-45 

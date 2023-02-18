@@ -27,7 +27,8 @@
 [Close] <tooth_paste>
 ## 1-2
 [Walk] <bathroom_cabinet>
-[Putback] <tooth_paste> <bathroom_cabinet>
+[Putin] <tooth_paste> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
 ## 2-3
 [Find] <faucet_bathroom>
 [Find] <toothbrush>
@@ -35,6 +36,5 @@
 [Wash] <toothbrush>
 [Switchoff] <faucet_bathroom>
 ## 1-2
-[Walk] <bathroom_cabinet>
-[Putback] <toothbrush> <bathroom_cabinet>
-[Close] <bathroom_cabinet>
+[Walk] <toothbrush_holder>
+[Putback] <toothbrush> <toothbrush_holder>

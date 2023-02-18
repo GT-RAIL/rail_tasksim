@@ -55,27 +55,13 @@
 [Sit] <bench>
 [Standup]
 
-# Cleanup
+# Cleanup wine
 ## 10-12
 [Walk] <wine_glass>
 [Grab] <wine_glass>
 [Walk] <sink_dining_room>
 [Rinse] <wine_glass>
 [Putback] <wine_glass> <sink_dining_room>
-## 3-5
-[Find] <food_donut>
-[Grab] <food_donut>
-[Walk] <trashbag>
-[Putback] <food_donut> <trashbag>
-## 3-5
-[Walk] <table_dining_room>
-[Find] <chessboard>
-[Grab] <chessboard>
-[Find] <deck_of_cards>
-[Grab] <deck_of_cards>
-[Walk] <bookshelf>
-[Putback] <chessboard> <bookshelf>
-[Putback] <deck_of_cards> <bookshelf>
 ## 2-3
 [Walk] <wine>
 [Grab] <wine>
@@ -99,3 +85,21 @@
 [Open] <fridge>
 [Putin] <food_cheese> <fridge>
 [Close] <fridge>
+
+# Cleanup dessert
+## 3-5
+[Find] <food_donut>
+[Grab] <food_donut>
+[Walk] <trashbag>
+[Putback] <food_donut> <trashbag>
+
+# Return games
+## 3-5
+[Walk] <table_dining_room>
+[Find] <chessboard>
+[Grab] <chessboard>
+[Find] <deck_of_cards>
+[Grab] <deck_of_cards>
+[Walk] <bookshelf>
+[Putback] <chessboard> <bookshelf>
+[Putback] <deck_of_cards> <bookshelf>

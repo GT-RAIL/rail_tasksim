@@ -49,7 +49,7 @@
 ## 3-4
 [Walk] <dining_room>
 [Walk] <washing_machine>
-[Putback] <basket_for_clothes> <washing_machine>
+[Drop] <basket_for_clothes>
 [Walk] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
 [Find] <laundry_detergent>
@@ -111,7 +111,7 @@
 [Find] <washing_machine>
 [Putin] <pajamas> <washing_machine>
 [Close] <basket_for_clothes>
-[Putback] <basket_for_clothes> <washing_machine>
+[Drop] <basket_for_clothes>
 
 # Run washing machine
 ## 0-1
@@ -210,7 +210,7 @@
 ## 5-7
 [Walk] <bedroom>
 [Find] <dresser>
-[Putback] <basket_for_clothes> <dresser>
+[Drop] <basket_for_clothes>
 [Open] <dresser>
 [Find] <clothes_dress>
 [Grab] <clothes_dress>

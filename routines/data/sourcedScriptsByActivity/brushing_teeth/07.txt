@@ -29,5 +29,5 @@
 [Grab] <tooth_paste>
 [Find] <bathroom_cabinet>
 [Open] <bathroom_cabinet>
-[Putback] <tooth_paste> <bathroom_cabinet>
+[Putin] <tooth_paste> <bathroom_cabinet>
 [Close] <bathroom_cabinet>

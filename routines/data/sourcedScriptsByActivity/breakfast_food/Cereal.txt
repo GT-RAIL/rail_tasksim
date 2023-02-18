@@ -40,7 +40,7 @@
 [PutBack] <spoon> <bowl>
 
 # Eat Cereal
-## 8-10
+## 8-25
 [WALK] <table_dining_room>
 [Find] <food_cereal>
 [Eat] <food_cereal>
@@ -80,11 +80,11 @@
 [Wash] <bowl>
 [Walk] <cupboard>
 [Open] <cupboard>
-[Putin] <bowl> <cupboard>
+[PutIn] <bowl> <cupboard>
 [Walk] <sink_dining_room>
 [Find] <spoon>
 [Grab] <spoon>
 [Wash] <spoon>
 [Walk] <cupboard>
-[Putin] <spoon> <cupboard>
+[PutIn] <spoon> <cupboard>
 [Close] <cupboard>

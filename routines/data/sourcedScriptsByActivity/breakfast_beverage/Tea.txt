@@ -1,0 +1,55 @@
+# Set Tea on table
+## 3-5
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <tea_bag>
+[Grab] <tea_bag>
+[Walk] <table_dining_room>
+[Putback] <tea_bag> <table_dining_room>
+[Find] <mug>
+[Grab] <mug>
+[Find] <cupboard>
+[Close] <cupboard>
+[Walk] <table_dining_room>
+[Putback] <mug> <table_dining_room>
+
+# Drink tea
+## 5-20
+[Walk] <table_dining_room>
+
+# Return tea
+[Walk] <table_dining_room>
+[Find] <tea_bag>
+[Grab] <tea_bag>
+[Walk] <cupboard>
+[Open] <cupboard>
+[PutIn] <tea_bag> <cupboard>
+[Close] <cupboard>
+
+# Cleanup table
+## 5-6
+[Find] <mug>
+[Grab] <mug>
+[Walk] <sink_dining_room>
+[Putback] <mug> <sink_dining_room>
+
+# Wash mug
+## 5-6
+[Rinse] <mug>
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <cloth_napkin>
+[Grab] <cloth_napkin>
+[Find] <mug>
+[Wipe] <mug>
+[Find] <kitchen_cabinet>
+[Putin] <cloth_napkin> <kitchen_cabinet>
+[Close] <kitchen_cabinet>
+## 1-2
+[Find] <mug>
+[Grab] <mug>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <mug> <cupboard>
+[Close] <cupboard>

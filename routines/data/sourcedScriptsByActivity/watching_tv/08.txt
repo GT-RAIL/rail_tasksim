@@ -18,10 +18,10 @@
 [Sit] <sofa_home_office>
 [Find] <sofa_home_office>
 [Putback] <remote_control> <sofa_home_office>
+[Standup]
 
 # Putaway TV remote
 ## 1-2
-[Standup]
 [Find] <remote_control>
 [Grab] <remote_control>
 [Find] <tvstand_home_office>

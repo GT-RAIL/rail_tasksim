@@ -1,0 +1,6 @@
+# Take a Nap
+## 15-60
+[Walk] <bedroom>
+# Wakeup
+## 10-15
+[Walk] <bedroom>

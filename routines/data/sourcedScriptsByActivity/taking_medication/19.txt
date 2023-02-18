@@ -46,7 +46,7 @@
 ## 1-2
 [Find] <painkillers>
 [Grab] <painkillers>
-[Putback] <painkillers> <bathroom_cabinet>
+[Putin] <painkillers> <bathroom_cabinet>
 [Close] <bathroom_cabinet>
 ## 1-2
 [Walk] <dining_room>

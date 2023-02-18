@@ -26,6 +26,8 @@
 
 # Eat Lunch
 ## 8-10
+[Walk] <table_dining_room>
+[Find] <table_dining_room>
 [Eat] <food_bread>
 [Eat] <food_cheese>
 

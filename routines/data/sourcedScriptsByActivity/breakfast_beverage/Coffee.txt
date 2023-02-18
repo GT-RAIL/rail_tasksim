@@ -1,0 +1,103 @@
+# Prepare Coffee
+## 3-5
+[Walk] <dining_room>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Find] <ground_coffee>
+[Grab] <ground_coffee>
+[Walk] <kitchen_counter>
+[Find] <coffe_maker>
+[Open] <coffe_maker>
+[Find] <coffee_filter>
+[Grab] <coffee_filter>
+[Find] <coffe_maker>
+[Putin] <coffee_filter> <coffe_maker>
+[Pour] <ground_coffee> <coffee_filter>
+[Find] <kitchen_counter>
+[Putback] <ground_coffee> <kitchen_counter>
+[Find] <mug>
+[Grab] <mug>
+[Find] <coffe_maker>
+[Putin] <mug> <coffe_maker>
+[Close] <coffe_maker>
+[Switchon] <coffe_maker>
+[Walk] <cupboard>
+[Close] <cupboard>
+
+# Return Coffee
+## 6-8
+[Find] <ground_coffee>
+[Grab] <ground_coffee>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <ground_coffee> <cupboard>
+[Close] <cupboard>
+[Find] <coffe_maker>
+[Switchoff] <coffe_maker>
+[Open] <coffe_maker>
+[Find] <coffee_filter>
+[Grab] <coffee_filter>
+[Walk] <sink_dining_room>
+[Putback] <coffee_filter> <sink_dining_room>
+
+# Set coffee on table
+## 2-3
+[Find] <coffe_maker>
+[Find] <mug>
+[Grab] <mug>
+[Close] <coffe_maker>
+[Walk] <table_dining_room>
+[Putback] <mug> <table_dining_room>
+
+# Drink Coffee
+## 5-20
+[Walk] <dining_room>
+
+# Cleanup table
+## 5-6
+[Find] <mug>
+[Grab] <mug>
+[Walk] <sink_dining_room>
+[Putback] <mug> <sink_dining_room>
+
+# Wash mug
+## 5-6
+[Find] <mug>
+[Rinse] <mug>
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <cloth_napkin>
+[Grab] <cloth_napkin>
+[Find] <mug>
+[Wipe] <mug>
+[Find] <kitchen_cabinet>
+[Putin] <cloth_napkin> <kitchen_cabinet>
+[Close] <kitchen_cabinet>
+## 1-2
+[Find] <mug>
+[Grab] <mug>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <mug> <cupboard>
+[Close] <cupboard>
+
+# Wash filter
+## 5-6
+[Find] <coffee_filter>
+[Rinse] <coffee_filter>
+[Find] <kitchen_cabinet>
+[Open] <kitchen_cabinet>
+[Find] <cloth_napkin>
+[Grab] <cloth_napkin>
+[Find] <coffee_filter>
+[Wipe] <coffee_filter>
+[Find] <kitchen_cabinet>
+[Putin] <cloth_napkin> <kitchen_cabinet>
+[Close] <kitchen_cabinet>
+## 1-2
+[Find] <coffee_filter>
+[Grab] <coffee_filter>
+[Walk] <cupboard>
+[Open] <cupboard>
+[Putin] <coffee_filter> <cupboard>
+[Close] <cupboard>

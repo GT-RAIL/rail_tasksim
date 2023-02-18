@@ -64,5 +64,5 @@
 [Find] <dresser>
 [Walk] <dresser>
 [Open] <dresser>
-[Putback] <clothes_jacket> <dresser>
+[Putin] <clothes_jacket> <dresser>
 [Close] <dresser>

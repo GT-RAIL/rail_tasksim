@@ -10,11 +10,11 @@
 [Putin] <cd> <cd_player>
 [Close] <cd_player>
 [Switchon] <cd_player>
+
+# Listen to music
 ## 1-2
 [Walk] <chair_home_office>
 [Sit] <chair_home_office>
-
-# Listen to music
 ## 15-60
 [Standup]
 [Walk] <cd_player>
@@ -22,6 +22,7 @@
 
 # Putaway CD Player
 ## 1-3
+[Walk] <cd_player>
 [Open] <cd_player>
 [Find] <cd>
 [Grab] <cd>

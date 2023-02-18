@@ -32,6 +32,7 @@
 [Find] <keys>
 [Grab] <keys>
 [Putin] <keys> <bag>
+[Close] <bag>
 [Find] <bench>
 [Putback] <bag> <bench>
 [Find] <shoes>

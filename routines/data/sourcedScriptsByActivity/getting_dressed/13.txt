@@ -7,13 +7,13 @@
 [Grab] <shaving_cream>
 [Find] <razor>
 [Grab] <razor>
-[Close] <bathroom_cabinet>
 [Walk] <faucet_bathroom>
 [Scrub] <shaving_cream>
 [Scrub] <razor>
 [Walk] <bathroom_cabinet>
-[Putback] <razor> <bathroom_cabinet>
-[Putback] <shaving_cream> <bathroom_cabinet>
+[Putin] <razor> <bathroom_cabinet>
+[Putin] <shaving_cream> <bathroom_cabinet>
+[Close] <bathroom_cabinet>
 
 # Put deodorant
 ## 2-3

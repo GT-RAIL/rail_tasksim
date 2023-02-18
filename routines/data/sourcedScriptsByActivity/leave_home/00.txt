@@ -1,0 +1,6 @@
+# Leave Home
+## 10-12
+[walk] <shoe_rack>
+[find] <shoes>
+[grab] <shoes>
+[Walk] <outside>

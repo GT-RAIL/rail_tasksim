@@ -68,7 +68,7 @@
 [Wash] <drinking_glass>
 [find] <cupboard>
 [open] <cupboard>
-[PutBack] <drinking_glass><cupboard>
+[Putin] <drinking_glass><cupboard>
 [close] <cupboard>
 ## 1-2
 [Walk] <table_dining_room>

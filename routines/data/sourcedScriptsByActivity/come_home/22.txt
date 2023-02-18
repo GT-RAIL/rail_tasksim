@@ -10,7 +10,7 @@
 ## 3-5
 [Walk] <dining_room>
 [Find] <cupboard>
-[Putback] <mail> <cupboard>
+[Putback] <mail> <dining_room>
 [Open] <cupboard>
 [Putin] <groceries> <cupboard>
 [Close] <cupboard>
@@ -34,5 +34,5 @@
 [Find] <dresser>
 [Walk] <dresser>
 [Open] <dresser>
-[Putback] <clothes_jacket> <dresser>
+[Putin] <clothes_jacket> <dresser>
 [Close] <dresser>

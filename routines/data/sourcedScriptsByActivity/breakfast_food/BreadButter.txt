@@ -1,0 +1,83 @@
+# Fetch bread and butter
+## 0-1
+[Walk] <dining_room>
+[Walk] <food_bread>
+## 0-1
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <kitchen_counter>
+[Find] <kitchen_counter>
+[Find] <food_bread>
+[PutBack] <food_bread> <kitchen_counter>
+## 0-1
+[Walk] <dining_room>
+[Walk] <fridge>
+## 0-1
+[Open] <fridge>
+[Find] <food_butter>
+[Grab] <food_butter>
+[Close] <fridge>
+[Walk] <kitchen_counter>
+[Find] <kitchen_counter>
+[PutBack] <food_butter> <kitchen_counter>
+
+# Prepare bread butter
+## 7-9
+[Find] <cupboard>
+[Open] <cupboard>
+[Find] <plate>
+[Grab] <plate>
+[Find] <table_dining_room>
+[Putback] <plate> <table_dining_room>
+[Find] <cupboard>
+[Close] <cupboard>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Find] <plate>
+[Pour] <food_bread> <plate>
+[PutBack] <food_bread> <table_dining_room>
+[Find] <food_butter>
+[Grab] <food_butter>
+[Find] <table_dining_room>
+[Find] <plate>
+[Pour] <food_butter> <plate>
+[PutBack] <food_butter> <table_dining_room>
+
+# Eat bread butter
+## 5-25
+[Walk] <table_dining_room>
+
+# Return bread and butter
+## 3-6
+[Walk] <table_dining_room>
+[Find] <food_bread>
+[Grab] <food_bread>
+[Walk] <kitchen_counter>
+[Find] <kitchen_counter>
+[PutBack] <food_bread> <kitchen_counter>
+[Walk] <table_dining_room>
+[Find] <food_butter>
+[Grab] <food_butter>
+[Walk] <fridge>
+[Open] <fridge>
+[PutIn] <food_butter> <fridge>
+[Close] <fridge>
+
+# Cleanup plate
+## 0-1
+[Find] <plate>
+[Grab] <plate>
+[Walk] <kitchen_counter>
+[PutBack] <plate> <kitchen_counter>
+## 1-2
+[Walk] <plate>
+[Find] <plate>
+[Grab] <plate>
+[Rinse] <plate>
+[Wipe] <plate>
+[Walk] <cupboard>
+[Find] <cupboard>
+[Open] <cupboard>
+[PutIn] <plate> <cupboard>
+[Close] <cupboard>
+

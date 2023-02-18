@@ -54,8 +54,8 @@
 [Find] <coffee>
 [Grab] <coffee>
 [Walk] <cupboard>
-[Putback] <tea> <cupboard>
-[Putback] <coffee> <cupboard>
+[Putin] <tea> <cupboard>
+[Putin] <coffee> <cupboard>
 [Close] <cupboard>
 ## 4-7
 [Walk] <cupboard>

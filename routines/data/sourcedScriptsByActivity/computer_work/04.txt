@@ -53,12 +53,14 @@
 [grab] <drinking_glass>
 [find] <cupboard>
 [open] <cupboard>
-[PutBack] <drinking_glass><cupboard>
+[Putin] <drinking_glass><cupboard>
 [close] <cupboard>
 ## 3-5
 [find] <bag>
 [grab] <bag>
 [find] <dresser>
-[PutBack] <bag><dresser>
+[Open] <dresser>
+[PutIn] <bag><dresser>
+[Closd] <dresser>
 
 

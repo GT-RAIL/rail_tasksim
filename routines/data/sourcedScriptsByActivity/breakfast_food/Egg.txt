@@ -1,34 +1,4 @@
-# Prepare Coffee
-## 3-5
-[Walk] <dining_room>
-[Walk] <cupboard>
-[Open] <cupboard>
-[Find] <ground_coffee>
-[Grab] <ground_coffee>
-[Walk] <kitchen_counter>
-[Find] <coffe_maker>
-[Open] <coffe_maker>
-[Find] <coffee_filter>
-[Grab] <coffee_filter>
-[Find] <coffe_maker>
-[Putin] <coffee_filter> <coffe_maker>
-[Pour] <ground_coffee> <coffee_filter>
-[Find] <kitchen_counter>
-[Putback] <ground_coffee> <kitchen_counter>
-[Find] <mug>
-[Grab] <mug>
-[Find] <coffe_maker>
-[Putin] <mug> <coffe_maker>
-[Close] <coffe_maker>
-[Switchon] <coffe_maker>
-## 3-5
-[Find] <ground_coffee>
-[Grab] <ground_coffee>
-[Walk] <cupboard>
-[Putin] <ground_coffee> <cupboard>
-[Close] <cupboard>
-
-# Prepare Egg
+# Prepare to Cook Egg
 ## 2-3
 [Walk] <fridge>
 [Open] <fridge>
@@ -46,16 +16,9 @@
 [Pour] <food_egg> <sauce_pan>
 [Find] <kitchen_counter>
 [Putback] <food_egg> <kitchen_counter>
-## 5-6
-[Find] <food_egg>
-[Grab] <food_egg>
-[Find] <fridge>
-[Open] <fridge>
-[Putin] <food_egg> <fridge>
-[Close] <fridge>
-[Find] <stove>
-[Switchoff] <stove>
-## 3-5
+
+# Cook Egg
+## 6-10
 [Walk] <cupboard>
 [Find] <plate>
 [Grab] <plate>
@@ -67,19 +30,22 @@
 [Pour] <sauce_pan> <plate>
 [Find] <kitchen_counter>
 [Putback] <sauce_pan> <kitchen_counter>
+## 5-6
+[Find] <food_egg>
+[Grab] <food_egg>
+[Find] <fridge>
+[Open] <fridge>
+[Putin] <food_egg> <fridge>
+[Close] <fridge>
+[Find] <stove>
+[Switchoff] <stove>
+
 
 # Set table
 ## 2-4
 [Find] <plate>
 [Grab] <plate>
-[Find] <coffe_maker>
-[Switchoff] <coffe_maker>
-[Open] <coffe_maker>
-[Find] <mug>
-[Grab] <mug>
-[Close] <coffe_maker>
-[Walk] <table_dining_room>
-[Putback] <mug> <table_dining_room>
+[Find] <table_dining_room>
 [Putback] <plate> <table_dining_room>
 [Walk] <cupboard>
 [Open] <cupboard>
@@ -89,50 +55,35 @@
 [Close] <cupboard>
 [Walk] <table_dining_room>
 [Find] <plate>
-[Putback] <fork> <plate> 
-## 15-20
-[Find] <mug>
-[Grab] <mug>
-[Drink] <mug>
-[Putback] <mug> <table_dining_room>
+[Putback] <fork> <plate>
+
+# Eat eggs
+## 10-25
+[Find] <table_dining_room>
 [Find] <plate>
 [Grab] <plate>
 [Eat] <plate>
 [Putback] <plate> <table_dining_room>
 
-# Cleanup table
+# Cleanup plate
 ## 5-6
-[Find] <mug>
-[Grab] <mug>
 [Find] <plate>
 [Grab] <plate>
 [Walk] <sink_dining_room>
-[Putback] <mug> <sink_dining_room>
+[Find] <sink_dining_room>
 [Putback] <plate> <sink_dining_room>
 [Find] <fork>
 [Grab] <fork>
+[Walk] <sink_dining_room>
 [Find] <sink_dining_room>
 [Putback] <fork> <sink_dining_room>
-## 2-3
-[Find] <sauce_pan>
-[Grab] <sauce_pan>
-[Walk] <sink_dining_room>
-[Putback] <sauce_pan> <sink_dining_room>
-
-# Wash dishes
 ## 5-6
-[Find] <faucet_dining_room>
-[Switchon] <faucet_dining_room>
-[Rinse] <mug>
 [Rinse] <plate>
 [Rinse] <fork>
-[Switchoff] <faucet_dining_room>
 [Find] <kitchen_cabinet>
 [Open] <kitchen_cabinet>
 [Find] <cloth_napkin>
 [Grab] <cloth_napkin>
-[Find] <mug>
-[Wipe] <mug>
 [Find] <plate>
 [Wipe] <plate>
 [Find] <fork>
@@ -141,20 +92,24 @@
 [Putin] <cloth_napkin> <kitchen_cabinet>
 [Close] <kitchen_cabinet>
 ## 1-2
-[Find] <mug>
-[Grab] <mug>
 [Walk] <cupboard>
 [Open] <cupboard>
-[Putin] <mug> <cupboard>
 [Find] <plate>
 [Grab] <plate>
-[Find] <cupboard>
-[Putin] <plate> <cupboard>
 [Find] <fork>
 [Grab] <fork>
 [Find] <cupboard>
+[Putin] <plate> <cupboard>
 [Putin] <fork> <cupboard>
 [Close] <cupboard> 
+
+# Cleanup Saucepan
+## 2-3
+[Find] <sauce_pan>
+[Grab] <sauce_pan>
+[Walk] <sink_dining_room>
+[Find] <sink_dining_room>
+[Putback] <sauce_pan> <sink_dining_room>
 ## 2-3
 [Find] <sauce_pan>
 [Grab] <sauce_pan>

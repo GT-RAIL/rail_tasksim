@@ -1,0 +1,8 @@
+# Online meeting
+## 30-60
+[walk] <home_office>
+[find] <chair_home_office>
+[sit] <chair_home_office>
+[find] <keyboard>
+[type] <keyboard>
+[standup]

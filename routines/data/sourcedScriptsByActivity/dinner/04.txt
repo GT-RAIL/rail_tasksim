@@ -1,4 +1,4 @@
-# Cook Dinner
+# Prepare Dinner Ingredients
 ## 1-2
 [walk] <dining_room>
 [find] <cupboard>
@@ -30,6 +30,8 @@
 [close] <fridge>
 [find] <kitchen_counter>
 [putback] <food_vegetable> <kitchen_counter>
+
+# Cook Dinner
 ## 7-8
 [find] <oil>
 [grab] <oil>

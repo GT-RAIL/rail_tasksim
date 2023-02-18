@@ -1,0 +1,6 @@
+# Write in a diary
+## 15-20
+[walk] <home_office>
+[find] <chair_home_office>
+[sit] <chair_home_office>
+[standup]

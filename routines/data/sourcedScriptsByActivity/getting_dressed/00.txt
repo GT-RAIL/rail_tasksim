@@ -18,5 +18,3 @@
 [Find] <shoes>
 [Grab] <shoes>
 [PutOn] <shoes>
-[Walk] <dresser>
-[Close] <dresser>

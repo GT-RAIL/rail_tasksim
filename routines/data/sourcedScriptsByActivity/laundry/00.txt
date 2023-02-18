@@ -17,7 +17,7 @@
 [Close] <dresser>
 [Walk] <washing_machine>
 [Find] <washing_machine>
-[PutBack] <basket_for_clothes> <washing_machine>
+[Drop] <basket_for_clothes>
 
 # Load washing machine
 ## 2-3
@@ -28,20 +28,23 @@
 [Close] <kitchen_cabinet>
 [Find] <washing_machine>
 [Pour] <laundry_detergent> <washing_machine>
-[Putback] <laundry_detergent> <washing_machine>
+[Drop] <laundry_detergent>
 ## 4-6
 [Walk] <washing_machine>
 [Find] <washing_machine>
 [Open] <washing_machine>
 [Find] <clothes_pants>
 [Grab] <clothes_pants>
-[PutBack] <clothes_pants> <washing_machine>
+[Find] <washing_machine>
+[Putin] <clothes_pants> <washing_machine>
 [Find] <clothes_dress>
 [Grab] <clothes_dress>
-[PutBack] <clothes_dress> <washing_machine>
+[Find] <washing_machine>
+[Putin] <clothes_dress> <washing_machine>
 [Find] <clothes_jacket>
 [Grab] <clothes_jacket>
-[PutBack] <clothes_jacket> <washing_machine>
+[Find] <washing_machine>
+[Putin] <clothes_jacket> <washing_machine>
 [Close] <washing_machine>
 
 # Run washing machine
@@ -69,19 +72,19 @@
 [Grab] <clothes_pants>
 [Walk] <dresser>
 [Open] <dresser>
-[PutBack] <clothes_pants> <dresser>
+[Putin] <clothes_pants> <dresser>
 ## 1-3
 [Walk] <washing_machine>
 [Find] <clothes_dress>
 [Grab] <clothes_dress>
 [Walk] <dresser>
-[PutBack] <clothes_dress> <dresser>
+[Putin] <clothes_dress> <dresser>
 ## 1-3
 [Walk] <washing_machine>
 [Find] <clothes_jacket>
 [Grab] <clothes_jacket>
 [Walk] <dresser>
-[PutBack] <clothes_jacket> <dresser>
+[Putin] <clothes_jacket> <dresser>
 [Close] <dresser>
 ## 1-2
 [Walk] <washing_machine>

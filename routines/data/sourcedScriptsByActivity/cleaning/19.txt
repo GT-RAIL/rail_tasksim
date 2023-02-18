@@ -61,5 +61,5 @@
 [Grab] <drinking_glass>
 [Walk] <cupboard>
 [Open] <cupboard>
-[Putback] <drinking_glass> <cupboard>
+[Putin] <drinking_glass> <cupboard>
 [Close] <cupboard>
