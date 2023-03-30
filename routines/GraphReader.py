@@ -72,7 +72,7 @@ def remove_nodes_from_graph(graph_file, nodes_to_remove, target_graph_file):
             continue
         trimmed_graph['edges'].append(edge)
     with open (target_graph_file,'w') as f:
-        json.dump(trimmed_graph, f)
+        json.dump(trimmed_graph, f, indent=4)
 
 class GraphReader():
     def __init__(self, graph=''):

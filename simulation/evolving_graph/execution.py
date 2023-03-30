@@ -337,7 +337,7 @@ class GrabExecutor(ActionExecutor):
         if _is_inside(state, node):
             info.error('{} is inside other closed thing', node)
             return None
-        new_relation = _find_free_hand(state)
+        new_relation = _find_free_hand(state, info)
         if new_relation is None:
             char_node = _get_character_node(state)
             info.error('{} does not have a free hand', char_node)
@@ -377,7 +377,7 @@ class OpenExecutor(ActionExecutor):
             info.error('{} is not close to {}', char_node, node)
             return False
         
-        if not self.close and _find_free_hand(state) is None:
+        if not self.close and _find_free_hand(state, info) is None:
             char_node = _get_character_node(state)
             info.error('{} does not have a free hand', char_node)
             return False
@@ -906,7 +906,7 @@ class MoveExecutor(ActionExecutor):
         if _is_inside(state, node):
             info.error('{} is inside other closed thing', node)
             return None
-        new_relation = _find_free_hand(state)
+        new_relation = _find_free_hand(state, info)
         if new_relation is None:
             char_node = _get_character_node(state)
             info.error('{} does not have a free hand', char_node)
@@ -950,7 +950,7 @@ class SqueezeExecutor(ActionExecutor):
 
     def check_squeezable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
         
-        if _find_free_hand(state) is None:
+        if _find_free_hand(state, info) is None:
             info.error('{} does not have a free hand', _get_character_node(state))
             return False
         if not _is_character_close_to(state, node):
@@ -996,7 +996,7 @@ class PlugExecutor(ActionExecutor):
         if not _is_character_close_to(state, node):
             info.error('{} is not close to {}', _get_character_node(state), node)
             return False
-        if _find_free_hand(state) is None:
+        if _find_free_hand(state, info) is None:
             info.error('{} does not have a free hand', _get_character_node(state))
             return False
         if s not in node.states:
@@ -1020,7 +1020,7 @@ class CutExecutor(ActionExecutor):
 
     def check_cuttable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo):
 
-        if _find_free_hand(state) is None:
+        if _find_free_hand(state, info) is None:
             info.error('{} does not have a free hand', _get_character_node(state))
             return False
         if not _is_character_close_to(state, node):
@@ -1164,11 +1164,12 @@ def _find_first_node_from(state: EnvironmentState, node: Node, relations: List[R
     return None, None
 
 
-def _find_free_hand(state: EnvironmentState):
+def _find_free_hand(state: EnvironmentState, info):
     if not state.evaluate(ExistsRelation(CharacterNode(), Relation.HOLDS_RH, AnyNodeFilter())):
         return Relation.HOLDS_RH
     if not state.evaluate(ExistsRelation(CharacterNode(), Relation.HOLDS_LH, AnyNodeFilter())):
         return Relation.HOLDS_LH
+    info.error('{} being held'.format([n.class_name for n in _find_nodes_from(state, _get_character_node(state), [Relation.HOLDS_RH, Relation.HOLDS_LH])]))
     return None
 
 
@@ -1204,6 +1205,7 @@ def _create_walkable_graph(state: EnvironmentState):
 
 
 def _check_closed_doors(state: EnvironmentState, room1: GraphNode, room2: GraphNode):
+    return []
     graph_adj_lists = _create_walkable_graph(state)
     bfs_prev = BFS_check_closed(state, graph_adj_lists, room1.id)
     if room2.id in bfs_prev:

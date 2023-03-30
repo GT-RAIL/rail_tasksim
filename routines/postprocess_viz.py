@@ -9,49 +9,18 @@ import matplotlib.pyplot as plt
 import json
 import seaborn as sns
 
+from ScheduleDistributionSampler import color_map
+
 min_time = 360
 plt.rcParams.update({'font.size': 22})
 
-# %%
-color_map = {
- "brushing_teeth" : sns.color_palette()[0], 
- "showering" : sns.color_palette()[1], 
- "breakfast" : sns.color_palette()[2], 
- "dinner" : sns.color_palette()[3], 
- "computer_work" : sns.color_palette()[4], 
- "lunch" : sns.color_palette()[5], 
- 
- "cleaning" : sns.color_palette(palette='dark')[0], 
- "laundry" : sns.color_palette(palette='dark')[1], 
- "leave_home" : sns.color_palette(palette='dark')[2], 
- "come_home" : sns.color_palette(palette='pastel')[2], 
- "socializing" : sns.color_palette(palette='dark')[3], 
- "taking_medication" : sns.color_palette(palette='dark')[4], 
- "watching_tv" : sns.color_palette(palette='dark')[5], 
- "vaccuum_cleaning" : sns.color_palette(palette='dark')[6], 
- "reading" : sns.color_palette(palette='dark')[7],
+grey = sns.color_palette(palette='pastel')[7]
 
-#  "going_to_the_bathroom" : None, 
-#  "getting_dressed" : None, 
-#  "kitchen_cleaning" : None, 
-#  "take_out_trash" : None, 
-#  "wash_dishes" : None, 
-#  "playing_music" : None, 
-#  "listening_to_music" : None
-
- 
- "going_to_the_bathroom" : sns.color_palette(palette='pastel')[0],
- "getting_dressed" : sns.color_palette(palette='pastel')[1],
- "kitchen_cleaning" : sns.color_palette(palette='pastel')[7],
- "take_out_trash" : sns.color_palette(palette='pastel')[3],
- "wash_dishes" : sns.color_palette(palette='pastel')[4],
- "playing_music" : sns.color_palette(palette='pastel')[5],
- "listening_to_music" : sns.color_palette(palette='pastel')[6]
-}
+greyed_activities = ["brushing_teeth", "showering", "leaving_home_fast", "watching_tv", "talk_on_phone", "online_meeting", "going_to_the_bathroom", "listening_to_music"]
 
 def alpha_act(activity):
     # if activity == "dinner":
-    return 1
+    return 0.5
     # return 0.3
 
 color_map_trunc = deepcopy(color_map)
@@ -74,109 +43,101 @@ def time_human(time_mins):
     time_mins = time_mins//24
     days = time_mins
     h = '{:02d}:{:02d}'.format(hrs,mins)
-    if days != 0:
-        h = str(days)+'day - '+h
+    # if days != 0:
+    #     h = str(days)+'day - '+h
     return h
 
 # %%
 
 def dump_visuals(root_dir):
     print(os.listdir(root_dir))
-    # %%
-    times = np.arange(6*60, 24*60, 10)
-    num_routines = 60
 
     for ind in os.listdir(root_dir):
         directory = os.path.join(root_dir, ind)
 
-        fig,ax = plt.subplots()
-        fig.set_size_inches(30,10)
 
-        activity_freq = {t:{k:0 for k in color_map.keys()} for t in times}
-        activities_labeled = []
+        def to_mins(str, add_day=False):
+            hrs_mins = [int(n) for n in str.split(':')]
+            total = int(60*hrs_mins[0])+hrs_mins[1]
+            if add_day: total += 24*60
+            return total
 
-        sch_cnt = 0
-        with open(os.path.join(directory, 'script_usage.txt')) as f:
-            data = f.readlines()
-            for line in data[1:]:
-                activity, _, start, end = line.split(';')
-                start = float(start.strip())
-                end = float(end.strip())
-                for t in times:
-                    if t>start and t<end:
-                        activity_freq[t][activity] += 1
-            bottoms = times*0.0
-            for act in color_map.keys():
-                freqs = [act_fr[act]/num_routines for act_fr in activity_freq.values()]
-                if color_map_trunc[act] is not None:
-                    ax.plot(times, freqs, label=act, color=color_map[act], linewidth=5)
-                bottoms += np.array(freqs)
-            # misclassification_prob = [min(sum(activity_freq[t].values())/num_routines, 1-max(activity_freq[t].values())/num_routines) for t in times]
-            ax.set_xlim([6*60,24*60])
-            _ = ax.set_ylabel('Probability of Activity', fontsize=40)
-            _ = ax.set_xlabel('Time', fontsize=40)
-            _ = ax.set_xticks(np.arange(6*60,24*60+1, 3*60))
-            _ = ax.set_xticklabels([time_human(t) for t in np.arange(6*60,24*60, 3*60)]+['24:00'], fontsize=35)
+        train_dirs = [os.path.join(directory,'scripts_train',fn) for fn in os.listdir(os.path.join(directory,'scripts_train'))]
+        train_dirs.sort()
+        test_dirs = [os.path.join(directory,'scripts_test',fn) for fn in os.listdir(os.path.join(directory,'scripts_test'))]
+        test_dirs.sort()
 
-        ## metrics calculation
-        # all_activities = ['idle']+list(color_map.keys())
-        for t in activity_freq:
-            activity_freq[t]['idle'] = num_routines - sum(activity_freq[t].values())
-        # act_fracs = [sum([act_fr[act] for act_fr in activity_freq.values()]) for act in all_activities]
-        # sum_sq_act_fracs = sum(act_fracs)*sum(act_fracs)
-        # P_e_bar = sum([a*a/sum_sq_act_fracs for a in act_fracs])
-        # P_bar = (sum([sum([activity_freq[t][act]*activity_freq[t][act] for act in all_activities]) for t in times]) - (len(times)*num_routines)) / (len(times)*num_routines*(num_routines+1))
-        # kappa = (P_bar - P_e_bar)/(1 - P_e_bar)
-        # other_kappa = (P_bar - (1/len(all_activities))) /(1 - (1/len(all_activities)))
-        # avg_miscl_prob = sum(misclassification_prob)/len(misclassification_prob)
-        info = ind #+'-- avg. misclassification probability = '+'{:1.3f}'.format(avg_miscl_prob)+' -- Fleiss\' Kappa = '+'{:1.5f}'.format(kappa)+' -- Holly & Guilford\'s G = '+'{:1.5f}'.format(other_kappa)
+        for colors in ['color','greyed']:
+            local_color_map = deepcopy(color_map)
+            if colors == 'greyed':
+                for act in greyed_activities:
+                    local_color_map[act] = grey
+            fig,ax = plt.subplots()
+            fig.set_size_inches(30,15)
+            activities_labeled = []
+            last_time = None
+            for sch_cnt, file in enumerate(train_dirs+test_dirs):
+                header = True
+                movements = []
+                movement_magns = []
+                for line in open(file).readlines():
+                    ## Break when the header is done
+                    if header and line.strip() == '':
+                        header = False
+                        continue
+                    elif header:
+                        activity = line[:line.index('(')].strip()
+                        times = line[line.index('(')+1:line.index(')')].strip().split('-')
+                        ## Break when the activity starts past midnight
+                        if len(times) > 3: break
+                        if len(times) > 2:
+                            assert times[1].strip() == '1day'
+                        start = to_mins(times[0].strip())
+                        end = to_mins(times[-1].strip(), add_day=len(times)>2)
+                        end = min(end, 24*60)
+                        if activity not in activities_labeled:
+                            ax.barh(sch_cnt+1, end-start, align='center', left=start, label=activity, color=local_color_map[activity], alpha=alpha_act(activity))
+                            activities_labeled.append(activity)
+                        else:
+                            ax.barh(sch_cnt+1, end-start, align='center', left=start, color=local_color_map[activity], alpha=alpha_act(activity))
+                    else:
+                        if 'moved' in line:
+                            time_idx = line.index(':')
+                            movement = float(line[:time_idx])
+                            movement_magn = line.count(',')+1
+                            ax.plot(movement, sch_cnt+1, '.', c=[1,1,1,1], markersize=movement_magn*4)
+                        try:
+                            last_time = float(line.strip())
+                        except:
+                            pass
+                        if "(s)" in line and "]->[" in line and 'OPEN' in line[line.index('>'):]:
+                            ax.plot(last_time, sch_cnt+1, 'tab:blue', markersize=10, marker='|')
+                        elif "(s)" in line and "]->[" in line and 'CLOSED' in line[line.index('>'):]:
+                            ax.plot(last_time, sch_cnt+1, 'tab:red', markersize=10, marker='|')
 
-        fig.tight_layout()
-        fig.suptitle(info)
-        # plt.savefig(os.path.join(directory,'schedule_distribution_separate.jpg'))
-        fig,ax = plt.subplots()
-        fig.set_size_inches(30,20)
 
-        activities_labeled = []
-        sch_cnt = 0
-        with open(os.path.join(directory, 'script_usage.txt')) as f:
-            prev_start = min_time
-            data = f.readlines()
-            for line in data[1:]:
-                activity, _, start, end = line.split(';')
-                start = float(start.strip())
-                end = float(end.strip())
-                end = min(end, 24*60)
-                if prev_start > end:
-                    prev_start = min_time
-                    sch_cnt += 1
-                if activity not in activities_labeled:
-                    ax.barh(sch_cnt, end-start, align='center', left=start, label=activity, color=color_map[activity], alpha=alpha_act(activity))
-                    activities_labeled.append(activity)
-                else:
-                    ax.barh(sch_cnt, end-start, align='center', left=start, color=color_map[activity], alpha=alpha_act(activity))
-                prev_start = start
 
-            _ = ax.set_xlabel('Time', fontsize=40)
-            # _ = ax.set_yticks([])
-            _ = ax.set_xticks(np.arange(6*60,24*60+1, 3*60))
-            _ = ax.set_xticklabels([time_human(t) for t in np.arange(6*60,24*60, 3*60)]+['24:00'], fontsize=45)
+                # _ = ax.set_yticks([])
+                try:
+                    start_time = json.load(open(os.path.join(directory,'info.json')))['start_time']
+                    end_time = json.load(open(os.path.join(directory,'info.json')))['end_time']
+                except:
+                    start_time = 6*60
+                    end_time = 24*60
+                ax.set_xlim([start_time,end_time+(end_time-start_time)/4])
+                steps = 60 if end_time-start_time < 360 else 3*60
+                _ = ax.set_xticks(np.arange(start_time, end_time+1, steps))
+                _ = ax.set_xticklabels([time_human(t) for t in np.arange(start_time, end_time+1, steps)], fontsize=45)
 
-        fig.tight_layout()
-        fig.suptitle(info)
-        plt.savefig(os.path.join(directory,'schedules.jpg'))
+            fig.tight_layout()
+            plt.legend()
+            plt.savefig(os.path.join(directory,f'schedules_{colors}.jpg'))
 
-        # fig, ax = plt.subplots()
-        # for act, col in color_map.items():
-        #     ax.plot(0,0,color=col, label=act, linewidth=20)
-        #     ax.legend(fontsize=45)
-        #     fig.set_size_inches(15,35)
-        #     fig.savefig(os.path.join(directory,'legend.jpg'))
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Run model on routines.')
-    parser.add_argument('--path', type=str, default='data/generated_routine', help='Directory to output data in')
+    parser.add_argument('--path', type=str, default='data/OrderlyHouseholds0308', help='Directory to output data in')
     parser.add_argument('--move_visuals', action='store_true', default=False, help='Set this to generate a complete dataset of all individuals and personas')
 
     args = parser.parse_args()

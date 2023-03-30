@@ -29,6 +29,7 @@ class State(Enum):
     LYING = 8
     PLUGGED_IN = 9
     PLUGGED_OUT = 10
+    SENSOR = 11
 
 
 class Relation(Enum):

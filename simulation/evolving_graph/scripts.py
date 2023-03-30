@@ -136,8 +136,8 @@ def parse_script_line(string, index, custom_patt_action=r'^\[(\w+)\]', custom_pa
         param_match = re.search(patt_params, param_match.string[param_match.end(2):])
 
     if len(params) != action.value[1]:
-        raise ScriptParseException('Wrong number of parameters for "{}". Got {}, expected {}',
-                                   action.name, len(params), action.value[1])
+        raise ScriptParseException('Wrong number of parameters for "{}". Got {}, expected {} in {}',
+                                   action.name, len(params), action.value[1], string)
 
     return ScriptLine(action, params, index)
 
