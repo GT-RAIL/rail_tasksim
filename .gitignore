@@ -181,5 +181,6 @@ routines/data/sourcedRoutines/*
 routines/data/dataVisuals*
 routines/data/originalExecutableScriptsByActivity
 routines/data/sourcedSchedules
+routines/data/generated_routine/*
 Output/
 routines/cluster_visuals/*
