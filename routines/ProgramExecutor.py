@@ -1,11 +1,20 @@
 import json
 import sys
+import os
 sys.path.append('..')
 from evolving_graph.scripts import Script, parse_script_line
 from evolving_graph.environment import EnvironmentGraph
 from evolving_graph.execution import ScriptExecutor
 import evolving_graph.utils as utils
-from object_locations import object_locations
+
+# Import object_locations - handle both relative and absolute imports
+try:
+    from routines.object_locations import object_locations
+except ImportError:
+    # Fallback for when running from different directory
+    current_dir = os.path.dirname(os.path.abspath(__file__))
+    sys.path.insert(0, current_dir)
+    from object_locations import object_locations
 
 def class_from_id(graph, id):
     lis = [n['class_name'] for n in graph['nodes'] if n['id']==id]

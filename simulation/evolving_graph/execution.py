@@ -116,6 +116,12 @@ class WalkExecutor(ActionExecutor):
         
         char_room = _get_room_node(state, char_node)
         node_room = _get_room_node(state, node)
+        if node_room is None:
+            info.error('Node {} has no room (category={})', node, getattr(node, 'category', None))
+            return False
+        if char_room is None:
+            info.error('Character has no room')
+            return False
         ### Maithili : You can always walk outside :) 
         if node_room.class_name == 'outside':
             return True
