@@ -600,11 +600,12 @@ if __name__ == "__main__":
 
     def check_path(path):
         if os.path.exists(path):
-            overwrite = input(path+' already exists. Do you want to overwrite it? (y/n)') or args.overwrite
-            if overwrite.lower() == 'y':
-                shutil.rmtree(path)
-            else:
-                raise InterruptedError()
+            # overwrite = input(path+' already exists. Do you want to overwrite it? (y/n)') or args.overwrite
+            shutil.rmtree(path)
+            # if overwrite.lower() == 'y':
+            #     shutil.rmtree(path)
+            # else:
+            #     raise InterruptedError()
 
     options_list = {
         'persona': persona_options,

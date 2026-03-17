@@ -10,6 +10,7 @@ class Action(Enum):
     """
     All supported actions, value of each enum is a pair (humanized name, required_number of parameters)
     """
+    TELEPORT = ("Teleport", 2)
     CLOSE = ("Close", 1)
     DRINK = ("Drink", 1)
     FIND = ("Find", 1)

@@ -38,6 +38,7 @@ class ExecutionInfo(object):
 # ActionExecutor-s
 ###############################################################################
 
+
 class ActionExecutor(object):
 
     @abstractmethod
@@ -50,6 +51,33 @@ class ActionExecutor(object):
         :return: enumerates possible states after execution of script_line
         """
         pass
+
+
+class TeleportExecutor(ActionExecutor):
+
+    def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
+        current_line = script[0]
+        info.set_current_line(current_line)
+        src_node = state.get_state_node(current_line.object())
+        dest_node = state.get_state_node(current_line.subject())
+        ## fail if character is holding src or dest node
+        nodes_in_hand = [(n.id, n.class_name) for n in _find_nodes_from(state, _get_character_node(state), [Relation.HOLDS_LH, Relation.HOLDS_RH])]
+        print(f"Nodes in hand: {[n.class_name for n in nodes_in_hand]}")
+        if (src_node.id, src_node.class_name) in nodes_in_hand in nodes_in_hand:
+            info.error('Character is holding {}', src_node)
+            return
+        if (dest_node.id, dest_node.class_name) in nodes_in_hand:
+            info.error('Character is holding {}', dest_node)
+            return
+        room_node = _get_room_node(state, dest_node)
+        if src_node is None or dest_node is None:
+            info.object_found_error()
+        else:
+            yield state.change_state(
+                    [DeleteEdges(NodeInstance(src_node), [Relation.ON, Relation.INSIDE, Relation.CLOSE], AnyNode(), delete_reverse=True),
+                     AddEdges(NodeInstance(src_node), Relation.ON, NodeInstance(dest_node)),
+                     AddEdges(NodeInstance(src_node), Relation.INSIDE, NodeInstance(room_node)),
+                    ])
 
 
 class UnknownExecutor(ActionExecutor):
@@ -249,9 +277,11 @@ class SitExecutor(ActionExecutor):
             new_char_node = char_node.copy()
             new_char_node.states.discard(State.LYING)
             new_char_node.states.add(State.SITTING)
-            
+            room_node = _get_room_node(state, node)
             yield state.change_state(
-                [AddEdges(CharacterNode(), Relation.ON, NodeInstance(node)),
+                [DeleteEdges(CharacterNode(), [Relation.INSIDE, Relation.ON, Relation.CLOSE, Relation.FACING], AnyNode()),
+                 AddEdges(CharacterNode(), Relation.INSIDE, NodeInstance(room_node)),
+                 AddEdges(CharacterNode(), Relation.ON, NodeInstance(node)),
                  AddEdges(CharacterNode(), Relation.FACING, RelationFrom(node, Relation.FACING)),
                  ChangeNode(new_char_node)]
             )
@@ -268,11 +298,11 @@ class SitExecutor(ActionExecutor):
         if Property.SITTABLE not in node.properties:
             info.error('{} is not sittable', node)
             return False
-        max_occupancy = self._MAX_OCCUPANCIES.get(node.class_name, 1)
-        if state.evaluate(CountRelations(AnyNode(), Relation.ON, NodeInstanceFilter(node),
-                                         min_value=max_occupancy)):
-            info.error('Too many things on {}', node)
-            return False
+        # max_occupancy = self._MAX_OCCUPANCIES.get(node.class_name, 1)
+        # if state.evaluate(CountRelations(AnyNode(), Relation.ON, NodeInstanceFilter(node),
+        #                                  min_value=max_occupancy)):
+        #     info.error('Too many things on {}', node)
+        #     return False
 
         return True
 
@@ -282,12 +312,17 @@ class StandUpExecutor(ActionExecutor):
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         info.set_current_line(script[0])
         char_node = _get_character_node(state)
+        sat_on_node = _find_nodes_from(state, char_node, [Relation.ON])
+        removed_sitting_edges = []
+        if len(sat_on_node) > 0:
+            removed_sitting_edges = [DeleteEdges(CharacterNode(), [Relation.ON], NodeInstance(node), delete_reverse=True) for node in sat_on_node]
         if State.SITTING in char_node.states or State.LYING in char_node.states:
             new_char_node = char_node.copy()
             new_char_node.states.discard(State.SITTING)
             new_char_node.states.discard(State.LYING)
-            yield state.change_state([ChangeNode(new_char_node)])
+            yield state.change_state(removed_sitting_edges + [ChangeNode(new_char_node)])
         else:
+            yield state.change_state(removed_sitting_edges)
             info.error('{} is not sitting', char_node)
             
 
@@ -308,18 +343,28 @@ class GrabExecutor(ActionExecutor):
             new_relation = self.check_grabbable(state, node, info)
             if new_relation is not None:
                 char_room = _get_room_node(state, char_node)
-                changes = [DeleteEdges(NodeInstance(node), [Relation.ON, Relation.INSIDE, Relation.CLOSE], AnyNode(), delete_reverse=True),
+                node_room = _get_room_node(state, node)
+                changes = []
+                if node_room.id != char_room.id:
+                    ##move character to node room
+                    print(f"Moving character to {node_room.class_name}")
+                    print(f"Nodes with character inside: {[n.class_name for n in _find_nodes_from(state, char_node, [Relation.INSIDE])]}")
+                    print(f"Nodes with character close: {[n.class_name for n in _find_nodes_from(state, char_node, [Relation.CLOSE])]}")
+                    print(f"Nodes with character facing: {[n.class_name for n in _find_nodes_from(state, char_node, [Relation.FACING])]}")
+                    print(f"Nodes with character holding: {[n.class_name for n in _find_nodes_from(state, char_node, [Relation.HOLDS_LH, Relation.HOLDS_RH])]}")
+                    print(f"Nodes with character on: {[n.class_name for n in _find_nodes_from(state, char_node, [Relation.ON])]}")
+                    changes = [DeleteEdges(CharacterNode(),[Relation.INSIDE, Relation.ON, Relation.CLOSE, Relation.FACING],AnyNode(), delete_reverse=True),
+                               AddEdges(CharacterNode(), Relation.INSIDE, NodeInstance(node_room))]
+                changes += [DeleteEdges(NodeInstance(node), [Relation.ON, Relation.INSIDE, Relation.CLOSE], AnyNode(), delete_reverse=True),
                            AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(node), add_reverse=True), 
-                           AddEdges(CharacterNode(), new_relation, NodeInstance(node)), 
-                           AddEdges(NodeInstance(node), Relation.INSIDE, NodeInstance(char_room))]
+                           AddEdges(CharacterNode(), new_relation, NodeInstance(node))]
                 ### Maithili : Grab all objects on/inside the one being grabbed
                 nodes_inside_grabbed = _find_nodes_to(state, node, [Relation.INSIDE])
                 nodes_on_grabbed = _find_nodes_to(state, node, [Relation.ON])
                 for indirect_node in nodes_inside_grabbed + nodes_on_grabbed:
                     changes += [DeleteEdges(NodeInstance(indirect_node), [Relation.ON, Relation.INSIDE, Relation.CLOSE], AnyNode(), delete_reverse=True),
                            AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(indirect_node), add_reverse=True), 
-                           AddEdges(CharacterNode(), new_relation, NodeInstance(indirect_node)), 
-                           AddEdges(NodeInstance(indirect_node), Relation.INSIDE, NodeInstance(char_room))]
+                           AddEdges(CharacterNode(), new_relation, NodeInstance(indirect_node))]
                 for indirect_node in nodes_inside_grabbed:
                     changes += [AddEdges(NodeInstance(indirect_node), Relation.CLOSE, NodeInstance(node), add_reverse=True),
                                 AddEdges(NodeInstance(indirect_node), Relation.INSIDE, NodeInstance(node))]
@@ -333,16 +378,16 @@ class GrabExecutor(ActionExecutor):
                 yield state.change_state(changes)
 
     def check_grabbable(self, state: EnvironmentState, node: GraphNode, info: ExecutionInfo) -> Optional[Relation]:
-        if Property.GRABBABLE not in node.properties and node.class_name not in ['water', 'child']:
+        if Property.GRABBABLE not in node.properties and node.class_name not in ['water', 'child'] and node.category not in ['Props', 'placable_objects']:
             info.error('{} is not grabbable', node)
             return None
         if not _is_character_close_to(state, node):
             char_node = _get_character_node(state)
             info.error('{} is not close to {}', char_node, node)
             return None
-        if _is_inside(state, node):
-            info.error('{} is inside other closed thing', node)
-            return None
+        # if _is_inside(state, node):
+        #     info.error('{} is inside other closed thing', node)
+        #     return None
         new_relation = _find_free_hand(state, info)
         if new_relation is None:
             char_node = _get_character_node(state)
@@ -428,7 +473,7 @@ class PutExecutor(ActionExecutor):
                     AddEdges(CharacterNode(), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
                     AddEdges(NodeInstance(node), Relation.CLOSE, NodeInstance(dest_node), add_reverse=True),
                     AddEdges(NodeInstance(node), self.relation, NodeInstance(dest_node)),
-                    AddEdges(NodeInstance(node), Relation.INSIDE, NodeInstance(_get_room_node(state, _get_character_node(state))))]
+                    AddEdges(NodeInstance(node), Relation.INSIDE, NodeInstance(_get_room_node(state, dest_node)))]
                 if holding_hand is not None:
                     changes += [AddEdges(CharacterNode(), holding_hand, NodeInstance(node))]
             yield state.change_state(changes)
@@ -909,9 +954,9 @@ class MoveExecutor(ActionExecutor):
             char_node = _get_character_node(state)
             info.error('{} is not close to {}', char_node, node)
             return None
-        if _is_inside(state, node):
-            info.error('{} is inside other closed thing', node)
-            return None
+        # if _is_inside(state, node):
+        #     info.error('{} is inside other closed thing', node)
+        #     return None
         new_relation = _find_free_hand(state, info)
         if new_relation is None:
             char_node = _get_character_node(state)
@@ -1111,15 +1156,16 @@ PointAtExecutor = LookAtExecutor
 
 
 def _is_character_close_to(state: EnvironmentState, node: Node):
-    if state.evaluate(ExistsRelation(CharacterNode(), Relation.CLOSE, NodeInstanceFilter(node))):
-        return True
-    # loose rule
-    for close_node in state.get_nodes_from(_get_character_node(state), Relation.CLOSE):
-        if state.evaluate(ExistsRelation(NodeInstance(close_node), Relation.CLOSE, NodeInstanceFilter(node))):
-            return True
-        if state.evaluate(ExistsRelation(NodeInstance(node), Relation.ON, NodeInstanceFilter(close_node))):
-            return True
-    return False
+    return True
+    # if state.evaluate(ExistsRelation(CharacterNode(), Relation.CLOSE, NodeInstanceFilter(node))):
+    #     return True
+    # # loose rule
+    # for close_node in state.get_nodes_from(_get_character_node(state), Relation.CLOSE):
+    #     if state.evaluate(ExistsRelation(NodeInstance(close_node), Relation.CLOSE, NodeInstanceFilter(node))):
+    #         return True
+    #     if state.evaluate(ExistsRelation(NodeInstance(node), Relation.ON, NodeInstanceFilter(close_node))):
+    #         return True
+    # return False
 
 
 def _is_character_face_to(state: EnvironmentState, node: Node):
@@ -1268,6 +1314,7 @@ def BFS(adj_lists: dict, s):
 class ScriptExecutor(object):
 
     _action_executors = {
+        Action.TELEPORT: TeleportExecutor(),
         Action.WALK: WalkExecutor(),
         Action.FIND: FindExecutor(),
         Action.SIT: SitExecutor(),
@@ -1317,6 +1364,7 @@ class ScriptExecutor(object):
         self.name_equivalence = name_equivalence
         self.processing_time_limit = 10  # 10 seconds
         self.processing_limit = 0
+        self.state = EnvironmentState(self.graph, self.name_equivalence, instance_selection=True)
         self.info = ExecutionInfo()
 
     def find_solutions(self, script: Script, init_changers: List[StateChanger]=None):
@@ -1340,28 +1388,26 @@ class ScriptExecutor(object):
     def execute(self, script: Script, init_changers: List[StateChanger]=None, w_graph_list: bool=True):
 
         info = self.info
-        state = EnvironmentState(self.graph, self.name_equivalence, instance_selection=True)
-        _apply_initial_changers(state, script, init_changers)
+        _apply_initial_changers(self.state, script, init_changers)
         graph_state_list = []
         for i in range(len(script)):
-            prev_state = state
+            prev_state = self.state
             if w_graph_list:
-                graph_state_list.append(state.to_dict())
+                graph_state_list.append(self.state.to_dict())
             
             future_script = script.from_index(i)
-            state = next(self.call_action_method(future_script, state, info), None)
-            if state is None:
+            self.state = next(self.call_action_method(future_script, self.state, info), None)
+            if self.state is None:
                 return False, prev_state, graph_state_list
                 
         if w_graph_list:
-            graph_state_list.append(state.to_dict())
+            graph_state_list.append(self.state.to_dict())
 
-        return True, state, graph_state_list
+        return True, self.state, graph_state_list
 
     def check_final_state(self):
-        state = EnvironmentState(self.graph, self.name_equivalence, instance_selection=True)
-        char_node = _get_character_node(state)
-        holding_nodes = _find_nodes_from(state, char_node, [Relation.HOLDS_LH, Relation.HOLDS_RH])
+        char_node = _get_character_node(self.state)
+        holding_nodes = _find_nodes_from(self.state, char_node, [Relation.HOLDS_LH, Relation.HOLDS_RH])
         assert (len(holding_nodes) == 0), f'Character must not be holding {[h.class_name for h in holding_nodes]}'
         assert State.SITTING not in char_node.states, 'Character must not be sitting down'
         assert State.LYING not in char_node.states, 'Character must not be lying down'

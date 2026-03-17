@@ -17,7 +17,7 @@ scene_num = str(2)
 base_dir = os.path.join(os.path.dirname(__file__), os.pardir)
 reference_graph_file = base_dir+'/example_graphs/TrimmedTestScene'+scene_num+'_graph.json'
 base_graph_file = base_dir+'/example_graphs/CustomBareScene'+scene_num+'_graph.json'
-init_graph_file = base_dir+'/example_graphs/CustomScene'+scene_num+'_graph.json'
+init_graph_file = 'data/init_graph_homer_plus.json'
 unnecessary_nodes = ['floor','wall','ceiling','window','character','doorjamb']
 
 def get_object_states(available_states, custom_options):
@@ -112,10 +112,8 @@ class GraphReader():
                             if nodes[n1]+'_'+nodes[n2] not in self.usable_nodes.keys():
                                 self.usable_nodes[nodes[n1]+'_'+nodes[n2]] = (n1, nodes[n1], nodes[n2])
                             else:
-                                print(self.usable_nodes[nodes[n1]+'_'+nodes[n2]], 'exists!', end = ' ')
                                 add_alias = True
                         else:
-                            print(self.usable_nodes[nodes[n1]], 'exists!', end = ' ')
                             add_alias = True
 
                         if add_alias:
@@ -126,22 +124,7 @@ class GraphReader():
                                 i += 1
                                 alias = base+str(i)
                             self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
-                            # while add_alias:
-                            #     alias = input(f'Enter alias for {nodes[n1]} in {nodes[n2]}. Press \'x\' to remove object')
-                            #     if alias.lower() == 'x' or alias == '':
-                            #         print('Removed')
-                            #         break
-                            #     elif alias not in self.usable_nodes.keys():
-                            #         self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
-                            #         print('Set to ',alias)
-                            #         add_alias = False
-                            #     else:
-                            #         ow = input('Already exists : {self.usable_nodes[alias]}, Do you want to overwrite? (y/n)')
-                            #         if ow.lower() == 'y':
-                            #             self.usable_nodes[alias] = (n1, nodes[n1], nodes[n2])
-                            #             print('Set to ',alias)
-                            #             break
-
+                            
         self.usable_nodes_by_room = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         self.ref_nodes = {n['class_name']:{} for n in self.graph_dict['nodes'] if n['category'] == "Rooms"}
         for full_name,(id, nodeclass, room) in self.usable_nodes.items():
