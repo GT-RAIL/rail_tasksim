@@ -54,6 +54,12 @@ class ActionExecutor(object):
 
 
 class TeleportExecutor(ActionExecutor):
+    """Teleport src_node ON dest_node (robot action, not a standard VH action).
+
+    Rejects if: character is holding either node, or the teleport would create
+    a cycle in the parent chain.  Passes state to _reparent_changes so that
+    stale ancestor shortcut edges on GRABBABLE descendants are cleaned up.
+    """
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -71,6 +77,18 @@ class TeleportExecutor(ActionExecutor):
         if src_node is None or dest_node is None:
             info.object_found_error()
         else:
+            # Reject teleports that would create a cycle in the parent chain
+            cur = dest_node
+            visited_cycle = {dest_node.id}
+            while True:
+                p, _ = _get_parent(state, cur)
+                if p is None or p.id in visited_cycle:
+                    break
+                if p.id == src_node.id:
+                    info.error('{} is ancestor of {} — teleport would create cycle', src_node, dest_node)
+                    return
+                visited_cycle.add(p.id)
+                cur = p
             yield state.change_state(_reparent_changes(src_node, dest_node, Relation.ON, state=state))
 
 
@@ -92,6 +110,7 @@ class JoinedExecutor(ActionExecutor):
 
 
 class WalkExecutor(ActionExecutor):
+    """Move character INSIDE the room containing the target node."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -153,6 +172,8 @@ class WalkExecutor(ActionExecutor):
 
 
 class _FindExecutor(ActionExecutor):
+    """Resolve script object to a graph node.  No graph changes — just binds
+    the script object name to the matched node in the state."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -178,6 +199,8 @@ _only_find_executor = _FindExecutor()
 
 
 class FindExecutor(ActionExecutor):
+    """Walk + Find: walks to the object's room first if character is not
+    already close, then binds the script object to the graph node."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -219,6 +242,7 @@ class GreetExecutor(ActionExecutor):
 
 
 class SitExecutor(ActionExecutor):
+    """Reparent character ON the sittable node and set SITTING state."""
 
     _MAX_OCCUPANCIES = {
         'couch': 5,
@@ -268,6 +292,8 @@ class SitExecutor(ActionExecutor):
 
 
 class StandUpExecutor(ActionExecutor):
+    """Reparent character INSIDE their current room (off the furniture) and
+    clear SITTING/LYING state."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         info.set_current_line(script[0])
@@ -286,6 +312,10 @@ class StandUpExecutor(ActionExecutor):
             
 
 class GrabExecutor(ActionExecutor):
+    """Pick up an object.  Moves character to the object's room if needed,
+    stores the object's current parent in executor_data (for PUTOBJBACK),
+    then reparents the object into the character's free hand (HOLDS_RH/LH).
+    Children of the grabbed object stay parented to it."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -381,6 +411,8 @@ class OpenExecutor(ActionExecutor):
 
 
 class PutExecutor(ActionExecutor):
+    """Put a held object ON or INSIDE a destination node.  Clears the
+    executor_data grab entry and reparents the object to the destination."""
 
     def __init__(self, relation: Relation):
         """
@@ -403,6 +435,8 @@ class PutExecutor(ActionExecutor):
 
 
 class PutBackExecutor(ActionExecutor):
+    """Put an object back where it was before GRAB.  Reads the stored
+    (dest_node, relation) from executor_data and reparents accordingly."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -507,6 +541,7 @@ class DrinkExecutor(ActionExecutor):
 
 
 class TurnToExecutor(ActionExecutor):
+    """No-op — FACING edges are not tracked in the tree model."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -627,6 +662,8 @@ class PutOffExecutor(ActionExecutor):
 
 
 class DropExecutor(ActionExecutor):
+    """Drop a held object INSIDE the character's current room.  Clears
+    the executor_data grab entry."""
 
     def execute(self, script: Script, state: EnvironmentState, info: ExecutionInfo):
         current_line = script[0]
@@ -695,6 +732,7 @@ class TouchExecutor(ActionExecutor):
 
 
 class LieExecutor(ActionExecutor):
+    """Reparent character ON the lieable node and set LYING state."""
 
     _MAX_OCCUPANCIES = {
         'couch': 5,
@@ -1110,6 +1148,8 @@ def _get_parent(state, node):
 
 
 def _get_room_node(state: EnvironmentState, node: Node, _visited=None):
+    """Walk up the parent chain via _get_parent until a Room node is found.
+    Returns None on cycle or if no room ancestor exists."""
     if node.category == 'Rooms':
         return node
     if _visited is None:
@@ -1157,6 +1197,11 @@ def _reparent_changes(node, new_parent, new_rel, state=None):
         def _collect_desc(n, visited):
             for child in _find_nodes_to(state, n, PARENT_RELS):
                 if child.id not in visited:
+                    # Static nodes (not GRABBABLE) don't travel with
+                    # a teleported object — their ancestor edges are
+                    # still valid, not stale shortcuts.
+                    if Property.GRABBABLE not in child.properties:
+                        continue
                     visited.add(child.id)
                     descendant_ids.add(child.id)
                     _collect_desc(child, visited)
@@ -1182,6 +1227,8 @@ def _reparent_changes(node, new_parent, new_rel, state=None):
             def _collect_desc_nodes(n, visited):
                 for child in _find_nodes_to(state, n, PARENT_RELS):
                     if child.id not in visited:
+                        if Property.GRABBABLE not in child.properties:
+                            continue
                         visited.add(child.id)
                         desc_nodes[child.id] = child
                         _collect_desc_nodes(child, visited)
@@ -1197,6 +1244,8 @@ def _reparent_changes(node, new_parent, new_rel, state=None):
 
 
 def _find_nodes_to(state: EnvironmentState, node: Node, relations: List[Relation]):
+    """Reverse edge lookup: find all nodes that have a relation edge pointing
+    TO *node* (i.e., find children of *node* in the parent-edge convention)."""
     nodes = []
     for src_node in AnyNode().enumerate(state):
         for r in relations:
@@ -1206,6 +1255,8 @@ def _find_nodes_to(state: EnvironmentState, node: Node, relations: List[Relation
     return nodes
 
 def _find_nodes_from(state: EnvironmentState, node: Node, relations: List[Relation]):
+    """Forward edge lookup: find all nodes reachable FROM *node* via the
+    given relations (i.e., find parents of *node*)."""
     nodes = []
     for r in relations:
         nl = state.get_nodes_from(node, r)
@@ -1214,10 +1265,18 @@ def _find_nodes_from(state: EnvironmentState, node: Node, relations: List[Relati
 
 
 def _find_first_node_from(state: EnvironmentState, node: Node, relations: List[Relation]):
+    """Return the first parent of *node*, preferring non-Room nodes (furniture,
+    surfaces).  Falls back to Room parents if no furniture parent exists.
+    Used by GrabExecutor to store the putback location in executor_data."""
+    # Prefer non-Room parents (furniture, surfaces)
     for r in relations:
         for n in state.get_nodes_from(node, r):
             if n.category != 'Rooms':
                 return n, r
+    # Fallback: Room parent (can happen after robot teleportation)
+    for r in relations:
+        for n in state.get_nodes_from(node, r):
+            return n, r
     return None, None
 
 
@@ -1391,7 +1450,13 @@ class ScriptExecutor(object):
                     break
 
     def execute(self, script: Script, init_changers: List[StateChanger]=None, w_graph_list: bool=True):
+        """Run each script line sequentially, advancing self.state.
 
+        Clears info.messages before starting.  On failure, restores
+        self.state to the pre-failure value and returns (False, prev_state, ...).
+        The persistent self.state accumulates executor_data across calls
+        (needed for GRAB/PUTOBJBACK pairing).
+        """
         info = self.info
         info.messages.clear()
         _apply_initial_changers(self.state, script, init_changers)

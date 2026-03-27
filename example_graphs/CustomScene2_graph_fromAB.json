@@ -1,0 +1,2184 @@
+{
+    "nodes": [
+        {
+            "id": 1,
+            "class_name": "bathroom",
+            "category": "Rooms",
+            "properties": [],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 17,
+            "class_name": "bathroom_cabinet",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 18,
+            "class_name": "bathroom_counter",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 41,
+            "class_name": "dining_room",
+            "category": "Rooms",
+            "properties": [],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 99,
+            "class_name": "trashcan",
+            "category": "Props",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 102,
+            "class_name": "mat",
+            "category": "Decor",
+            "properties": [
+                "MOVABLE",
+                "GRABBABLE",
+                "SURFACES",
+                "SITTABLE",
+                "LIEABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 114,
+            "class_name": "table",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 117,
+            "class_name": "cupboard",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 119,
+            "class_name": "kitchen_counter",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 120,
+            "class_name": "sink",
+            "category": "Furniture",
+            "properties": [
+                "RECIPIENT",
+                "CONTAINERS"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 122,
+            "class_name": "kitchen_counter",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 123,
+            "class_name": "kitchen_counter",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 124,
+            "class_name": "bookshelf",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 130,
+            "class_name": "coffe_maker",
+            "category": "Appliances",
+            "properties": [
+                "RECIPIENT",
+                "HAS_PLUG",
+                "MOVABLE",
+                "CONTAINERS",
+                "HAS_SWITCH",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "OFF",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 135,
+            "class_name": "microwave",
+            "category": "Appliances",
+            "properties": [
+                "HAS_PLUG",
+                "CONTAINERS",
+                "CAN_OPEN",
+                "HAS_SWITCH"
+            ],
+            "states": [
+                "OFF",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 162,
+            "class_name": "bedroom",
+            "category": "Rooms",
+            "properties": [],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 194,
+            "class_name": "chair",
+            "category": "Furniture",
+            "properties": [
+                "GRABBABLE",
+                "SITTABLE",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 196,
+            "class_name": "bookshelf",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 198,
+            "class_name": "sofa",
+            "category": "Furniture",
+            "properties": [
+                "SITTABLE",
+                "SURFACES",
+                "MOVABLE",
+                "LIEABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 200,
+            "class_name": "filing_cabinet",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 241,
+            "class_name": "home_office",
+            "category": "Rooms",
+            "properties": [],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 269,
+            "class_name": "sofa",
+            "category": "Furniture",
+            "properties": [
+                "SITTABLE",
+                "SURFACES",
+                "MOVABLE",
+                "LIEABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 271,
+            "class_name": "chair",
+            "category": "Furniture",
+            "properties": [
+                "GRABBABLE",
+                "SITTABLE",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 272,
+            "class_name": "desk",
+            "category": "Furniture",
+            "properties": [
+                "CAN_OPEN",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 273,
+            "class_name": "tvstand",
+            "category": "Furniture",
+            "properties": [
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 275,
+            "class_name": "bookshelf",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 999,
+            "class_name": "outside",
+            "category": "Rooms",
+            "properties": [
+                "RECIPIENT",
+                "CONTAINERS",
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1002,
+            "class_name": "stove",
+            "category": "Appliances",
+            "properties": [
+                "CAN_OPEN",
+                "SURFACES",
+                "HAS_SWITCH"
+            ],
+            "states": [
+                "OFF",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1004,
+            "class_name": "kitchen_cabinet",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN",
+                "SURFACES"
+            ],
+            "states": [
+                "CLEAN",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1006,
+            "class_name": "fridge",
+            "category": "Appliances",
+            "properties": [
+                "HAS_PLUG",
+                "CONTAINERS",
+                "CAN_OPEN",
+                "HAS_SWITCH"
+            ],
+            "states": [
+                "OFF",
+                "CLEAN",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1008,
+            "class_name": "dresser",
+            "category": "Furniture",
+            "properties": [
+                "CONTAINERS",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "CLEAN",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1012,
+            "class_name": "toothbrush_holder",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "CONTAINERS",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1023,
+            "class_name": "book",
+            "category": "placable_objects",
+            "properties": [
+                "MOVABLE",
+                "CUTTABLE",
+                "GRABBABLE",
+                "CAN_OPEN",
+                "HAS_PAPER",
+                "READABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1026,
+            "class_name": "bowl",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1034,
+            "class_name": "chessboard",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1036,
+            "class_name": "cleaning_solution",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1041,
+            "class_name": "clothes_jacket",
+            "category": "placable_objects",
+            "properties": [
+                "CLOTHES",
+                "GRABBABLE",
+                "HANGABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1048,
+            "class_name": "coffee",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE",
+                "DRINKABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1049,
+            "class_name": "coffee_cup",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1050,
+            "class_name": "coffee_filter",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "HAS_PAPER",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1056,
+            "class_name": "cookingpot",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "CAN_OPEN",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN",
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1058,
+            "class_name": "cup",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1059,
+            "class_name": "cutting_board",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1060,
+            "class_name": "deck_of_cards",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "HAS_PAPER",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1070,
+            "class_name": "dry_pasta",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1087,
+            "class_name": "food_cereal",
+            "category": "placable_objects",
+            "properties": [
+                "MOVABLE",
+                "POURABLE",
+                "GRABBABLE",
+                "CAN_OPEN",
+                "EATABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1088,
+            "class_name": "food_cheese",
+            "category": "placable_objects",
+            "properties": [
+                "CREAM",
+                "MOVABLE",
+                "CUTTABLE",
+                "GRABBABLE",
+                "EATABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1089,
+            "class_name": "food_chicken",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "EATABLE",
+                "MOVABLE",
+                "CUTTABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1091,
+            "class_name": "food_donut",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1102,
+            "class_name": "food_oatmeal",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "EATABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1109,
+            "class_name": "food_rice",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "EATABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1115,
+            "class_name": "food_vegetable",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "EATABLE",
+                "MOVABLE",
+                "CUTTABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1116,
+            "class_name": "fork",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1117,
+            "class_name": "fryingpan",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1119,
+            "class_name": "groceries",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1120,
+            "class_name": "ground_coffee",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "CAN_OPEN",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1121,
+            "class_name": "hairbrush",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1122,
+            "class_name": "hairdryer",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "HAS_PLUG",
+                "HAS_SWITCH",
+                "MOVABLE"
+            ],
+            "states": [
+                "OFF",
+                "PLUGGED_IN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1123,
+            "class_name": "headset",
+            "category": "placable_objects",
+            "properties": [
+                "CLOTHES",
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1126,
+            "class_name": "instrument_guitar",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE",
+                "HAS_SWITCH"
+            ],
+            "states": [
+                "OFF"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1132,
+            "class_name": "juice",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE",
+                "DRINKABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1142,
+            "class_name": "mail",
+            "category": "placable_objects",
+            "properties": [
+                "MOVABLE",
+                "GRABBABLE",
+                "CAN_OPEN",
+                "HAS_PAPER",
+                "READABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1144,
+            "class_name": "milk",
+            "category": "placable_objects",
+            "properties": [
+                "MOVABLE",
+                "DRINKABLE",
+                "POURABLE",
+                "GRABBABLE",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1148,
+            "class_name": "mug",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1154,
+            "class_name": "notebook",
+            "category": "placable_objects",
+            "properties": [
+                "MOVABLE",
+                "CUTTABLE",
+                "GRABBABLE",
+                "CAN_OPEN",
+                "HAS_PAPER",
+                "READABLE"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1156,
+            "class_name": "oil",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE",
+                "DRINKABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1162,
+            "class_name": "pen",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1167,
+            "class_name": "plate",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "SURFACES",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1174,
+            "class_name": "razor",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1176,
+            "class_name": "remote_control",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE",
+                "HAS_SWITCH"
+            ],
+            "states": [
+                "OFF"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1184,
+            "class_name": "shaving_cream",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "CREAM",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1193,
+            "class_name": "spoon",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1196,
+            "class_name": "tea",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE",
+                "DRINKABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1203,
+            "class_name": "tooth_paste",
+            "category": "placable_objects",
+            "properties": [
+                "CREAM",
+                "MOVABLE",
+                "POURABLE",
+                "GRABBABLE",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1204,
+            "class_name": "toothbrush",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1207,
+            "class_name": "trashbag",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "CONTAINERS",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1209,
+            "class_name": "vacuum_cleaner",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "HAS_PLUG",
+                "HAS_SWITCH",
+                "MOVABLE"
+            ],
+            "states": [
+                "OFF",
+                "PLUGGED_OUT"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1212,
+            "class_name": "washcloth",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1215,
+            "class_name": "wine",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE",
+                "DRINKABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1216,
+            "class_name": "wine_glass",
+            "category": "placable_objects",
+            "properties": [
+                "RECIPIENT",
+                "GRABBABLE",
+                "POURABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1098,
+            "class_name": "food_jam",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "CREAM",
+                "MOVABLE",
+                "EATABLE",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "CLOSED"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1106,
+            "class_name": "food_peanut_butter",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE",
+                "EATABLE",
+                "CREAM"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1083,
+            "class_name": "food_bread",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE",
+                "EATABLE",
+                "CUTTABLE"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1031,
+            "class_name": "cd_player",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "HAS_SWITCH",
+                "MOVABLE",
+                "HAS_PLUG",
+                "SURFACES",
+                "CAN_OPEN"
+            ],
+            "states": [
+                "OFF",
+                "CLOSED",
+                "CLEAN",
+                "PLUGGED_IN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1137,
+            "class_name": "knife",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 76,
+            "class_name": "knifeblock",
+            "category": "Props",
+            "properties": [],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 270,
+            "class_name": "table",
+            "category": "Furniture",
+            "properties": [
+                "MOVABLE",
+                "SURFACES"
+            ],
+            "states": [],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1030,
+            "class_name": "cd",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "MOVABLE"
+            ],
+            "states": [
+                "CLEAN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        },
+        {
+            "id": 1172,
+            "class_name": "radio",
+            "category": "placable_objects",
+            "properties": [
+                "GRABBABLE",
+                "HAS_SWITCH",
+                "HAS_PLUG",
+                "MOVABLE"
+            ],
+            "states": [
+                "OFF",
+                "PLUGGED_IN"
+            ],
+            "prefab_name": null,
+            "bounding_box": null
+        }
+    ],
+    "edges": [
+        {
+            "from_id": 17,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 18,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 99,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 102,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 114,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 117,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 119,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 120,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 120,
+            "relation_type": "INSIDE",
+            "to_id": 119
+        },
+        {
+            "from_id": 122,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 123,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 124,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 130,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 135,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 194,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 196,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 198,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 200,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 269,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 271,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 272,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 273,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 275,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 114,
+            "relation_type": "ON",
+            "to_id": 102
+        },
+        {
+            "from_id": 130,
+            "relation_type": "ON",
+            "to_id": 122
+        },
+        {
+            "from_id": 135,
+            "relation_type": "ON",
+            "to_id": 122
+        },
+        {
+            "from_id": 17,
+            "relation_type": "CLOSE",
+            "to_id": 18
+        },
+        {
+            "from_id": 18,
+            "relation_type": "CLOSE",
+            "to_id": 17
+        },
+        {
+            "from_id": 99,
+            "relation_type": "CLOSE",
+            "to_id": 130
+        },
+        {
+            "from_id": 99,
+            "relation_type": "CLOSE",
+            "to_id": 275
+        },
+        {
+            "from_id": 99,
+            "relation_type": "CLOSE",
+            "to_id": 122
+        },
+        {
+            "from_id": 102,
+            "relation_type": "CLOSE",
+            "to_id": 114
+        },
+        {
+            "from_id": 114,
+            "relation_type": "CLOSE",
+            "to_id": 102
+        },
+        {
+            "from_id": 117,
+            "relation_type": "CLOSE",
+            "to_id": 120
+        },
+        {
+            "from_id": 117,
+            "relation_type": "CLOSE",
+            "to_id": 119
+        },
+        {
+            "from_id": 117,
+            "relation_type": "CLOSE",
+            "to_id": 123
+        },
+        {
+            "from_id": 119,
+            "relation_type": "CLOSE",
+            "to_id": 120
+        },
+        {
+            "from_id": 119,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 119,
+            "relation_type": "CLOSE",
+            "to_id": 123
+        },
+        {
+            "from_id": 120,
+            "relation_type": "CLOSE",
+            "to_id": 119
+        },
+        {
+            "from_id": 120,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 120,
+            "relation_type": "CLOSE",
+            "to_id": 123
+        },
+        {
+            "from_id": 122,
+            "relation_type": "CLOSE",
+            "to_id": 135
+        },
+        {
+            "from_id": 122,
+            "relation_type": "CLOSE",
+            "to_id": 130
+        },
+        {
+            "from_id": 122,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 122,
+            "relation_type": "CLOSE",
+            "to_id": 99
+        },
+        {
+            "from_id": 123,
+            "relation_type": "CLOSE",
+            "to_id": 119
+        },
+        {
+            "from_id": 123,
+            "relation_type": "CLOSE",
+            "to_id": 120
+        },
+        {
+            "from_id": 123,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 124,
+            "relation_type": "CLOSE",
+            "to_id": 196
+        },
+        {
+            "from_id": 130,
+            "relation_type": "CLOSE",
+            "to_id": 135
+        },
+        {
+            "from_id": 130,
+            "relation_type": "CLOSE",
+            "to_id": 122
+        },
+        {
+            "from_id": 130,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 130,
+            "relation_type": "CLOSE",
+            "to_id": 99
+        },
+        {
+            "from_id": 135,
+            "relation_type": "CLOSE",
+            "to_id": 122
+        },
+        {
+            "from_id": 135,
+            "relation_type": "CLOSE",
+            "to_id": 117
+        },
+        {
+            "from_id": 135,
+            "relation_type": "CLOSE",
+            "to_id": 130
+        },
+        {
+            "from_id": 196,
+            "relation_type": "CLOSE",
+            "to_id": 124
+        },
+        {
+            "from_id": 196,
+            "relation_type": "CLOSE",
+            "to_id": 200
+        },
+        {
+            "from_id": 200,
+            "relation_type": "CLOSE",
+            "to_id": 196
+        },
+        {
+            "from_id": 271,
+            "relation_type": "CLOSE",
+            "to_id": 272
+        },
+        {
+            "from_id": 272,
+            "relation_type": "CLOSE",
+            "to_id": 271
+        },
+        {
+            "from_id": 275,
+            "relation_type": "CLOSE",
+            "to_id": 99
+        },
+        {
+            "from_id": 1002,
+            "relation_type": "ON",
+            "to_id": 123
+        },
+        {
+            "from_id": 1002,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1004,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1006,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1008,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 1012,
+            "relation_type": "ON",
+            "to_id": 18
+        },
+        {
+            "from_id": 1012,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1023,
+            "relation_type": "INSIDE",
+            "to_id": 196
+        },
+        {
+            "from_id": 1023,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 1026,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1026,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1034,
+            "relation_type": "INSIDE",
+            "to_id": 275
+        },
+        {
+            "from_id": 1034,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1036,
+            "relation_type": "INSIDE",
+            "to_id": 1004
+        },
+        {
+            "from_id": 1036,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1041,
+            "relation_type": "INSIDE",
+            "to_id": 1008
+        },
+        {
+            "from_id": 1041,
+            "relation_type": "INSIDE",
+            "to_id": 162
+        },
+        {
+            "from_id": 1048,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1048,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1049,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1049,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1050,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1050,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1056,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1056,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1058,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1058,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1059,
+            "relation_type": "ON",
+            "to_id": 123
+        },
+        {
+            "from_id": 1059,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1060,
+            "relation_type": "INSIDE",
+            "to_id": 275
+        },
+        {
+            "from_id": 1060,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1070,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1070,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1087,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1087,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1088,
+            "relation_type": "INSIDE",
+            "to_id": 1006
+        },
+        {
+            "from_id": 1088,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1089,
+            "relation_type": "INSIDE",
+            "to_id": 1006
+        },
+        {
+            "from_id": 1089,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1091,
+            "relation_type": "ON",
+            "to_id": 123
+        },
+        {
+            "from_id": 1091,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1102,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1102,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1109,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1109,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1115,
+            "relation_type": "INSIDE",
+            "to_id": 1006
+        },
+        {
+            "from_id": 1115,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1116,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1116,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1117,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1117,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1119,
+            "relation_type": "ON",
+            "to_id": 999
+        },
+        {
+            "from_id": 1120,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1120,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1121,
+            "relation_type": "INSIDE",
+            "to_id": 17
+        },
+        {
+            "from_id": 1121,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1122,
+            "relation_type": "INSIDE",
+            "to_id": 17
+        },
+        {
+            "from_id": 1122,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1123,
+            "relation_type": "INSIDE",
+            "to_id": 200
+        },
+        {
+            "from_id": 1123,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1126,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1132,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1132,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1142,
+            "relation_type": "ON",
+            "to_id": 999
+        },
+        {
+            "from_id": 1144,
+            "relation_type": "INSIDE",
+            "to_id": 1006
+        },
+        {
+            "from_id": 1144,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1148,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1148,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1154,
+            "relation_type": "INSIDE",
+            "to_id": 200
+        },
+        {
+            "from_id": 1154,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1156,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1156,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1162,
+            "relation_type": "ON",
+            "to_id": 272
+        },
+        {
+            "from_id": 1162,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1167,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1167,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1174,
+            "relation_type": "INSIDE",
+            "to_id": 17
+        },
+        {
+            "from_id": 1174,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1176,
+            "relation_type": "ON",
+            "to_id": 273
+        },
+        {
+            "from_id": 1176,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1184,
+            "relation_type": "INSIDE",
+            "to_id": 17
+        },
+        {
+            "from_id": 1184,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1193,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1193,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1196,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1196,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1203,
+            "relation_type": "ON",
+            "to_id": 1012
+        },
+        {
+            "from_id": 1203,
+            "relation_type": "ON",
+            "to_id": 18
+        },
+        {
+            "from_id": 1203,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1204,
+            "relation_type": "ON",
+            "to_id": 1012
+        },
+        {
+            "from_id": 1204,
+            "relation_type": "ON",
+            "to_id": 18
+        },
+        {
+            "from_id": 1204,
+            "relation_type": "INSIDE",
+            "to_id": 1
+        },
+        {
+            "from_id": 1207,
+            "relation_type": "INSIDE",
+            "to_id": 99
+        },
+        {
+            "from_id": 1207,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1209,
+            "relation_type": "INSIDE",
+            "to_id": 1004
+        },
+        {
+            "from_id": 1209,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1212,
+            "relation_type": "INSIDE",
+            "to_id": 1004
+        },
+        {
+            "from_id": 1212,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1215,
+            "relation_type": "ON",
+            "to_id": 114
+        },
+        {
+            "from_id": 1215,
+            "relation_type": "ON",
+            "to_id": 102
+        },
+        {
+            "from_id": 1215,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1216,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1216,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1098,
+            "relation_type": "INSIDE",
+            "to_id": 1006
+        },
+        {
+            "from_id": 1098,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1106,
+            "relation_type": "INSIDE",
+            "to_id": 117
+        },
+        {
+            "from_id": 1106,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1083,
+            "relation_type": "ON",
+            "to_id": 123
+        },
+        {
+            "from_id": 1083,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1031,
+            "relation_type": "ON",
+            "to_id": 273
+        },
+        {
+            "from_id": 1031,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1137,
+            "relation_type": "INSIDE",
+            "to_id": 76
+        },
+        {
+            "from_id": 1137,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 76,
+            "relation_type": "INSIDE",
+            "to_id": 41
+        },
+        {
+            "from_id": 1137,
+            "relation_type": "INSIDE",
+            "to_id": 76
+        },
+        {
+            "from_id": 270,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1030,
+            "relation_type": "ON",
+            "to_id": 273
+        },
+        {
+            "from_id": 1030,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        },
+        {
+            "from_id": 1172,
+            "relation_type": "ON",
+            "to_id": 273
+        },
+        {
+            "from_id": 1172,
+            "relation_type": "INSIDE",
+            "to_id": 241
+        }
+    ]
+}
